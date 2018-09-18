@@ -7,9 +7,9 @@
 
 #include "types.h"             // defines q_t, pcb_t, PROC_MAX, STACK_SIZE
 
-extern int cur_pid;            // PID of current selected running process
-...                            // prototype the rest...
-...
-...
+extern int cur_pid;                     // PID of current selected running process
+extern q_t ready_q, avail_q;            // avail PID and those created/ready to run
+extern pcb_t pcb[PROC_MAX];             //Process control blocks 
+extern char stack[PROC_MAX][STACK+SIZE] // Process runtime stacks
 
 #endif                         // endif of ifndef

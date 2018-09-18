@@ -27,6 +27,8 @@ void InitKernel(void) {             // init and set up kernel!
    Bzero(...);                      // clear 2 queues
    Bzero(...);
    for(i=...                        // add all avail PID's to the queue
+
+   set cur_pid to -1
 }
 
 void Scheduler(void) {             // choose a cur_pid to run
@@ -39,7 +41,9 @@ void Scheduler(void) {             // choose a cur_pid to run
       breakpoint();                                  // to GDB we go
    }
 
-   if cur_pid is not -1, then append cur_pid to ready_q; // suspend cur_pid
+   if cur_pid is not -1, then:
+      1. append cur_pid to ready_q; // suspend cur_pid
+      2. change its state
    replace cur_pid with the 1st one in ready_q; // pick a user proc
 
    ... ;                          // reset process time
@@ -50,7 +54,7 @@ int main(void) {                       // OS bootstraps
    initialize the kernel-related stuff by calling ...
 
    create InitProc process;            // create InitProc
-   set cur_pid to the 1st PID;         // select cur_pid
+   call Scheduler() to set cur_pid to the 1st PID;
    call Loader(with its TF_p);         // load proc to run
 
    return 0; // statement never reached, compiler needs it for syntax
