@@ -24,11 +24,11 @@ void InitKernel(void) {             // init and set up kernel!
    fill_gate(&IVT_p[TIMER],(int)TimerEntry,get_cs(),ACC_INTR_GATE,0);                  // fill out IVT for timer
    outportb(PIC_MASK,MASK);                   // mask out PIC for timer
 
-   Bzero(...);                      // clear 2 queues
-   Bzero(...);
-   for(i=...                        // add all avail PID's to the queue
-
-    set cur_pid to -1
+   Bzero((char*)&ready_q,ready_q.size);                      // clear 2 queues
+   Bzero((char*)&avail_q,avail_q.size);
+   for(i=0;i<PROC_MAX;i++)                    // add all avail PID's to the queue
+     EnQ(i, &avail_q);
+   cur_pid = -1;
 }
 
 void Scheduler(void) 
@@ -45,14 +45,16 @@ void Scheduler(void)
       cons_printf("Kernel panic: no process to run!\n");
       breakpoint();                                  // to GDB we go
    }
+   
+   if(cur_pid!=-1) //of cur_pid not -1
+   {
+     EnQ(cur_pid, ready_q);       // 1. append cur_pid to ready_q aka suspend cur_pid
+     pcb[cur_pid].state = READY;  // 2. Change its state
+   }
 
-   if cur_pid is not -1, then:
-      1. append cur_pid to ready_q; // suspend cur_pid
-      2. change its state
-   replace cur_pid with the 1st one in ready_q; // pick a user proc
-
-   ... ;                          // reset process time
-   ... ;                          // change its state
+   cur_pid = ready_q.head; // Pick user proc
+   pcb.time = 0;  //reset process time
+   pcb.state = RUN; //change its state
 }
 
 int main(void) {                       // OS bootstraps
@@ -68,20 +70,24 @@ int main(void) {                       // OS bootstraps
 void TheKernel(TF_t *TF_p) {           // kernel runs
    char ch;
 
-   ....TF_p = TF_p; // save TF addr
+   pcb[cur_pid].TF_p = TF_p; // save TF addr
 
-   call Timer ISR;                     // handle tiemr event
+   //call Timer ISR;                     // handle tiemr event
+   TimerISR();
 
-   if PC KB pressed {                  // if keyboard pressed
-      get the pressed key/character
-      if it's 'b':                     // 'b' for breakpoint
-         ...                        // go into GDB
+   if (cons_kbhit()) 
+   {                  // if keyboard pressed
+      char = cons_getchar();
+      if (ch == 'b')
+      {                     // 'b' for breakpoint
+         outportb(PIC_CONTROL,DONE);                        // go into GDB
          break;
-      if it's 'n':                     // 'n' for new process
-         call NewProc ISR (with UserProc as argument); // create a UserProc
-     }
+      }
+      if(ch=='n')                     // 'n' for new process
+         NewProcISR(UserProc); //NewProc ISR (with UserProc as argument)creates a UserProc
+  
    }
-   call Scheduler() // which may pick another proc
-   call Loader(with TF_p of scheduled process); // load proc to run!
+   Scheduler() // which may pick another proc
+   Loader(pcb[cur_pid].TF_p); // load proc to run! With TF_p of schedule process
 }
 
