@@ -48,7 +48,7 @@ void Scheduler(void)
    
    if(cur_pid!=-1) //of cur_pid not -1
    {
-     EnQ(cur_pid, ready_q);       // 1. append cur_pid to ready_q aka suspend cur_pid
+     EnQ(cur_pid, &ready_q);       // 1. append cur_pid to ready_q aka suspend cur_pid
      pcb[cur_pid].state = READY;  // 2. Change its state
    }
 
