@@ -58,11 +58,11 @@ void Scheduler(void)
 }
 
 int main(void) {                       // OS bootstraps
-   initialize the kernel-related stuff by calling ...
-
-   create InitProc process;            // create InitProc
-   call Scheduler() to set cur_pid to the 1st PID;
-   call Loader(with its TF_p);         // load proc to run
+   InitKernel(); //initialize the kernel-related stuff by calling ...
+  
+   InitProc();            // create InitProc
+   Scheduler();
+   Loader(pcb[cur_pid].TF_p);         // load proc to run
 
    return 0; // statement never reached, compiler needs it for syntax
 }
@@ -87,7 +87,7 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
          NewProcISR(UserProc); //NewProc ISR (with UserProc as argument)creates a UserProc
   
    }
-   Scheduler() // which may pick another proc
+   Scheduler(); // which may pick another proc
    Loader(pcb[cur_pid].TF_p); // load proc to run! With TF_p of schedule process
 }
 
