@@ -43,7 +43,7 @@ void UserProc(void) {
         asm("inb $0x80");
       }
       //erase above writing
-      *p = ' ' + VGA_MASK
+      *p = ' ' + VGA_MASK;
       //wait for half of LOOP: loop on asm("inb $0x80");
       for(i=0;i<LOOP/2;i++) asm("inb $0x80");
    }
