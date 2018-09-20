@@ -17,14 +17,14 @@ typedef struct {
 } TF_t;
 
 typedef struct {
-   TF_t * TF_P;                       // read in 1.html
+   TF_t * TF_p;                       // read in 1.html
    int time;
    int life;
    state_t state;
 } pcb_t;                     
 
 typedef struct {             // generic queue type
-  int q[20];                        // for a circular queue
+  int q[Q_SIZE];                        // for a circular queue
   int head, tail, size;  
 } q_t;
 

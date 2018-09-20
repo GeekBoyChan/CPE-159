@@ -53,8 +53,8 @@ void Scheduler(void)
    }
 
    cur_pid = ready_q.head; // Pick user proc
-   pcb.time = 0;  //reset process time
-   pcb.state = RUN; //change its state
+   pcb[cur_pid].time = 0;  //reset process time
+   pcb[cur_pid].state = RUN; //change its state
 }
 
 int main(void) {                       // OS bootstraps
@@ -77,11 +77,11 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
 
    if (cons_kbhit()) 
    {                  // if keyboard pressed
-      char = cons_getchar();
+      ch = cons_getchar();
       if (ch == 'b')
       {                     // 'b' for breakpoint
-         outportb(PIC_CONTROL,DONE);                        // go into GDB
-         break;
+         //outportb(PIC_CONTROL,DONE);                        // go into GDB
+         breakpoint();
       }
       if(ch=='n')                     // 'n' for new process
          NewProcISR(UserProc); //NewProc ISR (with UserProc as argument)creates a UserProc

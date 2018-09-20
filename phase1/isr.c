@@ -25,7 +25,7 @@ void NewProcISR(func_p_t p)
    	Bzero((char *) &stack[pid] [0], STACK_SIZE);  // clear stack
    	pcb[pid].state = READY;              // change process state
 	   		
-	EnQ(pid, &ready_pid_q);              // queue it
+	EnQ(pid, &ready_q);              // queue it
 	
 // point TF_p to stack & fill it out
 
@@ -45,9 +45,9 @@ void TimerISR(void) {
    	pcb[cur_pid].time++;                      // count up time
    	pcb[cur_pid].life++;                      // count up life
 
-   	if(pcb[cur_pid].runtime == TIME_MAX)
+   	if(pcb[cur_pid].time == TIME_MAX)
 	{
-		EnQ(cur_pid, &ready_pid_q);  //append current pid to ready queue
+		EnQ(cur_pid, &ready_q);  //append current pid to ready queue
 		cur_pid = -1;                //reset current pid to -1
 		pcb[cur_pid].state = READY;  //change state to ready
 	}

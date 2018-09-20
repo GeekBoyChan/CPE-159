@@ -11,14 +11,14 @@ void InitProc(void) {
    unsigned short *p = 0xb8000; // upper-left corner of display
 
    while(1) {
-      p = '.' + VGA_MASK;  //show the dot
+      *p = '.' + VGA_MASK;  //show the dot
       //wait for half of LOOP: loop on asm("inb $0x80");
-      for(i=0, i<LOOP/2, i++)
+      for(i=0; i<LOOP/2; i++)
       {
         asm("inb $0x80");
       }
 
-      p = ' ' + VGA_MASK; //erase above writing
+      *p = ' ' + VGA_MASK; //erase above writing
       //wait for half of LOOP: loop on asm("inb $0x80");
       for(i=0; i<LOOP/2;i++)
       {

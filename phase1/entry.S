@@ -17,12 +17,12 @@ ENTRY(Loader)
 // build proc frame, and go into kernel
 ENTRY(TimerEntry)                  // will have efl, cs, eip pushed by hardware
    pusha            //push all (8) registers
-   mov %ecx, %esp   //copy esp to ecx
+   movl %esp, %ecx   //copy esp to ecx
    movw $0x10, %ax                 // set kernel data segment registers
    mov %ax, %ds                    // set kernel data segment registers
    mov %ax, %es                    // set kernel data segment registers
    leal k_stack + K_STACK_SIZE, %esp  // set esp to top of kernel stack
-   push ecx                         // push ecx (onto the kernel stack)
+   pushl %ecx                         // push ecx (onto the kernel stack)
    cld                              // clear the direction flag of efl
    call CNAME(TheKernel)            //call TheKernel C function
 

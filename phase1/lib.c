@@ -5,10 +5,10 @@
 #include "data.h"
 
 // clear DRAM data block, zero-fill it
-void Bzero(char *p, int bytes) 
+void Bzero(char *p, int size) 
 {   
    int count = 0;
-   while(count <= bytes)
+   while(count <= size)
    {
      *p = (char)0;
      p++;
@@ -18,7 +18,7 @@ void Bzero(char *p, int bytes)
 
 int QisEmpty(q_t *p)  // return 1 if empty, else 0
 {
-   if(p -> bytes == 0)
+   if(p -> size  == 0)
    {
      return 1;
    }
@@ -27,7 +27,7 @@ int QisEmpty(q_t *p)  // return 1 if empty, else 0
 
 int QisFull(q_t *p) 
 { // return 1 if full, else 0
-  if(p->bytes == Q_SIZE)
+  if(p->size == Q_SIZE)
   {
     return 1;
   }
@@ -47,9 +47,9 @@ int DeQ(q_t *p)
    }
 
    next = p->q[0]; // copy first in queue to be returned later
-   p->bytes;
-   bytes--;
-   for(i = 0; i<p->bytes; i++) //decrease size of queue
+   p->size--;
+
+   for(i = 0; i<p->size; i++) //decrease size of queue
    {
      p->q[i]=p->q[i+1]; // shift all by 1
    }
@@ -62,11 +62,11 @@ void EnQ(int to_add, q_t *p)
    if(QisFull(p)) 
    {
       cons_printf("Kernel panic: queue is full, cannot EnQ!\n");
-      return
+      return;
    }
 
-   p.q[size] = to_add; //add int to next queue slot
-   size++;
+   p->q[p->size] = to_add; //add int to next queue slot
+   p->size++;
    return;
 }
 
