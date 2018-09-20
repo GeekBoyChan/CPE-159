@@ -8,16 +8,23 @@
 
 void InitProc(void) {
    int i;
-   unsigned short *p;
-
-   point p to 0xb8000; // upper-left corner of display
+   unsigned short *p = 0xb8000; // upper-left corner of display
 
    while(1) {
-      show the dot
-      wait for half of LOOP: loop on asm("inb $0x80");
+      cons_putchar('.'+VGA_MASK); //show the dot
+      *p = '.' + VGA_MASK;
+      //wait for half of LOOP: loop on asm("inb $0x80");
+      for(i=0, i<LOOP/2, i++)
+      {
+        asm("inb $0x80");
+      }
 
-      erase above writing
-      wait for half of LOOP: loop on asm("inb $0x80");
+      *p = ' ' + VGA_MASK; //erase above writing
+      //wait for half of LOOP: loop on asm("inb $0x80");
+      for(i=0; i<LOOP/2;i++)
+      {
+        asm("inb $0x80");
+      }
    }
 }
 
@@ -26,13 +33,18 @@ void UserProc(void) {
    unsigned short *p;
 
    while(1) {
-      point p to (0xb8000 + offset according to its PID)
-      show 1st digit of its PID
-      move p to next column
-      show 2nd digit of its PID
-      wait for half of LOOP: loop on asm("inb $0x80");
-
-      erase above writing
-      wait for half of LOOP: loop on asm("inb $0x80");
+      int offset = cur_pid *160; //point p to (0xb8000 + offset according to its PID)
+      *p = (cur_pid/10+''0') + VGA_MASK;//show 1st digit of its PID
+      p++; //move p to next column
+      *p = (cur_pid%10 + '0') + VGA_MASK; // show 2nd digit of its PID
+      //wait for half of LOOP: loop on asm("inb $0x80");
+      for(i=0;i<LOOP/2;i++)
+      {
+        asm("inb $0x80");
+      }
+      //erase above writing
+      *p = ' ' + VGA_MASK
+      //wait for half of LOOP: loop on asm("inb $0x80");
+      for(i=0;i<LOOP/2;i++) asm("inb $0x80");
    }
 }

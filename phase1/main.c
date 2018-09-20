@@ -20,24 +20,29 @@ void InitKernel(void) {             // init and set up kernel!
    int i;
    struct i386_gate *IVT_p;         // IVT's DRAM location
 
-   ...   = get_idt_base();          // get IVT location
-   fill_gate(...);                  // fill out IVT for timer
-   outportb(...);                   // mask out PIC for timer
+   IVT_p   = get_idt_base();          // get IVT location
+   fill_gate(&IVT_p[TIMER],(int)TimerEntry,get_cs(),ACC_INTR_GATE,0);                  // fill out IVT for timer
+   outportb(PIC_MASK,MASK);                   // mask out PIC for timer
 
    Bzero(...);                      // clear 2 queues
    Bzero(...);
    for(i=...                        // add all avail PID's to the queue
 
-   set cur_pid to -1
+    set cur_pid to -1
 }
 
-void Scheduler(void) {             // choose a cur_pid to run
-   if cur_pid is greater than 0, just return; // a user PID is already picked
+void Scheduler(void) 
+{             // choose a cur_pid to run
+   //if cur_pid is greater than 0, just return; // a user PID is already picked
+   if(cur_pid > 0) return;
 
-   if ready_q is empty && cur_pid is 0, just return; // InitProc OK
+   //if ready_q is empty && cur_pid is 0, just return; // InitProc OK
+   if(ready_q.size==0 && cur_pid==0) return;
 
-   if ready_q is empty && cur_pid is -1 {
-      cons_printf "Kernel panic: no process to run!\n
+   //if ready_q is empty && cur_pid is -1 
+   if(ready_q==0 && cur_pid==-1)
+   {
+      cons_printf("Kernel panic: no process to run!\n");
       breakpoint();                                  // to GDB we go
    }
 

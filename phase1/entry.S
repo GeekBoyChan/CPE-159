@@ -10,7 +10,7 @@
 // loads proc TF to run it
 ENTRY(Loader)
    movl 4(%esp)%ecx //copy 4 bytes from above register esp to register ecx
-   mov %ecx, %esp   //copy ecx to esp (point esp to the process trapframe)
+   movl %ecx, %esp   //copy ecx to esp (point esp to the process trapframe)
    popa             //pop all (8) registers
    iret             //return from interrupt
 
