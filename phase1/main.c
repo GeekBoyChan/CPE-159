@@ -50,9 +50,10 @@ void Scheduler(void)
    {
      EnQ(cur_pid, &ready_q);       // 1. append cur_pid to ready_q aka suspend cur_pid
      pcb[cur_pid].state = READY;  // 2. Change its state
+     cur_pid = DeQ(&ready_q); 
    }
 
-   cur_pid = DeQ(&ready_q); // Pick user proc
+   //cur_pid = DeQ(&ready_q); // Pick user proc
    pcb[cur_pid].time = 0;  //reset process time
    pcb[cur_pid].state = RUN; //change its state
 }
