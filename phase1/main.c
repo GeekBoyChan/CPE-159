@@ -52,7 +52,7 @@ void Scheduler(void)
      pcb[cur_pid].state = READY;  // 2. Change its state
    }
 
-   cur_pid = ready_q.head; // Pick user proc
+   cur_pid = DeQ(&ready_q); // Pick user proc
    pcb[cur_pid].time = 0;  //reset process time
    pcb[cur_pid].state = RUN; //change its state
 }
@@ -60,7 +60,7 @@ void Scheduler(void)
 int main(void) {                       // OS bootstraps
    InitKernel(); //initialize the kernel-related stuff by calling ...
   
-   InitProc();            // create InitProc
+   NewProcISR(InitProc);            // create InitProc
    Scheduler();
    Loader(pcb[cur_pid].TF_p);         // load proc to run
 
