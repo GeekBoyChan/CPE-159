@@ -22,9 +22,10 @@ void NewProcISR(func_p_t p)
 	
    	pid = DeQ(&avail_q);                 // alloc PID (1st is 0)
    	Bzero((char *) &pcb[pid], sizeof(pcb_t));       // clear PCB
-   	Bzero((char *) &stack[pid] , STACK_SIZE);  // clear stack
+   	Bzero((char *) &stack[pid][0] , STACK_SIZE);  // clear stack
    	pcb[pid].state = READY;              // change process state
-	   		
+	
+  //if(pid)
 	EnQ(pid, &ready_q);              // queue it
 	
 // point TF_p to stack & fill it out
@@ -33,7 +34,7 @@ void NewProcISR(func_p_t p)
    pcb[pid].TF_p--;
    pcb[pid].TF_p->efl = EF_DEFAULT_VALUE|EF_INTR; // enables intr
    pcb[pid].TF_p->cs = get_cs();                  // duplicate from CPU
-   pcb[pid].TF_p->eip = p;                          // set to code
+   pcb[pid].TF_p->eip =(int) p;                          // set to code
 }
 
 // count run time and switch if hitting time limit
