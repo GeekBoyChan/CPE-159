@@ -34,7 +34,7 @@ void NewProcISR(func_p_t p)
    pcb[pid].TF_p--;
    pcb[pid].TF_p->efl = EF_DEFAULT_VALUE|EF_INTR; // enables intr
    pcb[pid].TF_p->cs = get_cs();                  // duplicate from CPU
-   pcb[pid].TF_p->eip =(int) p;                          // set to code
+   pcb[pid].TF_p->eip =(unsigned int) p;                          // set to code
 }
 
 // count run time and switch if hitting time limit
@@ -49,7 +49,9 @@ void TimerISR(void) {
    	if(pcb[cur_pid].time == TIME_MAX)
 	{
 		EnQ(cur_pid, &ready_q);  //append current pid to ready queue
-		cur_pid = -1;                //reset current pid to -1
+		//cur_pid = -1;                //reset current pid to -1
 		pcb[cur_pid].state = READY;  //change state to ready
-	}
+	
+		cur_pid = -1;                //reset current pid to -1
+  }
 }
