@@ -1,6 +1,7 @@
 // include.h, CpE/CSc159
 // SPEDE library headers, ~spede2/Target-i386/Common/include/spede
 // Team Name: LIGMAOS
+// Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
 
 #ifndef __INCLUDE__
 #define __INCLUDE__
