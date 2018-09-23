@@ -1,5 +1,6 @@
 // constants.h, 159
 // Team Name: LIGMAOS
+// Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
 
 #ifndef __CONSTANTS__
 #define __CONSTANTS__
