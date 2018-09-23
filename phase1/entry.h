@@ -1,6 +1,7 @@
 // entry.h
 // prototypes what're in entry.S
 // Team Name: LIGMAOS
+// Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
 
 #ifndef __ENTRY__
 #define __ENTRY__
