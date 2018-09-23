@@ -35,8 +35,8 @@ void UserProc(void)
    
    while(1) 
    {
-      int offset = cur_pid *160; //point p to (0xb8000 + offset according to its PID)
-      *p = (0xb8000 + offset);
+      int offset = (cur_pid *160); //point p to (0xb8000 + offset according to its PID)
+      p = (0xb8000 + offset);
       *p = ((cur_pid/10) +'0') + VGA_MASK;//show 1st digit of its PID
       p++; //move p to next column
       *p = ((cur_pid%10) + '0') + VGA_MASK; // show 2nd digit of its PID
