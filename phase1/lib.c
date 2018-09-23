@@ -8,7 +8,7 @@
 void Bzero(char *p, int size) 
 {   
    int count = 0;
-   while(count <= size)
+   while(count <= size-1)
    {
      *p = (char)0;
      p++;
@@ -65,8 +65,9 @@ void EnQ(int to_add, q_t *p)
       return;
    }
 
-   p->q[p->size] = to_add; //add int to next queue slot
+   p->q[tail] = to_add; //add int to next queue slot
    p->size++;
+   tail = (tail + 1)%Q_SIZE;
    return;
 }
 
