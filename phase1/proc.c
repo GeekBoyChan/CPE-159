@@ -2,6 +2,7 @@
 // all user processes are coded here
 // processes do not R/W kernel data or code, must use syscalls
 // Team Name: LIGMAOS
+// Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
 
 #include "include.h"
 #include "data.h"
