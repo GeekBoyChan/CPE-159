@@ -1,5 +1,6 @@
 // entry.S, entries to kernel services, build process trapframe
 // Team Name: LIGMAOS
+// Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
 
 #include "constants.h"
 #include <spede/machine/asmacros.h> // do not use/include "spede.h"
