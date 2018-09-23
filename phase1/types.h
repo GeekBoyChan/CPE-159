@@ -1,4 +1,5 @@
 // types.h, 159
+// Team Name: LIGMAOS
 
 #ifndef __TYPES__
 #define __TYPES__

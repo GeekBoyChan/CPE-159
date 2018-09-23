@@ -1,5 +1,6 @@
 // entry.h
 // prototypes what're in entry.S
+// Team Name: LIGMAOS
 
 #ifndef __ENTRY__
 #define __ENTRY__

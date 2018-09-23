@@ -1,4 +1,5 @@
 // lib.h, 159
+// Team Name: LIGMAOS
 
 #ifndef __LIB__
 #define __LIB__

@@ -1,6 +1,7 @@
 // data.h, 159
 // kernel data are all declared in main.c during bootstrap
 // kernel .c code reference them as 'extern'
+// Team Name: LIGMAOS
 
 #ifndef __DATA__
 #define __DATA__
