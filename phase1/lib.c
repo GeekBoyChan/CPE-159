@@ -46,13 +46,15 @@ int DeQ(q_t *p)
       return -1;
    }
 
-   next = p->q[0]; // copy first in queue to be returned later
+   next = p->q[head]; // copy first in queue to be returned later
    p->size--;
 
-   for(i = 0; i<p->size; i++) //decrease size of queue
+   /*for(i = 0; i<p->size; i++) //decrease size of queue
    {
      p->q[i]=p->q[i+1]; // shift all by 1
    }
+   */
+   head = (head + 1)%Q_SIZE;
    return next;
 }
 
