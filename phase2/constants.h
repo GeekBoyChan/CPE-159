@@ -1,7 +1,7 @@
 // constants.h, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 1
+// Phase 2
 
 #ifndef __CONSTANTS__
 #define __CONSTANTS__
@@ -18,5 +18,15 @@
 #define PROC_MAX 20          // max number of processes
 #define Q_SIZE 20            // queuing capacity
 #define STACK_SIZE 4096      // process stack in bytes
+
+//Added for Phase 2
+#define STDOUT 1
+#define WRITE 4
+#define GETPID 20
+#define SETVIDEO 100
+#define SYSCALL 128
+#define SLEEP 162
+#define HOME_POS ((unsigned short *)0xb8000)
+#define END_POS ((unsigned short *)0xb8000+24*80)
 
 #endif

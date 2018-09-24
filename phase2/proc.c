@@ -2,6 +2,10 @@
 // all processes are coded here
 // processes do not access kernel data, must use syscalls
 
+// Team Name: LIGMAOS
+// Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
+// Phase 2
+
 #include "constants.h" // include only these 2 files
 #include "syscalls.h"
 

@@ -1,7 +1,7 @@
 // types.h, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 1
+// Phase 2
 
 #ifndef __TYPES__
 #define __TYPES__

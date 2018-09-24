@@ -1,5 +1,9 @@
 // entry.S, entries to kernel, build process TF
 
+// Team Name: LIGMAOS
+// Members: Andrew Encinas. Chandler Ocapan, Alex Paraiso
+// Phase 2
+
 #include "constants.h"
 #include <spede/machine/asmacros.h> // do not use/include "spede.h"
 

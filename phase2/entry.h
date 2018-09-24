@@ -2,7 +2,7 @@
 // prototypes what're in entry.S
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 1
+// Phase 2
 
 #ifndef __ENTRY__
 #define __ENTRY__
