@@ -17,7 +17,7 @@ ENTRY(Loader)
    movl 4(%esp), %ecx
    movl %ecx, %esp
    popa
-   ... to skip the 'entry' of TF, increment stack pointer by 4 bytes
+   add $4, %esp //to skip the 'entry' of TF, increment stack pointer by 4 bytes
    iret
 
 // build/push TF then go to kernel
