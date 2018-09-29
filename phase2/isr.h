@@ -8,5 +8,9 @@
 
 void NewProcISR(func_p_t p);  //Create process
 void TimerISR(void);          //Timer ISR
+void GetPidISR(void);          //
+void SleepISR(void);
+void SetVideoISR(void);
+void WriteISR(void);
 
 #endif
