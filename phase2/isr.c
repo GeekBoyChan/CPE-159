@@ -58,3 +58,16 @@ void TimerISR(void) {
 		cur_pid = -1;                //reset current pid to -1
   }
 }
+
+void GetPidISR(void)
+{
+        pcb[cur_pid].TF_p->ebx = cur_pid; //What is this I dont even
+}
+
+void SleepISR(void)
+{
+        pcb[cur_pid]. ...                    //I dont know
+        pcb[cur_pid].wake_time =  sys_ticks + ... * 100; //What is sleep second
+        pcb[cur_pid].state = SLEEPY;         //change state to SLEEPY
+        cur_pid = -1;                        //reset cur_pid
+}
