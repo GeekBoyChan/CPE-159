@@ -41,7 +41,7 @@ void UserProc(void) {
 
    while(1) {
       SetVideo(1,1);//call service to set video cursor to beginning of my row
-      Write(STDOUT, my_pid); //call service to write out my PID str
+      Write(STDOUT, str[3]); //call service to write out my PID str
       Sleep(2); //call service to sleep for 2 seconds
 
       SetVideo(1,1); //call service to set video cursor to beginning of my row
