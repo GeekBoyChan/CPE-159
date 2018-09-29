@@ -43,11 +43,13 @@ void NewProcISR(func_p_t p)
 // count run time and switch if hitting time limit
 
 
-void TimerISR(void) {
+void TimerISR(void) 
+{
    	outportb(PIC_CONTROL, DONE);              // notify PIC getting done
 
    	pcb[cur_pid].time++;                      // count up time
    	pcb[cur_pid].life++;                      // count up life
+	sys_ticks++;			// upcount current os uptime
 
    	if(pcb[cur_pid].time == TIME_MAX)
 	{
@@ -56,7 +58,19 @@ void TimerISR(void) {
 		pcb[cur_pid].state = READY;  //change state to ready
 	
 		cur_pid = -1;                //reset current pid to -1
-  }
+  	}
+
+	int i;
+	for(i=0; i<PROC_MAX; i++) // Loop thru entire PCB array
+	{
+		//If process is asleep and wake time has arrived
+		if((pcb[i].state==SLEEPY)&&(sys_ticks==pcb[i].wake_time)) 
+		{
+			EnQ(i, &ready_q); // EnQ process I to rdy_q(?)
+			pcb[i].state = READY;
+		}
+	}
+			
 }
 
 void GetPidISR(void)
@@ -66,8 +80,50 @@ void GetPidISR(void)
 
 void SleepISR(void)
 {
-        pcb[cur_pid]. ...                    //I dont know
-        pcb[cur_pid].wake_time =  sys_ticks + ... * 100; //What is sleep second
+        int sleepSec = pcb[cur_pid].ebx                    //I dont know
+        pcb[cur_pid].wake_time =  sys_ticks + sleepSec * 100; //What is sleep second
         pcb[cur_pid].state = SLEEPY;         //change state to SLEEPY
         cur_pid = -1;                        //reset cur_pid
 }
+
+void SetVideo(void)
+{
+	unsigned short row, col;
+	row = unsigned short(pcb[cur_pid].ebx);
+	col = unsigned short(pcb[cur_pid].ecx);
+
+	video_p = HOME_POS + (row-1) * 80 + (col-1);
+}
+
+void WriteISR(void)
+{
+	int device = pcb[cur_pid].ebx;
+	int *str = pcb[cur_pid].ecx;
+	int i,j;
+
+	if(device == STDOUT)
+	{
+		for(i=0;i<size_of(str);i++) //Not sure about size_of
+		{ 
+			if(video_p == END_POS)  // Reach end, return 
+				video_p = HOME_POS;
+			
+			if(video_p == HOME_POS) //FIX,Clear if at start of line
+				for(j=0;j<80;j++)
+					Write out ' ',
+			
+			if(str[i] != '\n') //if end of string
+			{
+				use video_p to write out 'c'
+				video_p++;
+			}
+			else //move video_p to start of next line
+			{
+				find 'col pos' of current video_p
+				the 'rest' = 80 - current 'col pos'		
+				incr video_p by 'rest'
+			}
+		}
+	}
+
+
