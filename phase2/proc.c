@@ -31,6 +31,9 @@ void UserProc(void) {
    str[3] = '\0';
 
     my_pid = GetPid; //get my PID and make a string from it (null-delimited)
+    str[0] = '0' + my_pid/10; //print the first digit of mypid
+    str[1] = '0' + my_pid%10; //print the second digit of mypid
+    str[3] = '\0'; //null delimited
 
    SetVideo(1,1); //set video cursor to beginning of my row
    Write(STDOUT, "write out that extra long msg to test line wrapped and erasure YEEEEEEEEEEEEEEEEEEEEE HAAAAAAAAAAAAAAAAAAAA"); //write out that extra long msg to test line wrapped and erasure
