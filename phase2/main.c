@@ -16,6 +16,9 @@ q_t ready_q, avail_q;               // avail PID and those created/ready to run
 pcb_t pcb[PROC_MAX];                // Process Control Blocks
 char stack[PROC_MAX][STACK_SIZE];   // process runtime stacks
 
+int sys_ticks;                      // OS time(timer ticks), starting at 0
+unsigned short *video_p;            //PC VGA video pointer, starting HOME_POS
+
 void InitKernel(void) {             // init and set up kernel!
    int i;
    struct i386_gate *IVT_p;         // IVT's DRAM location
@@ -74,7 +77,24 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
    pcb[cur_pid].TF_p = TF_p; // save TF addr
 
    //call Timer ISR;                     // handle tiemr event
-   TimerISR();
+   switch(TF_p->entry)
+   {
+      case TIMER:
+        TimerISR();
+        break;
+      case WRITE:
+        WriteISR();
+        break;
+      case GETPID:
+        GetPidISR();
+        break;
+      case SETVIDEO:
+        SetVideoISR();
+        break;
+      case SLEEP:
+        SleepISR();
+        break;
+   }
 
    if (cons_kbhit()) 
    {                  // if keyboard pressed
