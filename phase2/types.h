@@ -14,7 +14,7 @@ typedef enum {SLEEPY, AVAIL, READY, RUN} state_t;
 
 typedef struct {
    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
-   unsigned int entry,;
+   unsigned int entry;
    unsigned int eip,cs,efl;
 } TF_t;
 

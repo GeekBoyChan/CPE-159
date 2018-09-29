@@ -23,7 +23,8 @@ void InitProc(void) {
    }
 }
 
-void UserProc(void) {
+void UserProc(void) 
+{
    int my_pid;
    char str[3];
 
@@ -34,9 +35,10 @@ void UserProc(void) {
 
    SetVideo(1,1); //set video cursor to beginning of my row
    Write(STDOUT, "write out that extra long msg to test line wrapped and erasure YEEEEEEEEEEEEEEEEEEEEE HAAAAAAAAAAAAAAAAAAAA"); //write out that extra long msg to test line wrapped and erasure
-   Sleep(2) //sleep for 2 seconds
+   Sleep(2); //sleep for 2 seconds
 
-   while(1) {
+   while(1) 
+   {
       SetVideo(1,1);//call service to set video cursor to beginning of my row
       Write(STDOUT, str); //call service to write out my PID str
       Sleep(2); //call service to sleep for 2 seconds

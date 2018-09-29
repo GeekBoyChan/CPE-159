@@ -9,6 +9,7 @@
 #include "isr.h"
 #include "lib.h"
 #include "proc.h"
+#include "syscalls.h"
 
 // to create a process: alloc PID, PCB, and process stack
 // build trapframe, initialize PCB, record PID to ready_q
@@ -45,14 +46,15 @@ void NewProcISR(func_p_t p)
 
 void TimerISR(void) 
 {
-   	outportb(PIC_CONTROL, DONE);              // notify PIC getting done
+   	int i;
+    outportb(PIC_CONTROL, DONE);              // notify PIC getting done
 
    	pcb[cur_pid].time++;                      // count up time
    	pcb[cur_pid].life++;                      // count up life
-	sys_ticks++;			// upcount current os uptime
+	  sys_ticks++;			// upcount current os uptime
 
    	if(pcb[cur_pid].time == TIME_MAX)
-	{
+	  {
 		EnQ(cur_pid, &ready_q);  //append current pid to ready queue
 		//cur_pid = -1;                //reset current pid to -1
 		pcb[cur_pid].state = READY;  //change state to ready
@@ -60,7 +62,7 @@ void TimerISR(void)
 		cur_pid = -1;                //reset current pid to -1
   	}
 
-	int i;
+	
 	for(i=0; i<PROC_MAX; i++) // Loop thru entire PCB array
 	{
 		//If process is asleep and wake time has arrived
@@ -80,25 +82,25 @@ void GetPidISR(void)
 
 void SleepISR(void)
 {
-        int sleepSec = pcb[cur_pid].ebx                    //I dont know
+        int sleepSec = pcb[cur_pid].TF_p->ebx;                    //I dont know
         pcb[cur_pid].wake_time =  sys_ticks + sleepSec * 100; //What is sleep second
         pcb[cur_pid].state = SLEEPY;         //change state to SLEEPY
         cur_pid = -1;                        //reset cur_pid
 }
 
-void SetVideo(void)
+void SetVideoISR(void)
 {
 	unsigned short row, col;
-	row = unsigned short(pcb[cur_pid].ebx);
-	col = unsigned short(pcb[cur_pid].ecx);
+	row = (unsigned short) (pcb[cur_pid].TF_p->ebx);
+	col = (unsigned short) (pcb[cur_pid].TF_p->ecx);
 
 	video_p = HOME_POS + (row-1) * 80 + (col-1);
 }
 
 void WriteISR(void)
 {
-	int device = pcb[cur_pid].ebx;
-	int *str = pcb[cur_pid].ecx;
+	int device = pcb[cur_pid].TF_p->ebx;
+	int *str = pcb[cur_pid].TF_p->ecx;
 	int i,j;
 
 	if(device == STDOUT)
@@ -128,5 +130,5 @@ else //move video_p to start of next line
 			*/
 		}
 	}
-
+}
 
