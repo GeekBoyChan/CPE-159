@@ -105,7 +105,7 @@ void WriteISR(void)
 
 	if(device == STDOUT)
 	{
-		for(i=0;i<size_of(str);i++) //Not sure about size_of
+		for(i=0;i<sizeof(str);i++) //Not sure about size_of
 		{ 
 			if(video_p == END_POS)  // Reach end, return 
 				video_p = HOME_POS;
