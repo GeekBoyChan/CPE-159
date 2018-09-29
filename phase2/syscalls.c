@@ -32,14 +32,22 @@ int GetPid(void) {
 }
 
 void SetVideo(int row, int col) {
-   ...
-   ...
-   ...
+   asm("movl %0, %%eax;
+        movl %1, %%ebx;
+        movl %2, %%ecx;
+        int $128"
+        :
+        : "g"(SETVIDEO), "g"(row), "g"(col)
+        : "eax", "ebx", "ecx");
 }
 
 void Write(int device, char *str) {
-   ...
-   ...
-   ...
+   asm("movl %0, %%eax;
+        movl %1, %%ebx;
+        movl %2, %%ecx;
+        int $128"
+        :
+        : "g"(WRITE), "g"(device), "g"((int)str)
+        : "eax", "ebx", "ecx");
 }
 
