@@ -75,7 +75,7 @@ void TimerISR(void)
 
 void GetPidISR(void)
 {
-        pcb[cur_pid].TF_p->ebx = cur_pid; //What is this I dont even
+        pcb[cur_pid].TF_p->ebx = cur_pid; 
 }
 
 void SleepISR(void)
@@ -110,19 +110,22 @@ void WriteISR(void)
 			
 			if(video_p == HOME_POS) //FIX,Clear if at start of line
 				for(j=0;j<80;j++)
-					Write out ' ',
+					*video_p = ' ' + VGA_MASK; //Write out ' '
 			
 			if(str[i] != '\n') //if end of string
 			{
-				use video_p to write out 'c'
+				*video_p = str[i] + VGA_MASK;
 				video_p++;
 			}
-			else //move video_p to start of next line
+			/*			
+else //move video_p to start of next line
 			{
-				find 'col pos' of current video_p
-				the 'rest' = 80 - current 'col pos'		
-				incr video_p by 'rest'
+				unsigned short colPos, rst;
+				colPos = (video_p - HOME_POS)/ //find 'col pos' of current video_p
+				rst = 80 - colPos;		
+				video_p = video_p + rst;
 			}
+			*/
 		}
 	}
 
