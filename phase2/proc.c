@@ -26,9 +26,6 @@ void InitProc(void) {
 void UserProc(void) {
    int my_pid;
    char str[3];
-   str[0] = '0' + my_pid/10;
-   str[1] = '0' + my_pid%10;
-   str[3] = '\0';
 
     my_pid = GetPid; //get my PID and make a string from it (null-delimited)
     str[0] = '0' + my_pid/10; //print the first digit of mypid
