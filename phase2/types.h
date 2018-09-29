@@ -22,6 +22,7 @@ typedef struct {
    TF_t * TF_p;                       // read in 1.html
    int time;
    int life;
+   int wake_time;
    state_t state;
 } pcb_t;                     
 
