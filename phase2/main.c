@@ -25,6 +25,7 @@ void InitKernel(void) {             // init and set up kernel!
 
    IVT_p   = get_idt_base();          // get IVT location
    fill_gate(&IVT_p[TIMER],(int)TimerEntry,get_cs(),ACC_INTR_GATE,0);                  // fill out IVT for timer
+   fill_gate(&IVT_p[SYSCALL],(int)SyscallEntry,get_cs(),ACC_INTR_GATE,0); //Fill out gate for SysCall
    outportb(PIC_MASK,MASK);                   // mask out PIC for timer
 
    Bzero((char*)&ready_q,ready_q.size);                      // clear 2 queues
@@ -32,6 +33,8 @@ void InitKernel(void) {             // init and set up kernel!
    for(i=0;i<PROC_MAX;i++)                    // add all avail PID's to the queue
      EnQ(i, &avail_q);
    cur_pid = -1;
+   sys_ticks = 0;
+   video_p = HOME_POS;
 }
 
 void Scheduler(void) 
