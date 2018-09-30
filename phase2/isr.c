@@ -68,7 +68,7 @@ void TimerISR(void)
 		//If process is asleep and wake time has arrived
 		if((pcb[i].state==SLEEPY)&&(sys_ticks==pcb[i].wake_time)) 
 		{
-			EnQ(i, &ready_q); // EnQ process I to rdy_q(?)
+			EnQ(i, &ready_q); // EnQ process I to rdy_q
 			pcb[i].state = READY;
 		}
 	}
@@ -100,34 +100,36 @@ void SetVideoISR(void)
 void WriteISR(void)
 {
 	int device = pcb[cur_pid].TF_p->ebx;
-	int *str = pcb[cur_pid].TF_p->ecx;
-	int i,j;
+	char *str = pcb[cur_pid].TF_p->ecx;
+	int i;
 
 	if(device == STDOUT)
 	{
-		for(i=0;i<sizeof(str);i++) //Not sure about size_of
-		{ 
-			if(video_p == END_POS)  // Reach end, return 
+		//for(i=0;i<sizeof(str)-1;i++) //Not sure about size_of
+		while(*str != '\0')
+    { 
+			if(video_p == END_POS-1)  // Reach end, return 
 				video_p = HOME_POS;
 			
-			if(video_p == HOME_POS) //FIX,Clear if at start of line
-				for(j=0;j<80;j++)
-					*video_p = ' ' + VGA_MASK; //Write out ' '
-			
-			if(str[i] != '\n') //if end of string
+			if((video_p - HOME_POS) % 80 == 0 ) //Clear if at start of line
 			{
-				*video_p = str[i] + VGA_MASK;
+          Bzero((char *) video_p,  160); // Clear line with Bzero
+			}
+			if(*str != '\n') //if end of string
+			{
+				*video_p = *str + VGA_MASK;
 				video_p++;
 			}
-			/*			
-else //move video_p to start of next line
+						
+      else //move video_p to start of next line
 			{
 				unsigned short colPos, rst;
-				colPos = (video_p - HOME_POS)/ //find 'col pos' of current video_p
+				colPos = (video_p - HOME_POS)%80; //find 'col pos' of current video_p
 				rst = 80 - colPos;		
 				video_p = video_p + rst;
 			}
-			*/
+      str++;
+			
 		}
 	}
 }

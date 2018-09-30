@@ -22,7 +22,7 @@ ENTRY(Loader)
 
 // build/push TF then go to kernel
 ENTRY(TimerEntry)
-   pushl $TIMER push the timer entry number ($TIMER)
+   pushl $TIMER // push the timer entry number ($TIMER)
    jmp CommonRoutine // jump to the common routine
 
 ENTRY(SyscallEntry)
