@@ -101,7 +101,6 @@ void WriteISR(void)
 {
 	int device = pcb[cur_pid].TF_p->ebx;
 	char *str = pcb[cur_pid].TF_p->ecx;
-	int i;
 
 	if(device == STDOUT)
 	{
