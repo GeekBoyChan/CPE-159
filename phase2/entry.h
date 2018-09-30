@@ -15,7 +15,7 @@ __BEGIN_DECLS
 
 void TimerEntry(void);            // coded in entry.S, assembler won't like this syntax
 void Loader(TF_t *);              // coded in entry.S
-void SyscallEntry(void);
+void SyscallEntry(TF_t *);
 __END_DECLS
 
 #endif // ifndef ASSEMBLER

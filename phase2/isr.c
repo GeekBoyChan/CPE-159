@@ -90,11 +90,11 @@ void SleepISR(void)
 
 void SetVideoISR(void)
 {
-	unsigned short row, col;
-	row = (unsigned short) (pcb[cur_pid].TF_p->ebx);
-	col = (unsigned short) (pcb[cur_pid].TF_p->ecx);
+	int row, col;
+	row = (pcb[cur_pid].TF_p->ebx);
+	col = (pcb[cur_pid].TF_p->ecx);
 
-	video_p = HOME_POS + (row-1) * 80 + (col-1);
+	video_p = (unsigned short*) (HOME_POS + (row-1) * 80 + (col-1));
 }
 
 void WriteISR(void)
