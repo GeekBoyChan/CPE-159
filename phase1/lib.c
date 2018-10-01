@@ -13,7 +13,7 @@ void Bzero(char *p, int size)
    int count = 0;
    while(count <= size-1)
    {
-     *p = (char)0;
+     *p = (char *)0;
      p++;
      count++;
    }
@@ -42,16 +42,16 @@ int QisFull(q_t *p)
 int DeQ(q_t *p) 
 { // return -1 if q[] is empty
    int i;
-   int next;
+   int next = -1;
 
    if(QisEmpty(p))
    {
       return -1;
    }
-
+   //next = p->q[p->head];
    next = p->q[0]; // copy first in queue to be returned later
    p->size--;
-
+   //for loop not be needed 
    for(i = 0; i<p->size; i++) //decrease size of queue
    {
      p->q[i]=p->q[i+1]; // shift all by 1
