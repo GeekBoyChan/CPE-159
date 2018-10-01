@@ -33,7 +33,7 @@ void NewProcISR(func_p_t p)
 	
 // point TF_p to stack & fill it out
 
-   pcb[pid].TF_p = (TF_t *) &stack[pid][STACK_SIZE - sizeof(TF_t)];                       
+   pcb[pid].TF_p = (TF_t *) &stack[pid][STACK_SIZE - sizeof(TF_t)];   //remove ( - sizeof(TF_t)) or -- in next line                    
    pcb[pid].TF_p--;
    pcb[pid].TF_p->efl = EF_DEFAULT_VALUE|EF_INTR; // enables intr
    pcb[pid].TF_p->cs = get_cs();                  // duplicate from CPU
