@@ -37,9 +37,11 @@ void Scheduler(void)
    if(cur_pid > 0) return;
 
    //if ready_q is empty && cur_pid is 0, just return; // InitProc OK
+   //Change if statement to: if(QisEmpty(&ready_q) && curpid == 0) return;
    if(ready_q.size==0 && cur_pid==0) return;
 
    //if ready_q is empty && cur_pid is -1 
+   //Change if statement to: if(QisEmpty(&ready_q) && curpid == -1)
    if(ready_q.size==0 && cur_pid==-1)
    {
       cons_printf("Kernel panic: no process to run!\n");
@@ -83,6 +85,7 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
       {                     // 'b' for breakpoint
          //outportb(PIC_CONTROL,DONE);                        // go into GDB
          breakpoint();
+         //Add break; here
       }
       if(ch=='n')                     // 'n' for new process
          NewProcISR(UserProc); //NewProc ISR (with UserProc as argument)creates a UserProc
