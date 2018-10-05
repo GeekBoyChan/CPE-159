@@ -31,4 +31,9 @@ typedef struct {             // generic queue type
   int head, tail, size;  
 } q_t;
 
+typedef struct { 
+   int passes;
+   q_t wait_q;
+} sem_t;
+
 #endif
