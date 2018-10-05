@@ -10,5 +10,8 @@ void Sleep(int sec);
 int GetPid(void);
 void SetVideo(int row, int col);
 void Write(int device, char *str);
+int SemInit(int passes);
+void SemWait(int sem_id);
+void SemPost(int sem_id);
 
 #endif
