@@ -133,3 +133,56 @@ void WriteISR(void)
 	}
 }
 
+void SemInitISR(void)
+{
+	unsigned short *p;
+	int sem_id, passes;
+	sem_id = DeQ(&sem_q);
+	if(sem_id == -1);
+	{
+		cons_prints(“no more sems”);
+		breakpoint();
+	}
+	passes = pcb[cur_pid].TF_p->ebx;
+	Bzero(&sem[sem_id], sizeof(sem_t));
+	sem[sem_id].passes = passes;
+	P =HOME_POS + 21 * 80;
+	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+}
+
+void SemWaitISR(void)
+{
+	unsigned short *p;
+	int sem_id = pcb[cur_pid.TF_p->ebx;
+	if(sem[sem_id].passes > 0)
+	{
+		sem[sem_id].passes--;
+	}
+	Else
+	{
+		EnQ(cur_pid, &sem[sem_id].wait_q);
+		//Change state
+		//reset
+	}
+	p = HOME_POS + 21 * 80;
+	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+}
+
+void SemPostISR(void)
+{
+	unsigned short *p;
+	int pid, sem_id = pcb[cur_pid.TF_p->ebx;
+	if(QisEmpty(&sem[sem_id].wait_q))
+	{
+		sem[sem_id].passes++;
+	}
+	else
+	{
+		pid = DeQ(&sem[sem_id].wait_q);
+		EnQ(cur_pid, &sem[sem_id].wait_q);
+		//change state
+		
+	}
+	p = HOME_POS + 21 * 80;
+	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+}
