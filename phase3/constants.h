@@ -29,4 +29,10 @@
 #define HOME_POS ((unsigned short *)0xb8000)
 #define END_POS ((unsigned short *)0xb8000+24*80)
 
+// Added for Phase 3
+#define SEM_MAX 20 	// kernel has 20 semaphores to dispatch
+#define SEMINIT 101 	// serivce # to req for semaphore
+#define SEMWAIT 102	// service # for sem-wat
+#define SEMPOST 102	// service # for sem-post
+
 #endif

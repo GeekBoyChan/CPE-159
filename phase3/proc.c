@@ -39,12 +39,34 @@ void UserProc(void)
 
    while(1) 
    {
-      SetVideo(my_pid+1,1);//call service to set video cursor to beginning of my row
+      SetVideo(my_pid+1,10);//call service to set video cursor to beginning of my row
       Write(STDOUT, str); //call service to write out my PID str
       Sleep(2); //call service to sleep for 2 seconds
 
-      SetVideo(my_pid+1,1); //call service to set video cursor to beginning of my row
+      SetVideo(my_pid+1,10); //call service to set video cursor to beginning of my row
       Write(STDOUT, "--"); //call service to erase my PID str (with "--")
       Sleep(2); //call service to sleep for 2 seconds
    }
 }
+
+void CarProc(int car_sem)
+{
+	int my_pid = GetPid();
+	char str[3];
+    	str[0] = '0' + my_pid/10; //print the first digit of mypid
+    	str[1] = '0' + my_pid%10; //print the second digit of mypid
+    	str[2] = '\0'; //null delimited
+
+	while(1)
+	{
+		SetVideo(my_pid+1,10);
+		Write(STDOUT,"I'm off");
+		Sleep(2);
+		SemWait(car_sem);
+		SetVideo(my_pid +1, 10);
+		Write(STDOUT, "I'm on the bridge!");
+		Sleep(2);
+		SemPost(car_sem);
+	}
+}
+
