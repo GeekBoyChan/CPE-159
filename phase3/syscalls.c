@@ -51,3 +51,32 @@ void Write(int device, char *str) {
         : "eax", "ebx", "ecx");
 }
 
+int SemInit(int passes) {
+   asm("movl %1, %%eax;  //serive#
+        movl %2, %%ebx;  // passes
+       int $128"
+        movl %%ecx, %0;  //sem_od
+        : "=g" (sem_id)  //output
+        : "g"(SEMINIT), "g"(passes)
+        : "eax", "ebx", "ecx");  //used registers
+}
+
+void SemWait(int sem_id) {
+   asm("movl %0, %%eax;
+        movl %1, %%ebx;
+        int $128"
+        :
+        : "g"(SEMWAIT), "g"(sem_id)
+        : "eax", "ebx");
+}
+
+void SemPost(int sem_id) {
+   asm("movl %0, %%eax;
+        movl %1, %%ebx;
+        int $128"
+        :
+        : "g"(SEMPOST), "g"(sem_id)
+        : "eax", "ebx");
+}
+   
+
