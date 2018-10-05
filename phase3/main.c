@@ -43,10 +43,12 @@ void Scheduler(void)
    if(cur_pid > 0) return;
 
    //if ready_q is empty && cur_pid is 0, just return; // InitProc OK
-   if(ready_q.size==0 && cur_pid==0) return;
+   //if(ready_q.size==0 && cur_pid==0) return; old version
+   if(QisEmpty(&ready_q) && cur_pid == 0) return;
 
    //if ready_q is empty && cur_pid is -1 
-   if(ready_q.size==0 && cur_pid==-1)
+   //if(ready_q.size==0 && cur_pid==-1) old version
+   if(QisEmpty(&ready_q) && cur_pid == -1)
    {
       cons_printf("Kernel panic: no process to run!\n");
       breakpoint();                                  // to GDB we go
