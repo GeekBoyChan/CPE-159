@@ -33,6 +33,6 @@
 #define SEM_MAX 20 	// kernel has 20 semaphores to dispatch
 #define SEMINIT 101 	// serivce # to req for semaphore
 #define SEMWAIT 102	// service # for sem-wat
-#define SEMPOST 102	// service # for sem-post
+#define SEMPOST 103	// service # for sem-post
 
 #endif
