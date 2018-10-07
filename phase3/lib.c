@@ -1,7 +1,7 @@
 // lib.c, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 2
+// Phase 3
 
 #include "include.h"
 #include "types.h"
@@ -19,7 +19,7 @@ void Bzero(char *p, int size)
    }
 }
 
-int QisEmpty(q_t *p)  // return 1 if empty, else 0
+int QisEmpty(q_t *p)        // return 1 if empty, else 0
 {
    if(p -> size  == 0)
    {
@@ -28,8 +28,8 @@ int QisEmpty(q_t *p)  // return 1 if empty, else 0
    return 0;
 }
 
-int QisFull(q_t *p) 
-{ // return 1 if full, else 0
+int QisFull(q_t *p)         // return 1 if full, else 0
+{ 
   if(p->size == Q_SIZE)
   {
     return 1;
@@ -40,8 +40,7 @@ int QisFull(q_t *p)
 // dequeue, 1st integer in queue
 // if queue empty, return -1
 int DeQ(q_t *p) 
-{ // return -1 if q[] is empty
-   int i;
+{// return -1 if q[] is empty
    int next;
 
    if(QisEmpty(p))
@@ -49,15 +48,9 @@ int DeQ(q_t *p)
       return -1;
    }
 
-   next = p->q[0]; // copy first in queue to be returned later
+   next = p->q[p->head];            // copy first in queue to be returned later
    p->size--;
-
-   for(i = 0; i<p->size; i++) //decrease size of queue
-   {
-     p->q[i]=p->q[i+1]; // shift all by 1
-   }
-   
-   //p->head = (p->head + 1)%Q_SIZE;
+   p->head = (p->head + 1)%Q_SIZE;
    return next;
 }
 
@@ -70,9 +63,9 @@ void EnQ(int to_add, q_t *p)
       return;
    }
 
-   p->q[p->size] = to_add; //add int to next queue slot
+   p->q[p->tail] = to_add;           //add int to next queue slot
    p->size++;
-   //p->tail = (p->tail + 1)%Q_SIZE;
+   p->tail = (p->tail + 1)%Q_SIZE;
    return;
 }
 

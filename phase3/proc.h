@@ -1,12 +1,12 @@
 // proc.h, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 2
+// Phase 3
 
 #ifndef __PROC__
 #define __PROC__
 
 void InitProc(void); 
 void UserProc(void);
-void CarProc(int car_sem);
+void CarProc(void);
 #endif

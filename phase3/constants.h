@@ -1,7 +1,7 @@
 // constants.h, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 2
+// Phase 3
 
 #ifndef __CONSTANTS__
 #define __CONSTANTS__
@@ -13,7 +13,7 @@
 #define PIC_CONTROL 0x20    // Programmable Interrupt Controller I/O
 #define DONE 0x60
 
-#define LOOP 166666          // slow: 1666666 times calling asm("inb $0x80");
+#define LOOP 166666          // fast: 166666 times calling asm("inb $0x80");
 #define TIME_MAX 350         // max timer count, then rotate process
 #define PROC_MAX 20          // max number of processes
 #define Q_SIZE 20            // queuing capacity
@@ -30,9 +30,9 @@
 #define END_POS ((unsigned short *)0xb8000+24*80)
 
 // Added for Phase 3
-#define SEM_MAX 20 	// kernel has 20 semaphores to dispatch
-#define SEMINIT 101 	// serivce # to req for semaphore
-#define SEMWAIT 102	// service # for sem-wat
-#define SEMPOST 103	// service # for sem-post
+#define SEM_MAX 20 	         // kernel has 20 semaphores to dispatch
+#define SEMINIT 101 	       // serivce # to req for semaphore
+#define SEMWAIT 102	         // service # for sem-wait
+#define SEMPOST 103	         // service # for sem-post
 
 #endif

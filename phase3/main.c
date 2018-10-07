@@ -1,5 +1,5 @@
 // main.c, 159
-// OS bootstrap and The Kernel for OS phase 2
+// OS bootstrap and The Kernel for OS phase 3
 //
 // Team Name: LIGMAOS (Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso)
 
@@ -25,17 +25,17 @@ void InitKernel(void) {             // init and set up kernel!
    int i;
    struct i386_gate *IVT_p;         // IVT's DRAM location
 
-   IVT_p   = get_idt_base();          // get IVT location
+   IVT_p   = get_idt_base();        // get IVT location
    fill_gate(&IVT_p[TIMER],(int)TimerEntry,get_cs(),ACC_INTR_GATE,0);                  // fill out IVT for timer
-   fill_gate(&IVT_p[SYSCALL],(int)SyscallEntry,get_cs(),ACC_INTR_GATE,0); //Fill out gate for SysCall
-   outportb(PIC_MASK,MASK);                   // mask out PIC for timer
+   fill_gate(&IVT_p[SYSCALL],(int)SyscallEntry,get_cs(),ACC_INTR_GATE,0);              //Fill out gate for SysCall
+   outportb(PIC_MASK,MASK);         // mask out PIC for timer
 
-   Bzero((char*)&ready_q,sizeof(q_t));                      // clear 2 queues
+   Bzero((char*)&ready_q,sizeof(q_t));          // clear 2 queues
    Bzero((char*)&avail_q,sizeof(q_t));
    Bzero((char*)&sem_q,sizeof(sem_t));
-   for(i=0;i<PROC_MAX;i++)                    // add all avail PID's to the queue
+   for(i=0;i<PROC_MAX;i++)                      // add all avail PID's to the queue
      EnQ(i, &avail_q);
-   for(i=0;i<SEM_MAX;i++)                    // add all avail PID's to the queue
+   for(i=0;i<SEM_MAX;i++)                       // add all avail PID's to the queue
      EnQ(i, &sem_q);
    cur_pid = -1;
    sys_ticks = 0;
@@ -43,16 +43,14 @@ void InitKernel(void) {             // init and set up kernel!
 }
 
 void Scheduler(void) 
-{             // choose a cur_pid to run
+{                                               // choose a cur_pid to run
    //if cur_pid is greater than 0, just return; // a user PID is already picked
    if(cur_pid > 0) return;
 
    //if ready_q is empty && cur_pid is 0, just return; // InitProc OK
-   //if(ready_q.size==0 && cur_pid==0) return; old version
    if(QisEmpty(&ready_q) && cur_pid == 0) return;
 
    //if ready_q is empty && cur_pid is -1 
-   //if(ready_q.size==0 && cur_pid==-1) old version
    if(QisEmpty(&ready_q) && cur_pid == -1)
    {
       cons_printf("Kernel panic: no process to run!\n");
@@ -61,24 +59,24 @@ void Scheduler(void)
    
    if(cur_pid!=-1) //of cur_pid not -1
    {
-     EnQ(cur_pid, &ready_q);       // 1. append cur_pid to ready_q aka suspend cur_pid
-     pcb[cur_pid].state = READY;  // 2. Change its state
+     EnQ(cur_pid, &ready_q);           // 1. append cur_pid to ready_q aka suspend cur_pid
+     pcb[cur_pid].state = READY;       // 2. Change its state
      //cur_pid = DeQ(&ready_q); 
    }
 
-   cur_pid = DeQ(&ready_q); // Pick user proc
-   pcb[cur_pid].time = 0;  //reset process time
-   pcb[cur_pid].state = RUN; //change its state
+   cur_pid = DeQ(&ready_q);      // Pick user proc
+   pcb[cur_pid].time = 0;        //reset process time
+   pcb[cur_pid].state = RUN;     //change its state
 }
 
 int main(void) {                       // OS bootstraps
    InitKernel(); //initialize the kernel-related stuff by calling ...
   
-   NewProcISR(InitProc);            // create InitProc
+   NewProcISR(InitProc);               // create InitProc
    Scheduler();
-   Loader(pcb[cur_pid].TF_p);         // load proc to run
+   Loader(pcb[cur_pid].TF_p);          // load proc to run
 
-   return 0; // statement never reached, compiler needs it for syntax
+   return 0;                           // statement never reached, compiler needs it for syntax
 }
 
 void TheKernel(TF_t *TF_p) {           // kernel runs
@@ -86,7 +84,7 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
 
    pcb[cur_pid].TF_p = TF_p; // save TF addr
 
-   //call Timer ISR;                     // handle tiemr event
+   //call Timer ISR;                   // handle tiemr event
    switch(TF_p->entry)
    {
       case TIMER:
@@ -116,19 +114,19 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
    }
 
    if (cons_kbhit()) 
-   {                  // if keyboard pressed
+   {                             // if keyboard pressed
       ch = cons_getchar();
       switch(ch)
       {
-         case 'b': // 'b' for breakpoint
+         case 'b':               // 'b' for breakpoint
             breakpoint(); break; // go into GDB
-         case 'n': // 'n' for NewProcISR
+         case 'n':               // 'n' for NewProcISR
             NewProcISR(UserProc); break;
-         case 'c': //'c' for carproc
+         case 'c':               //'c' for carproc
             NewProcISR(CarProc); break;
       }
    }
-   Scheduler(); // which may pick another proc
-   Loader(pcb[cur_pid].TF_p); // load proc to run! With TF_p of schedule process
+   Scheduler();                  // which may pick another proc
+   Loader(pcb[cur_pid].TF_p);    // load proc to run! With TF_p of schedule process
 }
 

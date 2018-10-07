@@ -1,14 +1,14 @@
 // entry.h
-// prototypes what're in entry.S
+// prototypes for what's in entry.S
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 2
+// Phase 3
 
 #ifndef __ENTRY__
 #define __ENTRY__
 
-#ifndef ASSEMBLER  // skip below if ASSEMBLER defined (from an assembly code)
-                   // since below is not in assembler syntax
+#ifndef ASSEMBLER                 // skip below if ASSEMBLER defined (from an assembly code)
+                                  // since below is not in assembler syntax
 __BEGIN_DECLS
 
 #include "types.h"                // TF_t
