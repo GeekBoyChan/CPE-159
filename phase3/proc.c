@@ -41,11 +41,11 @@ void UserProc(void)
 
    while(1) 
    {
-      SetVideo(my_pid+1,10);//call service to set video cursor to beginning of my row
+      SetVideo(my_pid+1,1);//call service to set video cursor to beginning of my row
       Write(STDOUT, str); //call service to write out my PID str
       Sleep(2); //call service to sleep for 2 seconds
 
-      SetVideo(my_pid+1,10); //call service to set video cursor to beginning of my row
+      SetVideo(my_pid+1,1); //call service to set video cursor to beginning of my row
       Write(STDOUT, "--"); //call service to erase my PID str (with "--")
       Sleep(2); //call service to sleep for 2 seconds
    }
