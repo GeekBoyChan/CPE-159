@@ -3,29 +3,29 @@
 
 // Team name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 2
+// Phase 3
 
 #include "constants.h"
 
-void Sleep(int sec) {     // # of seconds
-   asm("movl %0, %%eax;     // service #162 (SLEEP)
-        movl %1, %%ebx;     // sleep period in ticks
+void Sleep(int sec) {         // # of seconds
+   asm("movl %0, %%eax;       // service #162 (SLEEP)
+        movl %1, %%ebx;       // sleep period in ticks
         int $128"
        :
        : "g" (SLEEP), "g" (sec)
-       : "eax", "ebx"       // used registers
+       : "eax", "ebx"         // used registers
        );
 }
 
 int GetPid(void) {
    int pid;
 
-   asm("movl %1, %%eax;     // service #20 (GETPID)
-        int $128;           // interrupt!
-        movl %%ebx, %0"     // after, copy eax to variable 'pid'
-       : "=g" (pid)         // output
-       : "g" (GETPID)       // input
-       : "eax", "ebx"       // used registers
+   asm("movl %1, %%eax;       // service #20 (GETPID)
+        int $128;             // interrupt!
+        movl %%ebx, %0"       // after, copy eax to variable 'pid'
+       : "=g" (pid)           // output
+       : "g" (GETPID)         // input
+       : "eax", "ebx"         // used registers
     );
 
    return pid;
@@ -53,13 +53,13 @@ void Write(int device, char *str) {
 
 int SemInit(int passes) {
    int sem_id;
-   asm("movl %1, %%eax;  //serive#
-        movl %2, %%ebx;  // passes
+   asm("movl %1, %%eax;             //serive#
+        movl %2, %%ebx;             // passes
         int $128;
-        movl %%ecx, %0"  //sem_od
-        : "=g" (sem_id)  //output
+        movl %%ecx, %0"             //sem_od
+        : "=g" (sem_id)             //output
         : "g"(SEMINIT), "g"(passes)
-        : "eax", "ebx", "ecx");  //used registers
+        : "eax", "ebx", "ecx");     //used registers
    return sem_id;
 }
 
