@@ -52,6 +52,7 @@ void Write(int device, char *str) {
 }
 
 int SemInit(int passes) {
+   int sem_id;
    asm("movl %1, %%eax;  //serive#
         movl %2, %%ebx;  // passes
         int $128;
