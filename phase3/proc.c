@@ -66,7 +66,10 @@ void CarProc(int car_sem)
 		SetVideo(my_pid+1,10);
 		Write(STDOUT,"I'm off              ");
 		Sleep(2);
+		
 		SemWait(car_sem);
+		SetVideo(my_pid+1,1); //call service to set video cursor to beginning of my row
+    		Write(STDOUT, "--");
 		SetVideo(my_pid+1,10);
 		Write(STDOUT, "I'm on the bridge!");
 		Sleep(2);
