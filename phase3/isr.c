@@ -18,7 +18,7 @@ void NewProcISR(func_p_t p)
 {  // arg: where process code starts
 	int pid;
 
-	if(QisEmpty(p))
+	if(QisEmpty((char *)p))
 	{    // may occur if too many been created
 		cons_printf("Kernel panic: no more process!\n");
         	return;        // cannot continue, alternative: breakpoint();
@@ -148,7 +148,7 @@ void SemInitISR(void)
 		breakpoint();
 	}
 	passes = pcb[cur_pid].TF_p->ebx;
-	Bzero(&sem[sem_id], sizeof(sem_t));
+	Bzero((char *) &sem[sem_id], sizeof(sem_t));
 	sem[sem_id].passes = passes;
 	p =HOME_POS + 21 * 80;
 	*p = sem[sem_id].passes + '0' + VGA_MASK;
