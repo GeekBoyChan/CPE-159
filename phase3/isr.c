@@ -114,9 +114,10 @@ void WriteISR(void)
 			}
 			if((video_p - HOME_POS) % 80 == 0 ) //Clear if at start of line
 			{
-          		//Bzero((char *) video_p,  160); // Clear line with Bzero
-			for(i =0; i<80; i++)
+          		Bzero((char *) video_p,  160); // Clear line with Bzero
+			/*for(i =0; i<80; i++)
 				video_p[i] = ' ' + VGA_MASK;
+			*/
 			}
 			if(*str != '\n') //if end of string
 			{
