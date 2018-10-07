@@ -8,5 +8,5 @@
 
 void InitProc(void); 
 void UserProc(void);
-void CarProc(int car_sem);
+void CarProc(void);
 #endif
