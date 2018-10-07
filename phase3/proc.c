@@ -8,6 +8,7 @@
 
 #include "constants.h" // include only these 2 files
 #include "syscalls.h"
+#include "data.h"
 
 void InitProc(void) {
    int i;
