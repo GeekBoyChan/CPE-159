@@ -15,6 +15,9 @@ int cur_pid;                        // current running PID; if -1, none selected
 q_t ready_q, avail_q;               // avail PID and those created/ready to run
 pcb_t pcb[PROC_MAX];                // Process Control Blocks
 char stack[PROC_MAX][STACK_SIZE];   // process runtime stacks
+sem_t sem[SEM_MAX];  // kernel has these semaphores
+q_t sem_q;           // semaphore ID's are initially queued here
+int car_sem;         // to hold a semaphore ID for testing
 
 int sys_ticks;                      // OS time(timer ticks), starting at 0
 unsigned short *video_p;            //PC VGA video pointer, starting HOME_POS
@@ -99,19 +102,29 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
       case SLEEP:
         SleepISR();
         break;
+      case SEMINIT:
+         SemInitISR();
+         break;
+      case SEMWAIT:
+         SemWaitISR();
+         break;
+      case SEMPOST:
+         SemPostISR();
+         break;
    }
 
    if (cons_kbhit()) 
    {                  // if keyboard pressed
       ch = cons_getchar();
-      if (ch == 'b')
-      {                     // 'b' for breakpoint
-         //outportb(PIC_CONTROL,DONE);                        // go into GDB
-         breakpoint();
+      switch(ch)
+      {
+         case 'b': // 'b' for breakpoint
+            breakpoint(); break; // go into GDB
+         case 'n': // 'n' for NewProcISR
+            NewProcISR(UserProc); break;
+         case 'c': //'c' for carproc
+            NewProcISR(CarProc); break;
       }
-      if(ch=='n')                     // 'n' for new process
-         NewProcISR(UserProc); //NewProc ISR (with UserProc as argument)creates a UserProc
-  
    }
    Scheduler(); // which may pick another proc
    Loader(pcb[cur_pid].TF_p); // load proc to run! With TF_p of schedule process
