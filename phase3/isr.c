@@ -146,7 +146,7 @@ void SemInitISR(void)
 	passes = pcb[cur_pid].TF_p->ebx;
 	Bzero(&sem[sem_id], sizeof(sem_t));
 	sem[sem_id].passes = passes;
-	P =HOME_POS + 21 * 80;
+	p =HOME_POS + 21 * 80;
 	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
 }
 
