@@ -100,19 +100,22 @@ void SetVideoISR(void)
 void WriteISR(void)
 {
 	int device = pcb[cur_pid].TF_p->ebx;
-	char *str = pcb[cur_pid].TF_p->ecx;
+	char *str = (char *) pcb[cur_pid].TF_p->ecx;
 
 	if(device == STDOUT)
 	{
 		//for(i=0;i<sizeof(str)-1;i++) //Not sure about size_of
-		while(*str != '\0')
-    { 
-			if(video_p == END_POS-1)  // Reach end, return 
-				video_p = HOME_POS;
-			
-			if((video_p - HOME_POS) % 80 == 0 ) //Clear if at start of line
+		while(*str)
+    	{ 
+			if(video_p == END_POS) // Reach end, return
 			{
-          Bzero((char *) video_p,  160); // Clear line with Bzero
+				video_p = HOME_POS;
+			}
+			if(video_p % 80 == 0 ) //Clear if at start of line
+			{
+          		//Bzero((char *) video_p,  160); // Clear line with Bzero
+			for(int i =0; i<80; i++)
+				video_p[i] = ' ' + VGA_MASK;
 			}
 			if(*str != '\n') //if end of string
 			{
@@ -120,14 +123,14 @@ void WriteISR(void)
 				video_p++;
 			}
 						
-      else //move video_p to start of next line
+      			else //move video_p to start of next line
 			{
 				unsigned short colPos, rst;
-				colPos = (video_p - HOME_POS)%80; //find 'col pos' of current video_p
+				colPos = video_p%80; //find 'col pos' of current video_p
 				rst = 80 - colPos;		
 				video_p = video_p + rst;
 			}
-      str++;
+      			str++;
 			
 		}
 	}
@@ -140,7 +143,7 @@ void SemInitISR(void)
 	sem_id = DeQ(&sem_q);
 	if(sem_id == -1);
 	{
-		cons_prints(“no more sems”);
+		cons_print(“no more sems”);
 		breakpoint();
 	}
 	passes = pcb[cur_pid].TF_p->ebx;
@@ -153,7 +156,7 @@ void SemInitISR(void)
 void SemWaitISR(void)
 {
 	unsigned short *p;
-	int sem_id = pcb[cur_pid.TF_p->ebx;
+	int sem_id = pcb[cur_pid].TF_p->ebx;
 	if(sem[sem_id].passes > 0)
 	{
 		sem[sem_id].passes--;
@@ -161,7 +164,7 @@ void SemWaitISR(void)
 	else
 	{
 		EnQ(cur_pid, &sem[sem_id].wait_q);
-		pcd[cur_pid].state = WAIT;
+		pcb[cur_pid].state = WAIT;
 		cur_pid = -1;
 	}
 	p = HOME_POS + 21 * 80;
@@ -171,7 +174,8 @@ void SemWaitISR(void)
 void SemPostISR(void)
 {
 	unsigned short *p;
-	int pid, sem_id = pcb[cur_pid.TF_p->ebx;
+	int pid; 
+	int sem_id = pcb[cur_pid].TF_p->ebx;
 	if(QisEmpty(&sem[sem_id].wait_q))
 	{
 		sem[sem_id].passes++;
