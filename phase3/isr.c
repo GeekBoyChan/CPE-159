@@ -185,7 +185,7 @@ void SemPostISR(void)
 	else
 	{
 		pid = DeQ(&sem[sem_id].wait_q);
-		EnQ(cur_pid, &sem[sem_id].wait_q);
+		EnQ(pid, &ready_q);
 		pcb[cur_pid].state = READY;
 		
 	}
