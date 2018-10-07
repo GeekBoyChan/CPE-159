@@ -158,11 +158,11 @@ void SemWaitISR(void)
 	{
 		sem[sem_id].passes--;
 	}
-	Else
+	else
 	{
 		EnQ(cur_pid, &sem[sem_id].wait_q);
-		//Change state
-		//reset
+		pcd[cur_pid].state = WAIT;
+		cur_pid = -1;
 	}
 	p = HOME_POS + 21 * 80;
 	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
@@ -180,7 +180,7 @@ void SemPostISR(void)
 	{
 		pid = DeQ(&sem[sem_id].wait_q);
 		EnQ(cur_pid, &sem[sem_id].wait_q);
-		//change state
+		pcb[cur_pid].state = READY;
 		
 	}
 	p = HOME_POS + 21 * 80;
