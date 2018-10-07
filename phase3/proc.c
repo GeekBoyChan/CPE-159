@@ -61,7 +61,7 @@ void CarProc(int car_sem)
 	while(1)
 	{
 		SetVideo(my_pid+1,10);
-		Write(STDOUT,"I'm off");
+		Write(STDOUT,"I'm off              ");
 		Sleep(2);
 		SemWait(car_sem);
 		SetVideo(my_pid +1, 10);
