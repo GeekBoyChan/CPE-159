@@ -99,6 +99,7 @@ void SetVideoISR(void)
 
 void WriteISR(void)
 {
+	int i;
 	int device = pcb[cur_pid].TF_p->ebx;
 	char *str = (char *) pcb[cur_pid].TF_p->ecx;
 
@@ -111,10 +112,10 @@ void WriteISR(void)
 			{
 				video_p = HOME_POS;
 			}
-			if(video_p % 80 == 0 ) //Clear if at start of line
+			if((video_p) % 80 == 0 ) //Clear if at start of line
 			{
           		//Bzero((char *) video_p,  160); // Clear line with Bzero
-			for(int i =0; i<80; i++)
+			for(i =0; i<80; i++)
 				video_p[i] = ' ' + VGA_MASK;
 			}
 			if(*str != '\n') //if end of string
@@ -126,7 +127,7 @@ void WriteISR(void)
       			else //move video_p to start of next line
 			{
 				unsigned short colPos, rst;
-				colPos = video_p%80; //find 'col pos' of current video_p
+				colPos = (video_p)%80; //find 'col pos' of current video_p
 				rst = 80 - colPos;		
 				video_p = video_p + rst;
 			}
@@ -143,14 +144,14 @@ void SemInitISR(void)
 	sem_id = DeQ(&sem_q);
 	if(sem_id == -1);
 	{
-		cons_print(“no more sems”);
+		cons_printf(“no more sems”);
 		breakpoint();
 	}
 	passes = pcb[cur_pid].TF_p->ebx;
 	Bzero(&sem[sem_id], sizeof(sem_t));
 	sem[sem_id].passes = passes;
 	p =HOME_POS + 21 * 80;
-	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
 
 void SemWaitISR(void)
@@ -168,7 +169,7 @@ void SemWaitISR(void)
 		cur_pid = -1;
 	}
 	p = HOME_POS + 21 * 80;
-	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
 
 void SemPostISR(void)
@@ -188,5 +189,5 @@ void SemPostISR(void)
 		
 	}
 	p = HOME_POS + 21 * 80;
-	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
