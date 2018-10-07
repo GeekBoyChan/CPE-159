@@ -99,7 +99,7 @@ void SetVideoISR(void)
 
 void WriteISR(void)
 {
-	int i;
+	//int i;
 	int device = pcb[cur_pid].TF_p->ebx;
 	char *str = (char *) pcb[cur_pid].TF_p->ecx;
 
