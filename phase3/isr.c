@@ -144,7 +144,7 @@ void SemInitISR(void)
 	sem_id = DeQ(&sem_q);
 	if(sem_id == -1);
 	{
-		cons_printf(“no more sems”);
+		cons_printf("no more sems");
 		breakpoint();
 	}
 	passes = pcb[cur_pid].TF_p->ebx;
