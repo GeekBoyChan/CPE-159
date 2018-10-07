@@ -142,7 +142,7 @@ void SemInitISR(void)
 	unsigned short *p;
 	int sem_id, passes;
 	sem_id = DeQ(&sem_q);
-	if(sem_id == -1);
+	if(sem_id == -1)
 	{
 		cons_printf("no more sems");
 		breakpoint();
