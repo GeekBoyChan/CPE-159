@@ -2,18 +2,18 @@
 // SPEDE library headers, ~spede2/Target-i386/Common/include/spede
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 2
+// Phase 3
 
 #ifndef __INCLUDE__
 #define __INCLUDE__
 
-#include <spede/stdio.h> // printf(), sprintf(), vprintf(), sscanf(), etc.
-#include <spede/flames.h> // IO_DELAY(), breakpoint(), cons_putchar(), cons_getchar(), cons_kbhit(),
-#include <spede/sys/cdefs.h> // __BEGIN_DECLS, __END_DECLS, etc.
-#include <spede/machine/io.h> // inportb(), outportb(), inportw(), etc.
-#include <spede/machine/proc_reg.h> // get_idt_base(), get_cs(), set_cr3(), etc
-#include <spede/machine/seg.h> // struct i386_gate, fill_gate(), etc.
-#include <spede/machine/asmacros.h> // ASM(), CNAME(), ENTRY(), etc.
+#include <spede/stdio.h>              // printf(), sprintf(), vprintf(), sscanf(), etc.
+#include <spede/flames.h>             // IO_DELAY(), breakpoint(), cons_putchar(), cons_getchar(), cons_kbhit(),
+#include <spede/sys/cdefs.h>          // __BEGIN_DECLS, __END_DECLS, etc.
+#include <spede/machine/io.h>         // inportb(), outportb(), inportw(), etc.
+#include <spede/machine/proc_reg.h>   // get_idt_base(), get_cs(), set_cr3(), etc
+#include <spede/machine/seg.h>        // struct i386_gate, fill_gate(), etc.
+#include <spede/machine/asmacros.h>   // ASM(), CNAME(), ENTRY(), etc.
 
 //#include <spede/machine/rs232.h>    // for terminals, IRQ3 constants
 
