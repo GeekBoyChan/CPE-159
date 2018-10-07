@@ -99,20 +99,24 @@ void SetVideoISR(void)
 
 void WriteISR(void)
 {
+	int i;
 	int device = pcb[cur_pid].TF_p->ebx;
-	char *str = pcb[cur_pid].TF_p->ecx;
+	char *str = (char *) pcb[cur_pid].TF_p->ecx;
 
 	if(device == STDOUT)
 	{
 		//for(i=0;i<sizeof(str)-1;i++) //Not sure about size_of
-		while(*str != '\0')
-    { 
-			if(video_p == END_POS-1)  // Reach end, return 
+		while(*str)
+    	{ 
+			if(video_p == END_POS) // Reach end, return
+			{
 				video_p = HOME_POS;
-			
+			}
 			if((video_p - HOME_POS) % 80 == 0 ) //Clear if at start of line
 			{
-          Bzero((char *) video_p,  160); // Clear line with Bzero
+          		//Bzero((char *) video_p,  160); // Clear line with Bzero
+			for(i =0; i<80; i++)
+				video_p[i] = ' ' + VGA_MASK;
 			}
 			if(*str != '\n') //if end of string
 			{
@@ -120,14 +124,14 @@ void WriteISR(void)
 				video_p++;
 			}
 						
-      else //move video_p to start of next line
+      			else //move video_p to start of next line
 			{
 				unsigned short colPos, rst;
 				colPos = (video_p - HOME_POS)%80; //find 'col pos' of current video_p
 				rst = 80 - colPos;		
 				video_p = video_p + rst;
 			}
-      str++;
+      			str++;
 			
 		}
 	}
@@ -140,20 +144,20 @@ void SemInitISR(void)
 	sem_id = DeQ(&sem_q);
 	if(sem_id == -1);
 	{
-		cons_prints(“no more sems”);
+		cons_printf("no more sems");
 		breakpoint();
 	}
 	passes = pcb[cur_pid].TF_p->ebx;
 	Bzero(&sem[sem_id], sizeof(sem_t));
 	sem[sem_id].passes = passes;
 	p =HOME_POS + 21 * 80;
-	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
 
 void SemWaitISR(void)
 {
 	unsigned short *p;
-	int sem_id = pcb[cur_pid.TF_p->ebx;
+	int sem_id = pcb[cur_pid].TF_p->ebx;
 	if(sem[sem_id].passes > 0)
 	{
 		sem[sem_id].passes--;
@@ -161,17 +165,18 @@ void SemWaitISR(void)
 	else
 	{
 		EnQ(cur_pid, &sem[sem_id].wait_q);
-		pcd[cur_pid].state = WAIT;
+		pcb[cur_pid].state = WAIT;
 		cur_pid = -1;
 	}
 	p = HOME_POS + 21 * 80;
-	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
 
 void SemPostISR(void)
 {
 	unsigned short *p;
-	int pid, sem_id = pcb[cur_pid.TF_p->ebx;
+	int pid; 
+	int sem_id = pcb[cur_pid].TF_p->ebx;
 	if(QisEmpty(&sem[sem_id].wait_q))
 	{
 		sem[sem_id].passes++;
@@ -184,5 +189,5 @@ void SemPostISR(void)
 		
 	}
 	p = HOME_POS + 21 * 80;
-	*p = sem[sem_id].passes + ‘0’ + VGA_MASK;
+	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }

@@ -52,10 +52,11 @@ void Write(int device, char *str) {
 }
 
 int SemInit(int passes) {
+   int sem_id;
    asm("movl %1, %%eax;  //serive#
         movl %2, %%ebx;  // passes
-       int $128"
-        movl %%ecx, %0;  //sem_od
+        int $128;
+        movl %%ecx, %0"  //sem_od
         : "=g" (sem_id)  //output
         : "g"(SEMINIT), "g"(passes)
         : "eax", "ebx", "ecx");  //used registers

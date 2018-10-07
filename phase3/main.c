@@ -15,12 +15,11 @@ int cur_pid;                        // current running PID; if -1, none selected
 q_t ready_q, avail_q;               // avail PID and those created/ready to run
 pcb_t pcb[PROC_MAX];                // Process Control Blocks
 char stack[PROC_MAX][STACK_SIZE];   // process runtime stacks
-sem_t sem[SEM_MAX];  // kernel has these semaphores
-q_t sem_q;           // semaphore ID's are initially queued here
-int car_sem;         // to hold a semaphore ID for testing
-
 int sys_ticks;                      // OS time(timer ticks), starting at 0
 unsigned short *video_p;            //PC VGA video pointer, starting HOME_POS
+sem_t sem[SEM_MAX];                 // kernel has these semaphores
+q_t sem_q;                          // semaphore ID's are initially queued here
+int car_sem;                        // to hold a semaphore ID for testing
 
 void InitKernel(void) {             // init and set up kernel!
    int i;
