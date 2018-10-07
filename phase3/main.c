@@ -32,8 +32,11 @@ void InitKernel(void) {             // init and set up kernel!
 
    Bzero((char*)&ready_q,sizeof(q_t));                      // clear 2 queues
    Bzero((char*)&avail_q,sizeof(q_t));
+   Bzero((char*)&sem_q,sizeof(sem_t));
    for(i=0;i<PROC_MAX;i++)                    // add all avail PID's to the queue
      EnQ(i, &avail_q);
+   for(i=0;i<SEM_MAX;i++)                    // add all avail PID's to the queue
+     EnQ(i, &sem_q);
    cur_pid = -1;
    sys_ticks = 0;
    video_p = HOME_POS;
