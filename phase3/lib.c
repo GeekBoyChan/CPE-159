@@ -41,7 +41,7 @@ int QisFull(q_t *p)
 // if queue empty, return -1
 int DeQ(q_t *p) 
 { // return -1 if q[] is empty
-   int i;
+   //int i;
    int next;
 
    if(QisEmpty(p))
@@ -49,7 +49,7 @@ int DeQ(q_t *p)
       return -1;
    }
 
-   next = p->q[head]; // copy first in queue to be returned later
+   next = p->q[p->head]; // copy first in queue to be returned later
    p->size--;
    /*
    for(i = 0; i<p->size; i++) //decrease size of queue
