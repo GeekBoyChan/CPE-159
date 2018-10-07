@@ -49,15 +49,15 @@ int DeQ(q_t *p)
       return -1;
    }
 
-   next = p->q[0]; // copy first in queue to be returned later
+   next = p->q[head]; // copy first in queue to be returned later
    p->size--;
-
+   /*
    for(i = 0; i<p->size; i++) //decrease size of queue
    {
      p->q[i]=p->q[i+1]; // shift all by 1
    }
-   
-   //p->head = (p->head + 1)%Q_SIZE;
+   */
+   p->head = (p->head + 1)%Q_SIZE;
    return next;
 }
 
@@ -70,9 +70,9 @@ void EnQ(int to_add, q_t *p)
       return;
    }
 
-   p->q[p->size] = to_add; //add int to next queue slot
+   p->q[p->tail] = to_add; //add int to next queue slot
    p->size++;
-   //p->tail = (p->tail + 1)%Q_SIZE;
+   p->tail = (p->tail + 1)%Q_SIZE;
    return;
 }
 
