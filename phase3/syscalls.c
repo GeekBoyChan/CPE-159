@@ -60,6 +60,7 @@ int SemInit(int passes) {
         : "=g" (sem_id)  //output
         : "g"(SEMINIT), "g"(passes)
         : "eax", "ebx", "ecx");  //used registers
+   return sem_id;
 }
 
 void SemWait(int sem_id) {
