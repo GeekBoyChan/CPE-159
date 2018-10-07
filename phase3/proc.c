@@ -61,11 +61,13 @@ void CarProc(int car_sem)
 
 	while(1)
 	{
+		SetVideo(my_pid+1,1);
+		Write(STDOUT, str); //call service to write out my PID str
 		SetVideo(my_pid+1,10);
 		Write(STDOUT,"I'm off              ");
 		Sleep(2);
 		SemWait(car_sem);
-		SetVideo(my_pid +1, 10);
+		SetVideo(my_pid+1,10);
 		Write(STDOUT, "I'm on the bridge!");
 		Sleep(2);
 		SemPost(car_sem);
