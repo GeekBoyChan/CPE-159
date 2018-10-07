@@ -112,7 +112,7 @@ void WriteISR(void)
 			{
 				video_p = HOME_POS;
 			}
-			if((video_p) % 80 == 0 ) //Clear if at start of line
+			if((video_p - HOME_POS) % 80 == 0 ) //Clear if at start of line
 			{
           		//Bzero((char *) video_p,  160); // Clear line with Bzero
 			for(i =0; i<80; i++)
@@ -127,7 +127,7 @@ void WriteISR(void)
       			else //move video_p to start of next line
 			{
 				unsigned short colPos, rst;
-				colPos = (video_p)%80; //find 'col pos' of current video_p
+				colPos = (video_p - HOME_POS)%80; //find 'col pos' of current video_p
 				rst = 80 - colPos;		
 				video_p = video_p + rst;
 			}
