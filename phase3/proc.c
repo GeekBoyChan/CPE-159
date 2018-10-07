@@ -12,7 +12,7 @@
 
 void InitProc(void) {
    int i;
-   int car_sem = SemInit(3);
+   car_sem = SemInit(3);
 
    while(1) {
       SetVideo(1, 1);         // pos video
@@ -51,7 +51,7 @@ void UserProc(void)
    }
 }
 
-void CarProc(int car_sem)
+void CarProc(void)
 {
 	int my_pid = GetPid();
 	char str[3];
