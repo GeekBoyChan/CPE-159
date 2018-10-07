@@ -31,8 +31,8 @@ void InitKernel(void) {             // init and set up kernel!
    fill_gate(&IVT_p[SYSCALL],(int)SyscallEntry,get_cs(),ACC_INTR_GATE,0); //Fill out gate for SysCall
    outportb(PIC_MASK,MASK);                   // mask out PIC for timer
 
-   Bzero((char*)&ready_q,ready_q.size);                      // clear 2 queues
-   Bzero((char*)&avail_q,avail_q.size);
+   Bzero((char*)&ready_q,sizeof(q_t));                      // clear 2 queues
+   Bzero((char*)&avail_q,sizeof(q_t));
    for(i=0;i<PROC_MAX;i++)                    // add all avail PID's to the queue
      EnQ(i, &avail_q);
    cur_pid = -1;
