@@ -124,6 +124,8 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
             NewProcISR(UserProc); break;
          case 'c':               //'c' for carproc
             NewProcISR(CarProc); break;
+         case 't':
+            NewProcISR(TermProc); break;  //'t' for TermProc
       }
    }
    Scheduler();                  // which may pick another proc
