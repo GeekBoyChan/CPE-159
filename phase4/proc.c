@@ -87,14 +87,15 @@ void TermProc(void)
     	str[1] = '0' + my_pid%10; 	//print the second digit of mypid
     	str[2] = '\0';
 	
-	device = pcb[my_pid].TF_p->ebx // Probably wrong
+	device = my_pid % 2; // if 0 TERM0, if 1 TERM1
 	
 	int i = 0;
 	while(1)
 	{
-		if(i == 4) //Every 5 lines write() to my device some special symbols
+		if(i == 5) //Every 5 lines write() to my device some special symbols
 		{
 			i = 0;
+			SetVideo(my_pid+1,10);
 			Write(device,"----->");
 		}
 		else
@@ -102,7 +103,7 @@ void TermProc(void)
 			i++;
 		}
 		Write(device, str); 	//Write 'str' to my device
-		SetVideo(my_pid+1,10); // ??
+		SetVideo(my_pid+1,10); 	// ??
 		Write(device,"A lengthier message to my device to show that it works");
 		Sleep(3);
 		
