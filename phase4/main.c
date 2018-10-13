@@ -20,15 +20,19 @@ unsigned short *video_p;            //PC VGA video pointer, starting HOME_POS
 sem_t sem[SEM_MAX];                 // kernel has these semaphores
 q_t sem_q;                          // semaphore ID's are initially queued here
 int car_sem;                        // to hold a semaphore ID for testing
+term_if_t term[TERM_MAX]
 
 void InitKernel(void) {             // init and set up kernel!
    int i;
    struct i386_gate *IVT_p;         // IVT's DRAM location
 
    IVT_p   = get_idt_base();        // get IVT location
-   fill_gate(&IVT_p[TIMER],(int)TimerEntry,get_cs(),ACC_INTR_GATE,0);                  // fill out IVT for timer
-   fill_gate(&IVT_p[SYSCALL],(int)SyscallEntry,get_cs(),ACC_INTR_GATE,0);              //Fill out gate for SysCall
-   outportb(PIC_MASK,MASK);         // mask out PIC for timer
+   fill_gate(&IVT_p[TIMER],(int)TimerEntry,get_cs(),ACC_INTR_GATE,0);         // fill out IVT for timer
+   fill_gate(&IVT_p[SYSCALL],(int)SyscallEntry,get_cs(),ACC_INTR_GATE,0);     //Fill out gate for SysCall
+      
+   fill_gate(&IVT_p[TERM0],(int)Term0Entry,get_cs(),ACC_INTR_GATE,0);         //Fill out gate for IVT Entry # Term0
+   fill_gate(&IVT_p[TERM1],(int)Term1Entry,get_cs(),ACC_INTR_GATE,0);         //Fill out IVT Entry # TERM1
+   outportb(PIC_MASK,MASK);         // mask out PIC
 
    Bzero((char*)&ready_q,sizeof(q_t));          // clear 2 queues
    Bzero((char*)&avail_q,sizeof(q_t));
