@@ -184,3 +184,21 @@ void SemPostISR(void)
 	p = HOME_POS + 21 * 80;
 	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
+
+void TermTxISR()
+{
+	if(QisEmpty(tx_wait_q))
+	{
+		return;
+	}
+	if(*tx_p != '\0')
+	{
+		outportb(term_if["something goes here"].io, );
+		tx_p++;
+		return;
+	}
+	if(*tx_p == '\0')
+	{
+		//Release waiting proc from tx_wait_q
+	}
+}
