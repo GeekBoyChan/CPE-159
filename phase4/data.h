@@ -20,5 +20,5 @@ extern unsigned short *video_p;           // PC VGA video pointer
 extern sem_t sem[SEM_MAX];                // kernel has these semaphores
 extern q_t sem_q;                         // semaphore ID's are initially queued here
 extern int car_sem;                       // to hold a semaphore ID for testing
-
+extern term_if_t term_if[TERM_MAX];       // Terminal interface
 #endif                                    // endif of ifndef
