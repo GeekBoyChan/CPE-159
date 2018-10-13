@@ -20,7 +20,7 @@ unsigned short *video_p;            //PC VGA video pointer, starting HOME_POS
 sem_t sem[SEM_MAX];                 // kernel has these semaphores
 q_t sem_q;                          // semaphore ID's are initially queued here
 int car_sem;                        // to hold a semaphore ID for testing
-term_if_t term[TERM_MAX]
+term_if_t term_if[TERM_MAX]         // Terminal interface
 
 void InitKernel(void) {             // init and set up kernel!
    int i;
