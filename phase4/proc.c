@@ -90,7 +90,7 @@ void TermProc(void)
 	str[2] = ':';
     	str[3] = '\0';
 	
-	device = my_pid % 2; // if 0 TERM0, if 1 TERM1
+	device = my_pid % 2; 		// if 0 TERM0, if 1 TERM1
 	if (device == 0)
 		device = TERM0;
 	if (device == 1)
@@ -100,7 +100,7 @@ void TermProc(void)
 	
 	while(1)
 	{
-		if(i == 5) //Every 5 lines write() to my device some special symbols
+		if(i == 5) 			//Every 5 lines write() to my device some special symbols
 		{
 			i = 0;
 			SetVideo(my_pid+1,10);
