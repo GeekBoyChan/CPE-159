@@ -79,17 +79,19 @@ void CarProc(void)
 
 void TermProc(void)
 {
-	int my_pid, device;
+	int my_pid, device, i;
+	char str[3];
+	i = 0;
 	
 	my_pid = GetPid();
-	char str[3];
+
     	str[0] = '0' + my_pid/10; 	//print the first digit of mypid
     	str[1] = '0' + my_pid%10; 	//print the second digit of mypid
     	str[2] = '\0';
 	
 	device = my_pid % 2; // if 0 TERM0, if 1 TERM1
 	
-	int i = 0;
+	
 	while(1)
 	{
 		if(i == 5) //Every 5 lines write() to my device some special symbols
