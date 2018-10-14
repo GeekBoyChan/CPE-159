@@ -115,10 +115,10 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
          SemPostISR();
          break;
       case TERM0:
-         TermISR();
+         TermISR(0);
          break;
       case TERM1:
-         TermISR();
+         TermISR(1);
          break;
    }
 
