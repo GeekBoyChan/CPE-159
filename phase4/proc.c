@@ -96,9 +96,6 @@ void TermProc(void)
 	if (device == 1)
 		device = TERM1;
 	
-	SetVideo(my_pid+1,10);
-	Write(device,"----->\n\r");
-	Sleep(3);
 	
 	while(1)
 	{
@@ -109,14 +106,16 @@ void TermProc(void)
 			Write(device,"----->\n\r");
 			Sleep(3);
 		}
-		else
+		if (i != 5)
 		{
+			Write(device, str); 	//Write 'str' to my device
+			SetVideo(my_pid+1,10); 	// ??
+			Write(device," A lengthier message to my device to show that it works\n\r");
 			i++;
+			Sleep(3);
+			
 		}
-		Write(device, str); 	//Write 'str' to my device
-		SetVideo(my_pid+1,10); 	// ??
-		Write(device," A lengthier message to my device to show that it works\n\r");
-		Sleep(3);
+		
 		
 	}
 }
