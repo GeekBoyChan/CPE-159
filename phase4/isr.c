@@ -119,7 +119,7 @@ void WriteISR(void)
 		{
 			outportb(term_if[1].io, *str);
 			
-			term_if[1].tx_p- = &str[1];
+			term_if[1].tx_p = &str[1];
 			
 			EnQ(cur_pid, &term_if[1].tx_wait_q);
 			pcb[cur_pid].state = WAIT;
