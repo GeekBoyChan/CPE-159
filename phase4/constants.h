@@ -6,7 +6,7 @@
 #ifndef __CONSTANTS__
 #define __CONSTANTS__
 
-#define VGA_MASK 0x0f00     // foreground bright white, background black
+//#define VGA_MASK 0x0f00     // foreground bright white, background black
 #define TIMER 32            // TIMER constant identifier
 #define PIC_MASK 0x21       // Programmable Interrupt Controller I/O
 #define MASK ~0x01          // mask for Programmable Interrupt Controller
