@@ -119,7 +119,7 @@ void WriteISR(void)
 						
       			else                                      //move video_p to start of next line
 			{
-				unsigned short colPos, rst;
+				int colPos, rst;
 				colPos = (video_p - HOME_POS)%80; //find 'col pos' of current video_p
 				rst = 80 - colPos;		
 				video_p = video_p + rst;
@@ -185,7 +185,20 @@ void SemPostISR(void)
 	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
 
-void TermTxISR()
+void TermISR(int index)
+{
+	if(inportb(term_if[index].io + IIR) == IIR_TXRDY)
+	{
+		TermTxISr(index);
+	}
+	else if(inportb(term_if[index].io + IIR) == IIR_RXRDY)
+	{
+		cons_printf("*"\n);
+	}
+	outportb(PIC_CONTROL, term_if.done);
+	
+}
+void TermTxISR(int index)
 {
 	if(QisEmpty(tx_wait_q))
 	{
@@ -193,12 +206,15 @@ void TermTxISR()
 	}
 	if(*tx_p != '\0')
 	{
-		outportb(term_if["something goes here"].io, );
+		outportb(term_if[index].io, *tx_p);
 		tx_p++;
 		return;
 	}
 	if(*tx_p == '\0')
 	{
-		//Release waiting proc from tx_wait_q
+		//Release waiting proc from tx_wait_q (3 steps)
+		pid = DeQ(&term_if[index].tx_wait_q);
+		EnQ(pid, &ready_q);
+		pcb[cur_pid].state = READY;
 	}
 }
