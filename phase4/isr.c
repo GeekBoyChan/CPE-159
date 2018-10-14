@@ -109,7 +109,7 @@ void WriteISR(void)
 			//set first character to 'io'
 			outportb(term_if[0].io, *str);
 			//set tx_p to second character in 'str'
-			term_if[0].tx_p->&str[1];
+			term_if[0].tx_p->str[1];
 			//block cur_pid to the tx_wait_q
 			EnQ(cur_pid, &term_if[0].tx_wait_q);
 			pcb[cur_pid].state = WAIT;
@@ -119,7 +119,7 @@ void WriteISR(void)
 		{
 			outportb(term_if[1].io, *str);
 			
-			term_if[1].tx_p->&str[1];
+			term_if[1].tx_p->str[1];
 			
 			EnQ(cur_pid, &term_if[1].tx_wait_q);
 			pcb[cur_pid].state = WAIT;
@@ -242,7 +242,7 @@ void TermTxISR(int index)
 	}
 	if(term_if[index].tx_p != '\0')
 	{
-		outportb(term_if[index].io, &term_if[index].tx_p);
+		outportb(term_if[index].io, *term_if[index].tx_p);
 		term_if[index].tx_p++;
 		return;
 	}
