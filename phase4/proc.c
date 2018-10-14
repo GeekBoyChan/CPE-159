@@ -90,6 +90,10 @@ void TermProc(void)
     	str[2] = '\0';
 	
 	device = my_pid % 2; // if 0 TERM0, if 1 TERM1
+	if (device == 0)
+		device = TERM0;
+	if (device == 1)
+		device = TERM1;
 	
 	
 	while(1)
