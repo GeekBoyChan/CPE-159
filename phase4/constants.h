@@ -6,10 +6,10 @@
 #ifndef __CONSTANTS__
 #define __CONSTANTS__
 
-//#define VGA_MASK 0x0f00     // foreground bright white, background black
+#define VGA_MASK 0x0f00     // foreground bright white, background black
 #define TIMER 32            // TIMER constant identifier
 #define PIC_MASK 0x21       // Programmable Interrupt Controller I/O
-#define MASK ~0x01          // mask for Programmable Interrupt Controller
+//#define MASK ~0x01          // mask for Programmable Interrupt Controller
 #define PIC_CONTROL 0x20    // Programmable Interrupt Controller I/O
 #define DONE 0x60
 
@@ -36,7 +36,7 @@
 #define SEMPOST 103	         // service # for sem-post
 
 //Added for phase 4
-#define MASK 0x19          // new mask for Programmable Interrupt Controller
+#define MASK ~0x19          // new mask for Programmable Interrupt Controller
 #define TERM_MAX 2          // there're two terminal ports
 #define TERM0 35            // TERM0
 #define TERM1 36            // TERM1
