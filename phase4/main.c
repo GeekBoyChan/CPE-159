@@ -34,7 +34,7 @@ void InitKernel(void) {             // init and set up kernel!
    fill_gate(&IVT_p[TERM1],(int)Term1Entry,get_cs(),ACC_INTR_GATE,0);         // Fill out IVT Entry # TERM1
    outportb(PIC_MASK,MASK);         // mask out PIC
 
-   Bzero((char*)&ready_q,sizeof(q_t));          // clear 2 queues
+   Bzero((char*)&ready_q,sizeof(q_t));          // clear queues
    Bzero((char*)&avail_q,sizeof(q_t));
    Bzero((char*)&sem_q,sizeof(sem_t));
    for(i=0;i<PROC_MAX;i++)                      // add all avail PID's to the queue
@@ -44,6 +44,9 @@ void InitKernel(void) {             // init and set up kernel!
    cur_pid = -1;
    sys_ticks = 0;
    video_p = HOME_POS;
+   
+   TermInit(0);                     // Initialize terminal 0
+   TermInit(1);                     // Initialize terminal 1
 }
 
 void Scheduler(void) 
@@ -141,3 +144,29 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
    Loader(pcb[cur_pid].TF_p);    // load proc to run! With TF_p of schedule process
 }
 
+void TermInit(int which);
+{
+   // Clear terminal interface
+   if(which == 0)
+   {
+      term_if[which].io = TERM0_IO;
+      term_if[which].done = TERM0_DONE;
+   }
+   else
+   {
+      term_if[which].io = TERM1_IO;
+      term_if[which].done = TERM0_DONE;
+   }
+   
+   outportb(term_if[which].io+CFCR, CFCR_DLAB);             // CFCR_DLAB is 0x80
+   outportb(term_if[which].io+BAUDLO, LOBYTE(115200/9600)); // period of each of 9600 bauds  
+   outportb(term_if[which].io+BAUDHI, HIBYTE(115200/9600));
+   outportb(term_if[which].io+CFCR, CFCR_PEVEN|CFCR_PENAB|CFCR_7BITS);
+   outportb(term_if[which].io+IER, 0);
+   outportb(term_if[which].io+MCR, MCR_DTR|MCR_RTS|MCR_IENABLE);
+   for(i=0; i<LOOP/2; i++)asm("inb $0x80");
+      outportb(term_if[which].io+IER, IER_ERXRDY|IER_ETXRDY);  // enable TX & RX intr
+   for(i=0; i<LOOP/2; i++)asm("inb $0x80");
+      inportb(term_if[which].io); // clear key entered at PROCOMM screen
+   
+}
