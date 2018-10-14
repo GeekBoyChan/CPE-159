@@ -36,7 +36,7 @@
 #define SEMPOST 103	         // service # for sem-post
 
 //Added for phase 4
-#define MASK ~0x19          // new mask for Programmable Interrupt Controller
+#define MASK 0x19          // new mask for Programmable Interrupt Controller
 #define TERM_MAX 2          // there're two terminal ports
 #define TERM0 35            // TERM0
 #define TERM1 36            // TERM1
