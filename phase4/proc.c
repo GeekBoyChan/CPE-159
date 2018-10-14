@@ -109,7 +109,7 @@ void TermProc(void)
 		if (i != 5)
 		{
 			Write(device, str); 	//Write 'str' to my device
-			SetVideo(my_pid+1,10); 	// ??
+			SetVideo(my_pid+1,10); 	
 			Write(device," A lengthier message to my device to show that it works\n\r");
 			i++;
 			Sleep(3);
