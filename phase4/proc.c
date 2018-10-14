@@ -102,7 +102,7 @@ void TermProc(void)
 		{
 			i = 0;
 			SetVideo(my_pid+1,10);
-			Write(device,"----->");
+			Write(device,"----->/n/r");
 			Sleep(3);
 		}
 		else
