@@ -98,7 +98,35 @@ void WriteISR(void)
 	//int i;
 	int device = pcb[cur_pid].TF_p->ebx;
 	char *str = (char *) pcb[cur_pid].TF_p->ecx;
-
+	if(QisEmpty(*str))
+	{
+		return;
+	}
+	if(device == TERM0 || device == TERM1)
+	{
+		if(device == TERM0)
+		{
+			//set first character to 'io'
+			outportb(term_if[0], *str);
+			//set tx_p to second character in 'str'
+			outportb(str[1], *tx_p);
+			//block cur_pid to the tx_wait_q
+			EnQ(cur_pid, &term_if[0].tx_wait_q);
+			pcb[cur_pid].state = WAIT;
+			cur_pid = -1;
+		}
+		if(device == TERM1)
+		{
+			outportb(term_if[1], *str);
+			
+			outportb(str[1], *tx_p);
+			
+			EnQ(cur_pid, &term_if[1].tx_wait_q);
+			pcb[cur_pid].state = WAIT;
+			cur_pid = -1;
+		}
+	
+	}
 	if(device == STDOUT)
 	{
 		while(*str != '\0')
@@ -189,7 +217,7 @@ void TermISR(int index)
 {
 	if(inportb(term_if[index].io + IIR) == IIR_TXRDY)
 	{
-		TermTxISr(index);
+		TermTxISR(index);
 	}
 	else if(inportb(term_if[index].io + IIR) == IIR_RXRDY)
 	{
