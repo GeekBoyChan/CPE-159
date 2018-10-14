@@ -102,9 +102,9 @@ void WriteISR(void)
 	{
 		return;
 	}
-	if(device == 0 || device == 1)
+	if(device == TERM0 || device == TERM1)
 	{
-		if(device == 0)
+		if(device == TERM0)
 		{
 			//set first character to 'io'
 			outportb(term_if[0].io, *str);
@@ -115,7 +115,7 @@ void WriteISR(void)
 			pcb[cur_pid].state = WAIT;
 			cur_pid = -1;
 		}
-		if(device == 1)
+		if(device == TERM1)
 		{
 			outportb(term_if[1].io, *str);
 			
