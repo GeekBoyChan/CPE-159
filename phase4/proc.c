@@ -111,7 +111,7 @@ void TermProc(void)
 		}
 		Write(device, str); 	//Write 'str' to my device
 		SetVideo(my_pid+1,10); 	// ??
-		Write(device,"A lengthier message to my device to show that it works");
+		Write(device,"A lengthier message to my device to show that it works\n\r");
 		Sleep(3);
 		
 	}
