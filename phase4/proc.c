@@ -81,7 +81,7 @@ void TermProc(void)
 {
 	int my_pid, device, i;
 	char str[3];
-	i = 0;
+	i = 5;
 	
 	my_pid = GetPid();
 
@@ -112,7 +112,7 @@ void TermProc(void)
 		}
 		Write(device, str); 	//Write 'str' to my device
 		SetVideo(my_pid+1,10); 	// ??
-		Write(device,"A lengthier message to my device to show that it works\n\r");
+		Write(device," A lengthier message to my device to show that it works\n\r");
 		Sleep(3);
 		
 	}
