@@ -16,7 +16,7 @@ q_t ready_q, avail_q;               // avail PID and those created/ready to run
 pcb_t pcb[PROC_MAX];                // Process Control Blocks
 char stack[PROC_MAX][STACK_SIZE];   // process runtime stacks
 int sys_ticks;                      // OS time(timer ticks), starting at 0
-unsigned short *video_p;            //PC VGA video pointer, starting HOME_POS
+unsigned short *video_p;            // PC VGA video pointer, starting HOME_POS
 sem_t sem[SEM_MAX];                 // kernel has these semaphores
 q_t sem_q;                          // semaphore ID's are initially queued here
 int car_sem;                        // to hold a semaphore ID for testing
@@ -27,11 +27,11 @@ void InitKernel(void) {             // init and set up kernel!
    struct i386_gate *IVT_p;         // IVT's DRAM location
 
    IVT_p   = get_idt_base();        // get IVT location
-   fill_gate(&IVT_p[TIMER],(int)TimerEntry,get_cs(),ACC_INTR_GATE,0);         // fill out IVT for timer
-   fill_gate(&IVT_p[SYSCALL],(int)SyscallEntry,get_cs(),ACC_INTR_GATE,0);     //Fill out gate for SysCall
+   fill_gate(&IVT_p[TIMER],(int)TimerEntry,get_cs(),ACC_INTR_GATE,0);         // Fill out IVT for timer
+   fill_gate(&IVT_p[SYSCALL],(int)SyscallEntry,get_cs(),ACC_INTR_GATE,0);     // Fill out gate for SysCall
       
-   fill_gate(&IVT_p[TERM0],(int)Term0Entry,get_cs(),ACC_INTR_GATE,0);         //Fill out gate for IVT Entry # Term0
-   fill_gate(&IVT_p[TERM1],(int)Term1Entry,get_cs(),ACC_INTR_GATE,0);         //Fill out IVT Entry # TERM1
+   fill_gate(&IVT_p[TERM0],(int)Term0Entry,get_cs(),ACC_INTR_GATE,0);         // Fill out gate for IVT Entry # Term0
+   fill_gate(&IVT_p[TERM1],(int)Term1Entry,get_cs(),ACC_INTR_GATE,0);         // Fill out IVT Entry # TERM1
    outportb(PIC_MASK,MASK);         // mask out PIC
 
    Bzero((char*)&ready_q,sizeof(q_t));          // clear 2 queues
@@ -86,10 +86,9 @@ int main(void) {                       // OS bootstraps
 void TheKernel(TF_t *TF_p) {           // kernel runs
    char ch;
 
-   pcb[cur_pid].TF_p = TF_p; // save TF addr
+   pcb[cur_pid].TF_p = TF_p;           // save TF addr
 
-   //call Timer ISR;                   // handle tiemr event
-   switch(TF_p->entry)
+   switch(TF_p->entry)                 //call Designated ISR
    {
       case TIMER:
         TimerISR();
@@ -114,6 +113,12 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
          break;
       case SEMPOST:
          SemPostISR();
+         break;
+      case TERM0:
+         TermISR();
+         break;
+      case TERM1:
+         TermISR();
          break;
    }
 
