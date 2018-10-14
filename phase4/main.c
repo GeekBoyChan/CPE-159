@@ -35,17 +35,23 @@ void TermInit(int which)
       term_if[which].io = TERM1_IO;
       term_if[which].done = TERM0_DONE;
    }
-   
+   int i;
    outportb(term_if[which].io+CFCR, CFCR_DLAB);             // CFCR_DLAB is 0x80
    outportb(term_if[which].io+BAUDLO, LOBYTE(115200/9600)); // period of each of 9600 bauds  
    outportb(term_if[which].io+BAUDHI, HIBYTE(115200/9600));
    outportb(term_if[which].io+CFCR, CFCR_PEVEN|CFCR_PENAB|CFCR_7BITS);
    outportb(term_if[which].io+IER, 0);
    outportb(term_if[which].io+MCR, MCR_DTR|MCR_RTS|MCR_IENABLE);
-   for(i=0; i<LOOP/2; i++)asm("inb $0x80")
+   for(i=0; i<LOOP/2; i++)
+   {
+      asm("inb $0x80");
       outportb(term_if[which].io+IER, IER_ERXRDY|IER_ETXRDY);  // enable TX & RX intr
-   for(i=0; i<LOOP/2; i++)asm("inb $0x80")
+   }
+   for(i=0; i<LOOP/2; i++)
+   {
+      asm("inb $0x80");
       inportb(term_if[which].io); // clear key entered at PROCOMM screen
+   }
    
 }
 
