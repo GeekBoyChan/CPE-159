@@ -15,7 +15,7 @@ void WriteISR(void);
 void SemInitISR(void);
 void SemWaitISR(void);
 void SemPostISR(void);
-void TermISR(index);
-void TermTxISR(index);
+void TermISR(int index);
+void TermTxISR(int index);
 
 #endif
