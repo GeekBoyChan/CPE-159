@@ -81,7 +81,7 @@ void TermProc(void)
 {
 	int my_pid, device, i;
 	char str[3];
-	i = 0;
+	i = 5;
 	
 	my_pid = GetPid();
 
