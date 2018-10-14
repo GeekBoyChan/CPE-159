@@ -98,7 +98,7 @@ void WriteISR(void)
 	//int i;
 	int device = pcb[cur_pid].TF_p->ebx;
 	char *str = (char *) pcb[cur_pid].TF_p->ecx;
-	if(QisEmpty(*str))
+	if(sizeof(*str)==0)
 	{
 		return;
 	}
@@ -107,9 +107,9 @@ void WriteISR(void)
 		if(device == TERM0)
 		{
 			//set first character to 'io'
-			outportb(term_if[0], *str);
+			outportb(term_if[0].io, *str);
 			//set tx_p to second character in 'str'
-			outportb(str[1], *tx_p);
+			outportb(str[1], term_if[0].tx_p);
 			//block cur_pid to the tx_wait_q
 			EnQ(cur_pid, &term_if[0].tx_wait_q);
 			pcb[cur_pid].state = WAIT;
@@ -117,9 +117,9 @@ void WriteISR(void)
 		}
 		if(device == TERM1)
 		{
-			outportb(term_if[1], *str);
+			outportb(term_if[1].io, *str);
 			
-			outportb(str[1], *tx_p);
+			outportb(str[1], term_if[1].tx_p);
 			
 			EnQ(cur_pid, &term_if[1].tx_wait_q);
 			pcb[cur_pid].state = WAIT;
@@ -221,27 +221,27 @@ void TermISR(int index)
 	}
 	else if(inportb(term_if[index].io + IIR) == IIR_RXRDY)
 	{
-		cons_printf("*"\n);
+		cons_printf("*\n");
 	}
 	outportb(PIC_CONTROL, term_if.done);
 	
 }
 void TermTxISR(int index)
 {
-	if(QisEmpty(tx_wait_q))
+	if(QisEmpty(term_if[index].tx_wait_q))
 	{
 		return;
 	}
-	if(*tx_p != '\0')
+	if(term_if[index].tx_p != '\0')
 	{
-		outportb(term_if[index].io, *tx_p);
+		outportb(term_if[index].io, term_if[index].tx_p);
 		tx_p++;
 		return;
 	}
-	if(*tx_p == '\0')
+	if(term_if[index].tx_p == '\0')
 	{
 		//Release waiting proc from tx_wait_q (3 steps)
-		pid = DeQ(&term_if[index].tx_wait_q);
+		cur_pid = DeQ(&term_if[index].tx_wait_q);
 		EnQ(pid, &ready_q);
 		pcb[cur_pid].state = READY;
 	}
