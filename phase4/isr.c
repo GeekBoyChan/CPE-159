@@ -240,13 +240,13 @@ void TermTxISR(int index)
 	{
 		return;
 	}
-	if(term_if[index].tx_p != '\0')
+	if(*term_if[index].tx_p != '\0')
 	{
 		outportb(term_if[index].io, *term_if[index].tx_p);
 		term_if[index].tx_p++;
 		return;
 	}
-	if(term_if[index].tx_p == '\0')
+	if(*term_if[index].tx_p == '\0')
 	{
 		//Release waiting proc from tx_wait_q (3 steps)
 		pid = DeQ(&term_if[index].tx_wait_q);
