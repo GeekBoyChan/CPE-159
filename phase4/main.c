@@ -24,6 +24,7 @@ term_if_t term_if[TERM_MAX];         // Terminal interface
 
 void TermInit(int which)
 {
+   int i;
    // Clear terminal interface
    if(which == 0)
    {
@@ -35,7 +36,7 @@ void TermInit(int which)
       term_if[which].io = TERM1_IO;
       term_if[which].done = TERM0_DONE;
    }
-   int i;
+
    outportb(term_if[which].io+CFCR, CFCR_DLAB);             // CFCR_DLAB is 0x80
    outportb(term_if[which].io+BAUDLO, LOBYTE(115200/9600)); // period of each of 9600 bauds  
    outportb(term_if[which].io+BAUDHI, HIBYTE(115200/9600));
