@@ -97,6 +97,7 @@ void TermProc(void)
 		device = TERM1;
 	
 	
+	
 	while(1)
 	{
 		if(i == 5) //Every 5 lines write() to my device some special symbols
@@ -104,14 +105,14 @@ void TermProc(void)
 			i = 0;
 			SetVideo(my_pid+1,10);
 			Write(device,"----->\n\r");
-			Sleep(3);
+			
 		}
 		if (i != 5)
 		{
+			i++;
 			Write(device, str); 	//Write 'str' to my device
 			SetVideo(my_pid+1,10); 	
 			Write(device," A lengthier message to my device to show that it works\n\r");
-			i++;
 			Sleep(3);
 			
 		}
