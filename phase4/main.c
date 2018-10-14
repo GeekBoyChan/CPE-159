@@ -4,7 +4,7 @@
 // Team Name: LIGMAOS (Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso)
 
 #include "include.h"  // given SPEDE stuff
-#include "types.h"    // kernle data types
+#include "types.h"    // kernel data types
 #include "lib.h"      // small handly functions
 #include "proc.h"     // all user process code here
 #include "isr.h"      // kernel ISR code
