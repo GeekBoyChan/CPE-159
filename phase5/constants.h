@@ -35,7 +35,7 @@
 #define SEMWAIT 102	         // service # for sem-wait
 #define SEMPOST 103	         // service # for sem-post
 
-//Added for phase 4
+//Added for Phase 4
 #define MASK ~0x19          // new mask for Programmable Interrupt Controller
 #define TERM_MAX 2          // there're two terminal ports
 #define TERM0 35            // TERM0
@@ -45,4 +45,7 @@
 #define TERM0_DONE 0x63     // done signal to send to PIC
 #define TERM1_DONE 0x64     // done signal to send to PIC
 
+// Added for Phase 5
+#define READ 3              // read terminal KB service #
+#define BUFF_SIZE 101       // for PID waiting for term KB input
 #endif
