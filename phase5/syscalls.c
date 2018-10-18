@@ -51,6 +51,16 @@ void Write(int device, char *str) {
         : "eax", "ebx", "ecx");
 }
 
+void Read(int device, char *buff) {
+   asm("movl %0, %%eax;
+        movl %1, %%ebx;
+        movl %2, %%ecx;
+        int $128"
+        :
+        : "g"(READ), "g"(device), "g"((int)buff)
+        : "eax", "ebx", "ecx");
+}
+
 int SemInit(int passes) {
    int sem_id;
    asm("movl %1, %%eax;             //serive#
