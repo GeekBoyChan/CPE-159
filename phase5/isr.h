@@ -12,6 +12,7 @@ void GetPidISR(void);          //
 void SleepISR(void);
 void SetVideoISR(void);
 void WriteISR(void);
+void ReadISR(void);
 void SemInitISR(void);
 void SemWaitISR(void);
 void SemPostISR(void);
