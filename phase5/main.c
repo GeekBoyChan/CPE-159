@@ -20,7 +20,9 @@ unsigned short *video_p;            // PC VGA video pointer, starting HOME_POS
 sem_t sem[SEM_MAX];                 // kernel has these semaphores
 q_t sem_q;                          // semaphore ID's are initially queued here
 int car_sem;                        // to hold a semaphore ID for testing
-term_if_t term_if[TERM_MAX];         // Terminal interface
+term_if_t term_if[TERM_MAX];        // Terminal interface
+char *rx_p;                         // point to inside the buffer
+q_t rx_wait_q;                      // for PID waiting for term KB input
 
 void TermInit(int which)
 {
@@ -132,6 +134,9 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
         break;
       case WRITE:
         WriteISR();
+        break;
+      case READ:
+        ReadISR();
         break;
       case GETPID:
         GetPidISR();
