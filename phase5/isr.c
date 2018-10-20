@@ -310,7 +310,7 @@ void TermRxISR(int interface_num)
 	if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
 	{
 		//3.a delimit 'buff' with a null character
-		&buff = '\0';
+		buff = '\0';
 		//3.b release the waiting process
 		pid = DeQ(&term_if[interface_num].rx_wait_q);
 		EnQ(pid, &ready_q);
