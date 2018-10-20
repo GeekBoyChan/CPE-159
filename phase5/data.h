@@ -21,6 +21,4 @@ extern sem_t sem[SEM_MAX];                // kernel has these semaphores
 extern q_t sem_q;                         // semaphore ID's are initially queued here
 extern int car_sem;                       // to hold a semaphore ID for testing
 extern term_if_t term_if[TERM_MAX];       // Terminal interface
-extern char *rx_p;                        // point to inside the buffer
-extern q_t rx_wait_q;                     // for PID waiting for term KB input
 #endif                                    // endif of ifndef
