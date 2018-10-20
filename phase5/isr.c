@@ -160,9 +160,31 @@ void WriteISR(void)
 
 void ReadISR(void)
 {
+	int device = pcb[cur_pid].TF_p->ebx;
+	char *buff = (char *) pcb[cur_pid].TF_p->ecx;
+	
 	//determine which terminal interface to use
+	if(device == TERM0)
+	{
 	//set the RX pointer of the interface to 'buff'
+	term_if[0].rx_p = &buff;
 	//"block' the current process to the RX wait queue of the interface
+	EnQ(cur_pid, &term_if[0].rx_wait_q);
+	pcb[cur_pid].state = WAIT;
+	cur_pid = -1;
+	}
+	
+	//determine which terminal interface to use
+	if(device == TERM1)
+	{
+	//set the RX pointer of the interface to 'buff'
+	term_if[1].rx_p = &buff;
+	//"block' the current process to the RX wait queue of the interface
+	EnQ(cur_pid, &term_if[1].rx_wait_q);
+	pcb[cur_pid].state = WAIT;
+	cur_pid = -1;
+	}
+	
 }
 
 void SemInitISR(void)
