@@ -167,7 +167,7 @@ void ReadISR(void)
 	if(device == TERM0)
 	{
 	//set the RX pointer of the interface to 'buff'
-	term_if[0].rx_p = &buff;
+	term_if[0].rx_p = buff;
 	//"block' the current process to the RX wait queue of the interface
 	EnQ(cur_pid, &term_if[0].rx_wait_q);
 	pcb[cur_pid].state = WAIT;
@@ -178,7 +178,7 @@ void ReadISR(void)
 	if(device == TERM1)
 	{
 	//set the RX pointer of the interface to 'buff'
-	term_if[1].rx_p = &buff;
+	term_if[1].rx_p = buff;
 	//"block' the current process to the RX wait queue of the interface
 	EnQ(cur_pid, &term_if[1].rx_wait_q);
 	pcb[cur_pid].state = WAIT;
@@ -286,6 +286,7 @@ void TermTxISR(int index)
 
 void TermRxISR(int interface_num)
 {
+	int pid;
 	//1. read the character in from the 'io' of the terminal interface
 	char in = *term_if[interface_num].rx_p;
 	//2. if the character is NOT '\n' or '\r' (not Enter or Return):
@@ -297,7 +298,7 @@ void TermRxISR(int interface_num)
 		if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
 		{
 			//2.b.1 using the RX pointer of the interface to append it to 'buff'
-			&buff = term_if[interface_num].rx_p;
+			buff = term_if[interface_num].rx_p;
 			//2.b.2 advance the RX pointer
 			term_if[interface_num].rx_p++;
 		}
@@ -310,7 +311,7 @@ void TermRxISR(int interface_num)
 		//3.a delimit 'buff' with a null character
 		&buff = '\0';
 		//3.b release the waiting process
-		pid = DeQ(&term_if[index].rx_wait_q);
+		pid = DeQ(&term_if[interface_num].rx_wait_q);
 		EnQ(pid, &ready_q);
 		pcb[cur_pid].state = READY;
 	}
