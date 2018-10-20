@@ -250,7 +250,7 @@ void TermISR(int index)
 	}
 	else if(inportb(term_if[index].io + IIR) == IIR_RXRDY)
 	{
-		cons_printf("*\n");
+		TermRxISR(index);
 	}
 	if(index == 0)
 	{
