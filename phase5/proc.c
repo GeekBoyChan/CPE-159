@@ -68,8 +68,6 @@ void CarProc(void)
 		Sleep(2);
 		
 		SemWait(car_sem);
-		SetVideo(my_pid+1,1); 	//call service to set video cursor to beginning of my row
-    		Write(STDOUT, "--");
 		SetVideo(my_pid+1,10);
 		Write(STDOUT, "I'm on the bridge!");
 		Sleep(2);
@@ -81,6 +79,7 @@ void TermProc(void)
 {
 	int my_pid, device, i;
 	char str[3];
+	char buff[BUFF_SIZE];
 	i = 5;
 	
 	my_pid = GetPid();
@@ -113,10 +112,15 @@ void TermProc(void)
 			Write(device, str); 	//Write 'str' to my device
 			SetVideo(my_pid+1,10); 	
 			Write(device," A lengthier message to my device to show that it works\n\r");
-			Sleep(3);
-			
+			Sleep(3);	
 		}
 		
+		Write(device, "Enter a character from the keyboard")
+		if(cons_kbhit())
+		{
+			ch = cons_getchar();
+			Write(device, ch);
+		}
 		
 	}
 }
