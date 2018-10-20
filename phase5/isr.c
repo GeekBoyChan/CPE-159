@@ -287,13 +287,32 @@ void TermTxISR(int index)
 void TermRxISR(int interface_num)
 {
 	//1. read the character in from the 'io' of the terminal interface
+	char in = *term_if[interface_num].rx_p;
 	//2. if the character is NOT '\n' or '\r' (not Enter or Return):
+	if(in != '\n' || in != 'r')
+	{
 		//2.a. write it back to the 'io' of the interface (echo)
+		outportb(term_if[interface_num].io, *term_if[interface_num].rx_p);
 		//2.b. if the RX wait queue is not empty:
+		if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
+		{
 			//2.b.1 using the RX pointer of the interface to append it to 'buff'
+			&buff = term_if[interface_num].rx_p;
 			//2.b.2 advance the RX pointer
+			term_if[interface_num].rx_p++;
+		}
 		//2.c return
+		return;
+	}
 	//3. if there is a waiting process in the RX wait queue of the interface:
+	if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
+	{
 		//3.a delimit 'buff' with a null character
+		&buff = '\0';
 		//3.b release the waiting process
+		pid = DeQ(&term_if[index].rx_wait_q);
+		EnQ(pid, &ready_q);
+		pcb[cur_pid].state = READY;
+	}
+	
 }
