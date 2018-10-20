@@ -41,6 +41,8 @@ typedef struct {
       done;             // done signal to PIC (TERM0_DONE and TERM1_DONE)
       char *tx_p;       // point to a character in the string
       q_t tx_wait_q;    // TX requester (wait for completion)
+      char *rx_p;      // point to inside the buffer
+      q_t rx_wait_q;   // for PID waiting for term KB input
    } term_if_t;
 
 #endif
