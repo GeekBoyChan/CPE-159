@@ -95,11 +95,16 @@ void TermProc(void)
 	if (device == 1)
 		device = TERM1;
 	
-	
-	
 	while(1)
 	{
-		if(i == 5) 			//Every 5 lines write() to my device some special symbols
+		Write(device, str);
+		Write(device,"Enter: \n\r");
+		Read(device, buff);
+		Write(device,"Entered: \n\r");
+		Write(device, buff);
+		
+
+		/*if(i == 5) 			//Every 5 lines write() to my device some special symbols
 		{
 			i = 0;
 			SetVideo(my_pid+1,10);
@@ -113,14 +118,7 @@ void TermProc(void)
 			SetVideo(my_pid+1,10); 	
 			Write(device," A lengthier message to my device to show that it works\n\r");
 			Sleep(3);	
-		}
-		
-		Write(device, "Enter a character from the keyboard")
-		if(cons_kbhit())
-		{
-			ch = cons_getchar();
-			Write(device, ch);
-		}
+		}*/
 		
 	}
 }
