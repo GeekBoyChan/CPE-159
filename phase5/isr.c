@@ -287,7 +287,6 @@ void TermTxISR(int index)
 void TermRxISR(int interface_num)
 {
 	int pid;
-	char *buff = (char *) pcb[cur_pid].TF_p->ecx;
 	//1. read the character in from the 'io' of the terminal interface
 	char in = inportb(term_if[interface_num].io);
 	//2. if the character is NOT '\n' or '\r' (not Enter or Return):
