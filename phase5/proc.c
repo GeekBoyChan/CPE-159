@@ -102,9 +102,7 @@ void TermProc(void)
 		Write(device,"Enter: \n\r");
 		Read(device, buff);
 		Write(device,"Entered: \n\r");
-		SetVideo(my_pid+1,10);
 		Write(device, buff);
-		Write(device,"\n\r");
 		
 
 		/*if(i == 5) 			//Every 5 lines write() to my device some special symbols
