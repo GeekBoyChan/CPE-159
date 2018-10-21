@@ -175,8 +175,8 @@ void ReadISR(void)
 	}
 	
 	//determine which terminal interface to use
+	if(device == TERM1)
 	{
-	*buff = inportb(term_if[1].io);
 	//set the RX pointer of the interface to 'buff'
 	term_if[1].rx_p = buff;
 	//"block' the current process to the RX wait queue of the interface
@@ -294,6 +294,7 @@ void TermRxISR(int interface_num)
 	if(in != '\n' || in != '\r')
 	{
 		//2.a. write it back to the 'io' of the interface (echo)
+		outportb(term_if[interface_num].io, "\n\r");
 		outportb(term_if[interface_num].io, in);
 		//2.b. if the RX wait queue is not empty:
 		if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
