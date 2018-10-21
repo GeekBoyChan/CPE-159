@@ -97,10 +97,12 @@ void TermProc(void)
 	
 	while(1)
 	{
+		SetVideo(my_pid+1);
 		Write(device, str);
 		Write(device,"Enter: \n\r");
 		Read(device, buff);
-		Write(device,"Entered:");
+		Write(device,"Entered: \n\r");
+		SetVideo(my_pid+1,10)
 		Write(device, buff);
 		Write(device,"\n\r");
 		
