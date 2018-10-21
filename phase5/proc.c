@@ -103,6 +103,12 @@ void TermProc(void)
 		Write(device,"\n\rEntered: ");
 		Write(device, buff);
 		Write(device, "\n\r");
+		/*Miles screwing around
+		delete before submiting!! maybe (;*/
+		while(*buff != '\0') {
+			*buff = '\0';
+			buff++;
+		}
 		
 
 		/*if(i == 5) 			//Every 5 lines write() to my device some special symbols
