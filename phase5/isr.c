@@ -166,7 +166,7 @@ void ReadISR(void)
 	//determine which terminal interface to use
 	if(device == TERM0)
 	{
-	buff = inportb(term_if[0].io);
+	*buff = inportb(term_if[0].io);
 	//set the RX pointer of the interface to 'buff'
 	term_if[0].rx_p = buff;
 	//"block' the current process to the RX wait queue of the interface
@@ -178,7 +178,7 @@ void ReadISR(void)
 	//determine which terminal interface to use
 	if(device == TERM1)
 	{
-	buff = inportb(term_if[1].io);
+	*buff = inportb(term_if[1].io);
 	//set the RX pointer of the interface to 'buff'
 	term_if[1].rx_p = buff;
 	//"block' the current process to the RX wait queue of the interface
