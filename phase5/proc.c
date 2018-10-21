@@ -80,7 +80,7 @@ void TermProc(void)
 	int my_pid, device, i;
 	char str[3];
 	char buff[BUFF_SIZE];
-	i = 5;
+	i = 0;
 	
 	my_pid = GetPid();
 
@@ -105,9 +105,9 @@ void TermProc(void)
 		Write(device, "\n\r");
 		/*Miles screwing around
 		delete before submiting!! maybe (;*/
-		while(*buff != '\0') {
-			*buff = '\0';
-			buff++;
+		while(buff[i] != '\0') {
+			buff[i] = '\0';
+			i++;
 		}
 		
 
