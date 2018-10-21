@@ -104,7 +104,8 @@ void TermProc(void)
 		Write(device,"\n\rEntered: ");
 		Write(device, buff);
 		Write(device, "\n\r");
-		while(buff[i] != '\0') {
+		while(buff[i] != '\0')
+		{
 			buff[i] = '\0';
 			i++;
 		}
