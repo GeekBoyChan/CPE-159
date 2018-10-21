@@ -294,8 +294,6 @@ void TermRxISR(int interface_num)
 	if(in != '\n' || in != '\r')
 	{
 		//2.a. write it back to the 'io' of the interface (echo)
-		outportb(term_if[interface_num].io, '\n');
-		outportb(term_if[interface_num].io, '\r');
 		outportb(term_if[interface_num].io, in);
 		//2.b. if the RX wait queue is not empty:
 		if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
