@@ -102,6 +102,7 @@ void TermProc(void)
 		Read(device, buff);
 		Write(device,"\n\rEntered: ");
 		Write(device, buff);
+		Write(device, "\n\r");
 		
 
 		/*if(i == 5) 			//Every 5 lines write() to my device some special symbols
