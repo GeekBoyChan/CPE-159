@@ -296,10 +296,10 @@ void TermRxISR(int interface_num)
 		//2.a. write it back to the 'io' of the interface (echo)
 		outportb(term_if[interface_num].io, in);
 		//2.b. if the RX wait queue is not empty:
-		if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
+		if(!QisEmpty(&term_if[interface_num].rx_wait_q))
 		{
 			//2.b.1 using the RX pointer of the interface to append it to 'buff'
-			buff = term_if[interface_num].rx_p;
+			*term_if[interface_num].rx_p = in;
 			//2.b.2 advance the RX pointer
 			term_if[interface_num].rx_p++;
 		}
@@ -310,7 +310,8 @@ void TermRxISR(int interface_num)
 	if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
 	{
 		//3.a delimit 'buff' with a null character
-		buff = '\0';
+		//buff = '\0';
+		term_if[interface_num].rx_p = '\0';
 		//3.b release the waiting process
 		pid = DeQ(&term_if[interface_num].rx_wait_q);
 		EnQ(pid, &ready_q);
