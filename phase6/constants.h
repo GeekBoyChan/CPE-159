@@ -31,7 +31,7 @@
 
 // Added for Phase 3
 #define SEM_MAX 20 	         // kernel has 20 semaphores to dispatch
-#define SEMINIT 101 	       // serivce # to req for semaphore
+#define SEMINIT 101 	       // service # to req for semaphore
 #define SEMWAIT 102	         // service # for sem-wait
 #define SEMPOST 103	         // service # for sem-post
 
@@ -48,4 +48,9 @@
 // Added for Phase 5
 #define READ 3              // read terminal KB service #
 #define BUFF_SIZE 101       // for PID waiting for term KB input
+
+// Added for Phase 6
+#define SIGNAL 48           // signal service #
+#define SIGINT 2            // signal ctrl-C is 2
+
 #endif
