@@ -112,3 +112,27 @@ void TermProc(void)
 		
 	}
 }
+
+void Ouch(int device)
+{
+	int  my_pid, device;
+	
+	my_pid = GetPid();
+	
+	device = my_pid % 2;
+	if (device == 0)
+		device = TERM0;
+	if (device == 1)
+		device = TERM1;
+	
+	Write(device, "Ouch, don't touch that! \n\r");
+}
+
+void Wrapper(func_p_t handler_p)
+{
+	asm("pushal");                    // save regs
+	handler_p();                      // call user's signal handler
+	asm("popal");                     // restore regs
+	asm("movl %%ebp, %%esp; popl %%ebp; ret $4"::); // skip Ouch addr
+}
+	
