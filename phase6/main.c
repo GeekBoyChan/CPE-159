@@ -24,6 +24,11 @@ term_if_t term_if[TERM_MAX];        // Terminal interface
 char *rx_p;                         // point to inside the buffer
 q_t rx_wait_q;                      // for PID waiting for term KB input
 
+/*
+TermInit:
+-.5  for(i=0; i<LOOP/2; i++) ... outportb(...); this is just once, not looped
+-.5  same with the following inportb(), should not be in any loop
+*/
 void TermInit(int which)
 {
    int i;
