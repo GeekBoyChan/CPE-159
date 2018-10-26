@@ -93,6 +93,11 @@ void SetVideoISR(void)
 	video_p = (unsigned short*) (HOME_POS + (row-1) * 80 + (col-1));
 }
 
+/*
+WriteISR:
+-1  sizeof(*str)==0 will never occur, you mean *str == '\0'  (potentially fatal)
+-.5  use the index so to combine duplicates of if(device == TERM0) and == TERM1
+*/
 void WriteISR(void)
 {
 	//int i;
@@ -242,7 +247,16 @@ void SemPostISR(void)
 	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
 
+/*
+TermISR:
+-1  reading IIR again doesn't mean it's the same there (reading may change)
+    if(inportb(...) == IIR_TXRDY) ...
+    else if(inportb(...) == IIR_RXRDY) ...
+-.5  the 'done' to outportb() is in term_if[index].done
+-.5  if(... != '\0') ... return; after, == '\0' is not needed (already implied)
+-.5  not cur_pid becomes READY, it's the pid just got released
 void TermISR(int index)
+*/
 {
 	if(inportb(term_if[index].io + IIR) == IIR_TXRDY)
 	{
