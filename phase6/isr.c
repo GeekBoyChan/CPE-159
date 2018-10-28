@@ -319,6 +319,26 @@ void TermRxISR(int interface_num)
 		//2.c return
 		return;
 	}
+	if(in == ASCII 3)
+	{
+		//if the terminal RX wait queue is empty: just 'return;'
+		if(QisEmpty(&term_if[interface_num].rx_wait_q) == 1)
+		{
+			return;
+		}
+		//release the 1st waiting process in the queue (3 steps)
+		pid = DeQ(&term_if[interface_num].rx_wait_q);
+		EnQ(pid, &ready_q);
+		pcb[cur_pid].state = READY;
+		//delimited the process terminal input buffer with a null character
+		term_if[interface_num].rx_p = '\0';
+		//if the process has a handler requested, call WrapperISR with its PID and handler address
+		if()
+		{
+			
+		}
+		return;
+	}
 	//3. if there is a waiting process in the RX wait queue of the interface:
 	if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
 	{
@@ -330,4 +350,22 @@ void TermRxISR(int interface_num)
 		pcb[cur_pid].state = READY;
 	}
 	
+}
+
+void SignalISR(void)
+{
+	//register the handler address to the PCB
+}
+void WrapperISR(int pid, func_p_t handler_p)
+{
+	//copy process trapframe to a temporary trapframe (local)
+	
+	//lower the trapframe location info (in PCB) by 8 bytes
+	
+	//copy temporary trapframe to the new lowered location
+	
+	//the vacated 8 bytes: put 'handler_p,' and 'eip' of
+        //the old trapframe there
+	
+	//change 'eip' in the moved trapframe to Wrapper() address
 }
