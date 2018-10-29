@@ -103,7 +103,8 @@ void WriteISR(void)
 	//int i;
 	int device = pcb[cur_pid].TF_p->ebx;
 	char *str = (char *) pcb[cur_pid].TF_p->ecx;
-	if(sizeof(*str)==0)
+	//if(sizeof(*str)==0)
+	if(*str == '\0')
 	{
 		return;
 	}
@@ -255,8 +256,8 @@ TermISR:
 -.5  the 'done' to outportb() is in term_if[index].done
 -.5  if(... != '\0') ... return; after, == '\0' is not needed (already implied)
 -.5  not cur_pid becomes READY, it's the pid just got released
-void TermISR(int index)
 */
+void TermISR(int index)
 {
 	if(inportb(term_if[index].io + IIR) == IIR_TXRDY)
 	{
@@ -331,7 +332,7 @@ void TermRxISR(int interface_num)
 		EnQ(pid, &ready_q);
 		pcb[cur_pid].state = READY;
 		//delimited the process terminal input buffer with a null character
-		term_if[interface_num].rx_p = '\0';
+		*term_if[interface_num].rx_p = '\0';
 		//if the process has a handler requested, call WrapperISR with its PID and handler address
 		if()
 		{
