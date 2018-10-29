@@ -24,11 +24,6 @@ term_if_t term_if[TERM_MAX];        // Terminal interface
 char *rx_p;                         // point to inside the buffer
 q_t rx_wait_q;                      // for PID waiting for term KB input
 
-/*
-TermInit:
--.5  for(i=0; i<LOOP/2; i++) ... outportb(...); this is just once, not looped
--.5  same with the following inportb(), should not be in any loop
-*/
 void TermInit(int which)
 {
    int i;
@@ -50,16 +45,13 @@ void TermInit(int which)
    outportb(term_if[which].io+CFCR, CFCR_PEVEN|CFCR_PENAB|CFCR_7BITS);
    outportb(term_if[which].io+IER, 0);
    outportb(term_if[which].io+MCR, MCR_DTR|MCR_RTS|MCR_IENABLE);
-   for(i=0; i<LOOP/2; i++)
-   {
-      asm("inb $0x80");
-      outportb(term_if[which].io+IER, IER_ERXRDY|IER_ETXRDY);  // enable TX & RX intr
-   }
-   for(i=0; i<LOOP/2; i++)
-   {
-      asm("inb $0x80");
-      inportb(term_if[which].io); // clear key entered at PROCOMM screen
-   }
+  
+   asm("inb $0x80");
+   outportb(term_if[which].io+IER, IER_ERXRDY|IER_ETXRDY);  // enable TX & RX intr
+   
+   asm("inb $0x80");
+   inportb(term_if[which].io); // clear key entered at PROCOMM screen
+   
    
 }
 
