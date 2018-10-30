@@ -344,7 +344,7 @@ void TermRxISR(int interface_num)
 	if(QisEmpty(&term_if[interface_num].rx_wait_q) == 0)
 	{
 		//3.a delimit 'buff' with a null character
-		term_if[interface_num].rx_p = '\0';
+		*term_if[interface_num].rx_p = '\0';
 		//3.b release the waiting process
 		pid = DeQ(&term_if[interface_num].rx_wait_q);
 		EnQ(pid, &ready_q);
@@ -365,7 +365,7 @@ void WrapperISR(int pid, func_p_t handler_p)
 	//lower the trapframe location info (in PCB) by 8 bytes
 	pcb[pid].TF_p -= 8;
 	//copy temporary trapframe to the new lowered location
-	*pcb[pid].TF_p = tmp
+	*pcb[pid].TF_p = tmp;
 	//the vacated 8 bytes: put 'handler_p,' and 'eip' of
         //the old trapframe there
 	
