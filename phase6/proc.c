@@ -75,6 +75,21 @@ void CarProc(void)
 	}
 }
 
+void Ouch(void)
+{
+	int  my_pid, device;
+	
+	my_pid = GetPid();
+	
+	device = my_pid % 2;
+	if (device == 0)
+		device = TERM0;
+	if (device == 1)
+		device = TERM1;
+	
+	Write(device, "Ouch, don't touch that! \n\r");
+}
+
 void TermProc(void)
 {
 	int my_pid, device, i;
@@ -107,21 +122,6 @@ void TermProc(void)
 		Write(device, "\n\r");
 		
 	}
-}
-
-void Ouch(void)
-{
-	int  my_pid, device;
-	
-	my_pid = GetPid();
-	
-	device = my_pid % 2;
-	if (device == 0)
-		device = TERM0;
-	if (device == 1)
-		device = TERM1;
-	
-	Write(device, "Ouch, don't touch that! \n\r");
 }
 
 void Wrapper(func_p_t handler_p)
