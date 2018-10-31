@@ -110,33 +110,19 @@ void WriteISR(void)
 	}
 	if(device == TERM0 || device == TERM1)
 	{
-		if(device == TERM0)
-		{
-			//set first character to 'io'
-			outportb(term_if[0].io, *str);
-			//set tx_p to second character in 'str'
-			term_if[0].tx_p = &str[1];
-			//block cur_pid to the tx_wait_q
-			EnQ(cur_pid, &term_if[0].tx_wait_q);
-			pcb[cur_pid].state = WAIT;
-			cur_pid = -1;
-		}
-		if(device == TERM1)
-		{
-			outportb(term_if[1].io, *str);
-			
-			term_if[1].tx_p = &str[1];
-			
-			EnQ(cur_pid, &term_if[1].tx_wait_q);
-			pcb[cur_pid].state = WAIT;
-			cur_pid = -1;
-		}
-	
+		//set first character to 'io'
+		outportb(term_if[device-35].io, *str);
+		//set tx_p to second character in 'str'
+		term_if[device-35].tx_p = &str[1];
+		//block cur_pid to the tx_wait_q
+		EnQ(cur_pid, &term_if[device-35].tx_wait_q);
+		pcb[cur_pid].state = WAIT;
+		cur_pid = -1;
 	}
 	if(device == STDOUT)
 	{
 		while(*str != '\0')
-    	{ 
+    		{ 
 			if(video_p == END_POS)                    // Reach end, return
 			{
 				video_p = HOME_POS;
