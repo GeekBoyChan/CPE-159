@@ -1,7 +1,7 @@
 // isr.h, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 6
+// Phase 7
 
 #ifndef __ISR__
 #define __ISR__
@@ -21,6 +21,7 @@ void TermTxISR(int index);
 void TermRxISR(int interface_num);
 void SignalISR(void);
 void WrapperISR(int pid, func_p_t handler_p);
-
+void GetPpidISR(void);
+void ForkISR(void);
 
 #endif
