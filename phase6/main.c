@@ -160,7 +160,7 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
          break;
       case SIGNAL:
          SignalISR();
-         break();
+         break;
    }
 
    if (cons_kbhit()) 
