@@ -1,7 +1,7 @@
 // isr.c, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 6
+// Phase 7
 
 #include "include.h"
 #include "types.h"
@@ -335,3 +335,38 @@ void WrapperISR(int pid, func_p_t handler_p)
 	//change 'eip' in the moved trapframe to Wrapper() address
 	pcb[pid].TF_p->eip = (int)Wrapper;
 }
+
+/* Coding Hint #4
+void GetPpidISR(void) 
+{
+      similar to the get PID ISR
+}
+
+void ForkISR(void) 
+{
+      get (DeQ) a new child PID and put it into
+      the ebx of calling process trapframe (for Fork() to return)
+
+      if new child PID obtained is -1:
+         1. show on TargetPC: Kernel Panic: no more process!
+         2. just return
+
+      copy new child process' PCB from its parent's PCB
+      set its state to the correct one
+      enqueue its PID to ready queue
+      set its ppid to the parent PID
+
+      copy its parent's runtime stack
+      calc the location distance between the two stacks, and
+      apply the distance to the child's TF_p
+      then set ebx of its trapframe to 0 (child process gets 0 from Fork())
+      apply the distance to esp, ebp, esi, edi in the child's trapframe
+
+      (change all ebp if currently in a nested call stack:)
+      use an integer pointer p, set it to ebp (caller EBP)
+      loop: if what p points to is not 0:
+         adjust what it points to with the distance
+         change p to what it points (caller EBP still)
+         jmp loop
+}
+*/	 
