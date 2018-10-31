@@ -213,15 +213,6 @@ void SemPostISR(void)
 	*p = sem[sem_id].passes + '0' + VGA_MASK;
 }
 
-/*
-TermISR:
--1  reading IIR again doesn't mean it's the same there (reading may change)
-    if(inportb(...) == IIR_TXRDY) ...
-    else if(inportb(...) == IIR_RXRDY) ...
--.5  the 'done' to outportb() is in term_if[index].done
--.5  if(... != '\0') ... return; after, == '\0' is not needed (already implied)
--.5  not cur_pid becomes READY, it's the pid just got released
-*/
 void TermISR(int index)
 {
 	if(inportb(term_if[index].io) == IIR_TXRDY)
@@ -232,18 +223,9 @@ void TermISR(int index)
 	{
 		TermRxISR(index);
 	}
-	/*
-	if(index == 0)
-	{
-		outportb(PIC_CONTROL, TERM0_DONE);
-	}
-	if(index == 1)
-	{
-		outportb(PIC_CONTROL, TERM1_DONE);
-	}
-	*/
 	term_if[index].done;
 }
+
 void TermTxISR(int index)
 {
 	int pid;
@@ -257,12 +239,12 @@ void TermTxISR(int index)
 		term_if[index].tx_p++;
 		return;
 	}
-	if(*term_if[index].tx_p == '\0')
+	else
 	{
 		//Release waiting proc from tx_wait_q (3 steps)
 		pid = DeQ(&term_if[index].tx_wait_q);
 		EnQ(pid, &ready_q);
-		pcb[cur_pid].state = READY;
+		pcb[pid].state = READY;
 	}
 }
 
