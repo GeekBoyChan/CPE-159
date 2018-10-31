@@ -292,7 +292,7 @@ void TermRxISR(int interface_num)
 		//delimited the process terminal input buffer with a null character
 		*term_if[interface_num].rx_p = '\0';
 		//if the process has a handler requested, call WrapperISR with its PID and handler address
-		if(pcb[pid].sigint_handler_p)
+		if(pcb[pid].sigint_handler_p != NULL)
 		{
 			WrapperISR(pid, pcb[pid].sigint_handler_p);	
 		}
@@ -314,7 +314,7 @@ void TermRxISR(int interface_num)
 void SignalISR(void)
 {
 	//register the handler address to the PCB
-	pcb[cur_pid].sigint_handler_p = (func_p_t)pcb[cur_pid].TF_p->ebx; 
+	pcb[cur_pid].sigint_handler_p = (func_p_t)pcb[cur_pid].TF_p->ecx; 
 }
 void WrapperISR(int pid, func_p_t handler_p)
 {
