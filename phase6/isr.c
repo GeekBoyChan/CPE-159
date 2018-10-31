@@ -276,7 +276,7 @@ void TermRxISR(int interface_num)
 		//2.c return
 		return;
 	}
-	if(in == SIGINT)
+	if(in == 3)
 	{
 		//if the terminal RX wait queue is empty: just 'return;'
 		if(QisEmpty(&term_if[interface_num].rx_wait_q) == 1)
