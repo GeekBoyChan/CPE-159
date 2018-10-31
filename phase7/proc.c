@@ -4,7 +4,7 @@
 
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 6
+// Phase 7
 
 #include "constants.h"        	// include only these 2 files
 #include "syscalls.h"
@@ -90,6 +90,34 @@ void Ouch(void)
 	
 	Write(device, "Ouch, don't touch that! \n\r");
 }
+
+/* Coding Hint #1
+void ChildCode(void) 
+{  // child proc runs this
+      1. get my PID
+      2. get parent's PID using new syscall
+      3. build a string based on my PID
+      4. loop forever:
+         a. show the msg (see demo) to the same terminal as the parent
+         b. and sleep for 3 seconds
+}
+void TermProc(void) {
+	... get my PID and build a string as before ...
+	loop: 
+	{
+	sleep for 1 second
+	prompt and read input from terminal (as before)
+	show input (as before)
+	use new StrCmp() to compare if what entered is "fork"
+	if so, 
+	{
+	    1. new call Fork() to create process and return the new child pid
+	    2. if pid returned is:
+	       a. -1, show an error message onto terminal: OS failed to fork!
+	       b. 0, (child process) call ChildCode() instead
+	}
+}
+*/
 
 void TermProc(void)
 {
