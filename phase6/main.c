@@ -158,6 +158,9 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
       case TERM1:
          TermISR(1);
          break;
+      case SIGNAL:
+         SignalISR();
+         break();
    }
 
    if (cons_kbhit()) 
