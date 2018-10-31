@@ -53,4 +53,8 @@
 #define SIGNAL 48           // signal service #
 #define SIGINT 2            // signal ctrl-C is 2
 
+// Added for Phase 7
+#define FORK 2              // fork service #
+#define GETPPID             // get parent pid service #
+
 #endif
