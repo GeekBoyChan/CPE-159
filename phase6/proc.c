@@ -80,7 +80,8 @@ void TermProc(void)
 	int my_pid, device, i;
 	char str[3];
 	char buff[BUFF_SIZE];
-	//i = 0;
+	
+	Signal(SIGINT, Ouch());
 	
 	my_pid = GetPid();
 
@@ -103,17 +104,12 @@ void TermProc(void)
 		Read(device, buff);		// Read what was entered
 		Write(device,"\n\rEntered: ");
 		Write(device, buff);		// Print what was entered
-		Write(device, "\n\r");		
-		while(buff[i] != '\0')		// clear the buffer
-		{
-			buff[i] = '\0';
-			i++;
-		}
+		Write(device, "\n\r");
 		
 	}
 }
 
-void Ouch(int device)
+void Ouch(void)
 {
 	int  my_pid, device;
 	
