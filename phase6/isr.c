@@ -259,14 +259,15 @@ TermISR:
 */
 void TermISR(int index)
 {
-	if(inportb(term_if[index].io + IIR) == IIR_TXRDY)
+	if(inportb(term_if[index].io) == IIR_TXRDY)
 	{
 		TermTxISR(index);
 	}
-	else if(inportb(term_if[index].io + IIR) == IIR_RXRDY)
+	else if(inportb(term_if[index].io) == IIR_RXRDY)
 	{
 		TermRxISR(index);
 	}
+	/*
 	if(index == 0)
 	{
 		outportb(PIC_CONTROL, TERM0_DONE);
@@ -275,7 +276,8 @@ void TermISR(int index)
 	{
 		outportb(PIC_CONTROL, TERM1_DONE);
 	}
-	
+	*/
+	term_if[index].done;
 }
 void TermTxISR(int index)
 {
