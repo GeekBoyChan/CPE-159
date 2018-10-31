@@ -276,7 +276,7 @@ void TermRxISR(int interface_num)
 		//2.c return
 		return;
 	}
-	if(in == ASCII 3)
+	if(in == SIGINT)
 	{
 		//if the terminal RX wait queue is empty: just 'return;'
 		if(QisEmpty(&term_if[interface_num].rx_wait_q) == 1)
@@ -290,9 +290,9 @@ void TermRxISR(int interface_num)
 		//delimited the process terminal input buffer with a null character
 		*term_if[interface_num].rx_p = '\0';
 		//if the process has a handler requested, call WrapperISR with its PID and handler address
-		if()
+		if(pcb[cur_pid].sigint_handler_p != 0)
 		{
-			
+			WrapperISR(cur_pid, pcb[cur_pid].sigint_handler_p);	
 		}
 		return;
 	}
