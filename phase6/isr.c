@@ -93,11 +93,6 @@ void SetVideoISR(void)
 	video_p = (unsigned short*) (HOME_POS + (row-1) * 80 + (col-1));
 }
 
-/*
-WriteISR:
--1  sizeof(*str)==0 will never occur, you mean *str == '\0'  (potentially fatal)
--.5  use the index so to combine duplicates of if(device == TERM0) and == TERM1
-*/
 void WriteISR(void)
 {
 	//int i;
@@ -155,28 +150,12 @@ void ReadISR(void)
 	int device = pcb[cur_pid].TF_p->ebx;
 	char *buff = (char *) pcb[cur_pid].TF_p->ecx;
 	
-	//determine which terminal interface to use
-	if(device == TERM0)
-	{
 	//set the RX pointer of the interface to 'buff'
-	term_if[0].rx_p = buff;
+	term_if[device-35].rx_p = buff;
 	//"block' the current process to the RX wait queue of the interface
-	EnQ(cur_pid, &term_if[0].rx_wait_q);
+	EnQ(cur_pid, &term_if[device-35].rx_wait_q);
 	pcb[cur_pid].state = WAIT;
 	cur_pid = -1;
-	}
-	
-	//determine which terminal interface to use
-	if(device == TERM1)
-	{
-	//set the RX pointer of the interface to 'buff'
-	term_if[1].rx_p = buff;
-	//"block' the current process to the RX wait queue of the interface
-	EnQ(cur_pid, &term_if[1].rx_wait_q);
-	pcb[cur_pid].state = WAIT;
-	cur_pid = -1;
-	}
-	
 }
 
 void SemInitISR(void)
