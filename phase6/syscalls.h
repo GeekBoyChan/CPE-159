@@ -14,5 +14,5 @@ void Read(int device, char *buff);
 int SemInit(int passes);
 void SemWait(int sem_id);
 void SemPost(int sem_id);
-void Signal(int sig_num, func_p_t p);
+void Signal(int sig_num, int p);
 #endif
