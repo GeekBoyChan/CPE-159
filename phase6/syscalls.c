@@ -91,7 +91,7 @@ void SemPost(int sem_id) {
         : "eax", "ebx");
 }
    
-void Signal(int sig_num, func_p_t p) {
+void Signal(int sig_num, func_p_t *p) {
    asm("movl %0, %%eax;
         movl %1, %%ebx;
         movl %2, %%ecx;
