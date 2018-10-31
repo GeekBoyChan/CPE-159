@@ -318,8 +318,8 @@ void WrapperISR(int pid, func_p_t handler_p)
 {
 	int *p1, *p2;
 	TF_t tmp;
-	*p1 = (int) handler_p;
-	*p2 = (int) tmp.eip;
+	p1 = &pcb[pid].TF_p->cs;
+	p2 = &pcb[pid].TF_p->efl;
 	//copy process trapframe to a temporary trapframe (local)
 	tmp = *pcb[pid].TF_p;
 	//lower the trapframe location info (in PCB) by 8 bytes
@@ -328,10 +328,8 @@ void WrapperISR(int pid, func_p_t handler_p)
 	*pcb[pid].TF_p = tmp;
 	//the vacated 8 bytes: put 'handler_p,' and 'eip' of
         //the old trapframe there
-	(int)pcb[pid].TF_p += 8;
-	*pcb[pid].TF_p = *p1;
-	(int)pcb[pid].TF_p -= 4;
-	*pcb[pid].TF_p = *p2;
+	*p1 = (int) handler_p;
+	*p2 = tmp.eip;
 	//change 'eip' in the moved trapframe to Wrapper() address
-	pcb[pid].TF_p->eip = get_eip;
+	pcb[pid].TF_p->eip = (int)Wrapper;
 }
