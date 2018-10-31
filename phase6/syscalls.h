@@ -2,6 +2,7 @@
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
 // Phase 5
+#include "types.h"
 
 #ifndef __SYSCALLS__
 #define __SYSCALLS__
