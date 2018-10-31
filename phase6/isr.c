@@ -223,7 +223,14 @@ void TermISR(int index)
 	{
 		TermRxISR(index);
 	}
-	outportb(PIC_CONTROL, term_if[index].done);
+	if(index == 0)
+	{
+		outportb(PIC_CONTROL, TERM0_DONE);
+	}
+	if(index == 1)
+	{
+		outportb(PIC_CONTROL, TERM1_DONE);
+	}
 }
 
 void TermTxISR(int index)
