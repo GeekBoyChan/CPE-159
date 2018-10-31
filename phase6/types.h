@@ -24,6 +24,7 @@ typedef struct {
    int life;
    int wake_time;
    state_t state;
+   func_p_t sigint_handler_p;
 } pcb_t;                     
 
 typedef struct {                       // generic queue type
