@@ -6,7 +6,6 @@
 // Phase 5
 
 #include "constants.h"
-#include "types.h"
 
 void Sleep(int sec) {         // # of seconds
    asm("movl %0, %%eax;       // service #162 (SLEEP)
