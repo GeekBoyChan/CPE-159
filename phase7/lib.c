@@ -1,7 +1,7 @@
 // lib.c, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 6
+// Phase 7
 
 #include "include.h"
 #include "types.h"
@@ -69,3 +69,13 @@ void EnQ(int to_add, q_t *p)
    return;
 }
 
+/* Coding Hint #5
+int StrCmp(char *s1, char *s2)
+{
+   which returns 1 if two strings are the same, otherwise 0
+}
+void MemCpy(char *dst, char *src, int size)
+{
+   which copies 'size' bytes from memory location 'src' to location 'dst'
+}
+*/
