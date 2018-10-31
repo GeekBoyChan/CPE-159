@@ -3,7 +3,7 @@
 
 // Team name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 6
+// Phase 7
 
 #include "constants.h"
 #include "types.h"
@@ -101,4 +101,15 @@ void Signal(int sig_num, func_p_t p) {
         : "g"(SIGNAL), "g"(sig_num), "g"((int)p)
         : "eax", "ebx", "ecx");
    
+}
+
+int GetPpid(void) 
+{
+   //will return parent PID (similar to the get PID call)
+}
+   
+int Fork(void)
+{
+   //Returns the new child PID for the parent
+   //process, and 0 for the child; or -1 if running out of PID
 }
