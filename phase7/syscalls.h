@@ -1,7 +1,7 @@
 // syscalls.h, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 6
+// Phase 7
 #include "types.h"
 
 #ifndef __SYSCALLS__
@@ -16,5 +16,7 @@ int SemInit(int passes);
 void SemWait(int sem_id);
 void SemPost(int sem_id);
 void Signal(int sig_num, func_p_t p);
+int GetPpid(void);
+void Fork(void);
 
 #endif
