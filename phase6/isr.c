@@ -314,7 +314,7 @@ void TermRxISR(int interface_num)
 void SignalISR(void)
 {
 	//register the handler address to the PCB
-	pcb[cur_pid].sigint_handler_p = (func_p_t)pcb[cur_pid].TF_p->ebx; 
+	pcb[cur_pid].sigint_handler_p = (func_p_t)pcb[cur_pid].TF_p->ecx; 
 }
 void WrapperISR(int pid, func_p_t handler_p)
 {
