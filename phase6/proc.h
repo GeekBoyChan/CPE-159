@@ -1,7 +1,7 @@
 // proc.h, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 5
+// Phase 6
 
 #ifndef __PROC__
 #define __PROC__
