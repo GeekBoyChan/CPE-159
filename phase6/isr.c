@@ -215,7 +215,7 @@ void SemPostISR(void)
 
 void TermISR(int index)
 {
-	int event = inportb(term_if[index].io + IIR;
+	int event = inportb(term_if[index].io + IIR);
 	if(event == IIR_TXRDY)
 	{
 		TermTxISR(index);
