@@ -288,13 +288,13 @@ void TermRxISR(int interface_num)
 		//release the 1st waiting process in the queue (3 steps)
 		pid = DeQ(&term_if[interface_num].rx_wait_q);
 		EnQ(pid, &ready_q);
-		pcb[cur_pid].state = READY;
+		pcb[pid].state = READY;
 		//delimited the process terminal input buffer with a null character
 		*term_if[interface_num].rx_p = '\0';
 		//if the process has a handler requested, call WrapperISR with its PID and handler address
-		if(pcb[cur_pid].sigint_handler_p != 0)
+		if(pcb[pid].sigint_handler_p != 0)
 		{
-			WrapperISR(cur_pid, pcb[cur_pid].sigint_handler_p);	
+			WrapperISR(pid, pcb[pid].sigint_handler_p);	
 		}
 		return;
 	}
@@ -306,7 +306,7 @@ void TermRxISR(int interface_num)
 		//3.b release the waiting process
 		pid = DeQ(&term_if[interface_num].rx_wait_q);
 		EnQ(pid, &ready_q);
-		pcb[cur_pid].state = READY;
+		pcb[pid].state = READY;
 	}
 	
 }
