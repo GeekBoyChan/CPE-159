@@ -25,6 +25,7 @@ typedef struct {
    int wake_time;
    state_t state;
    func_p_t sigint_handler_p;
+   int ppid;                           
 } pcb_t;                     
 
 typedef struct {                       // generic queue type
