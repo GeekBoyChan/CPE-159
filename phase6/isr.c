@@ -215,14 +215,16 @@ void SemPostISR(void)
 
 void TermISR(int index)
 {
-	if(inportb(term_if[index].io + IIR) == IIR_TXRDY)
+	int event = inportb(term_if[index].io + IIR;
+	if(event == IIR_TXRDY)
 	{
 		TermTxISR(index);
 	}
-	else if(inportb(term_if[index].io + IIR) == IIR_RXRDY)
+	else if(event == IIR_RXRDY)
 	{
 		TermRxISR(index);
 	}
+	
 	if(index == 0)
 	{
 		outportb(PIC_CONTROL, TERM0_DONE);
