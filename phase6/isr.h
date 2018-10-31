@@ -19,5 +19,8 @@ void SemPostISR(void);
 void TermISR(int index);
 void TermTxISR(int index);
 void TermRxISR(int interface_num);
+void SignalISR(void);
+void WrapperISR(int pid, func_p_t handler_p);
+
 
 #endif
