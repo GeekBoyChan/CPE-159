@@ -96,7 +96,7 @@ void TermProc(void)
 	char str[3];
 	char buff[BUFF_SIZE];
 	
-	Signal(SIGINT, Ouch());
+	Signal(SIGINT, (int)Ouch);
 	
 	my_pid = GetPid();
 
