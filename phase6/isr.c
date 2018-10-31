@@ -305,18 +305,25 @@ void TermRxISR(int interface_num)
 void SignalISR(void)
 {
 	//register the handler address to the PCB
-	pcb[cur_pid].sigint_handler_p = pcb[cur_pid].TF_p->ebx; 
+	pcb[cur_pid].sigint_handler_p = (func_p_t)pcb[cur_pid].TF_p->ebx; 
 }
 void WrapperISR(int pid, func_p_t handler_p)
 {
+	int *p1, *p2;
+	*p1 = (int) handler_p;
+	*p2 = (int) tmp.eip;
 	//copy process trapframe to a temporary trapframe (local)
 	tmp = *pcb[pid].TF_p;
 	//lower the trapframe location info (in PCB) by 8 bytes
-	pcb[pid].TF_p -= 8;
+	(int)pcb[pid].TF_p -= 8;
 	//copy temporary trapframe to the new lowered location
 	*pcb[pid].TF_p = tmp;
 	//the vacated 8 bytes: put 'handler_p,' and 'eip' of
         //the old trapframe there
-	
+	(int)pcb[pid].TF_p += 8;
+	*pcb[pid].TF_p = handler_p;
+	(int)pcb[pid].TF_p -= 4;
+	*pcb[pid].TF_p = tmp.eip;
 	//change 'eip' in the moved trapframe to Wrapper() address
+	pcb[pid].TF_p->eip = get_eip;
 }
