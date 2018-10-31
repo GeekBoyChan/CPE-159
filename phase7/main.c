@@ -1,5 +1,5 @@
 // main.c, 159
-// OS bootstrap and The Kernel for OS phase 6
+// OS bootstrap and The Kernel for OS phase 7
 //
 // Team Name: LIGMAOS (Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso)
 
