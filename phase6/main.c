@@ -26,7 +26,6 @@ q_t rx_wait_q;                      // for PID waiting for term KB input
 
 void TermInit(int which)
 {
-   int i;
    // Clear terminal interface
    if(which == 0)
    {
