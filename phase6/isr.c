@@ -251,7 +251,7 @@ void TermTxISR(int index)
 		//Release waiting proc from tx_wait_q (3 steps)
 		pid = DeQ(&term_if[index].tx_wait_q);
 		EnQ(pid, &ready_q);
-		pcb[pid].state = READY;
+		pcb[cur_pid].state = READY;
 	}
 }
 
