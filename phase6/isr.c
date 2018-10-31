@@ -263,7 +263,7 @@ void TermRxISR(int interface_num)
 	//1. read the character in from the 'io' of the terminal interface
 	char in = inportb(term_if[interface_num].io);
 	//2. if the character is NOT '\n' or '\r' (not Enter or Return):
-	if(!(in == '\n' || in == '\r'))
+	if(!(in == '\n' || in == '\r' || in==3))
 	{
 		//2.a. write it back to the 'io' of the interface (echo)
 		outportb(term_if[interface_num].io, in);
