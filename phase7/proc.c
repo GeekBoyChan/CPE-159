@@ -94,7 +94,11 @@ void Ouch(void)
 /* Coding Hint #1
 void ChildCode(void) 
 {  // child proc runs this
-      1. get my PID
+      int my_pid;		//1. get my PID
+      
+      my_pid = GetPid();
+      
+      
       2. get parent's PID using new syscall
       3. build a string based on my PID
       4. loop forever:
