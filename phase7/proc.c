@@ -91,20 +91,35 @@ void Ouch(void)
 	Write(device, "Ouch, don't touch that! \n\r");
 }
 
-/* Coding Hint #1
 void ChildCode(void) 
 {  // child proc runs this
-      int my_pid;		//1. get my PID
+      int my_pid, p_pid, device;
+      char str[3];
+  
+      my_pid = GetPid();	//1. get my PID
       
-      my_pid = GetPid();
+      p_pid = GetPpid();	//2. get parent's PID using new syscall
       
+      				//3. build a string based on my PID
+      str[0] = '0' + my_pid/10; 	//print the first digit of mypid
+      str[1] = '0' + my_pid%10; 	//print the second digit of mypid
+      str[2] = ':';
+      str[3] = '\0';
       
-      2. get parent's PID using new syscall
-      3. build a string based on my PID
-      4. loop forever:
-         a. show the msg (see demo) to the same terminal as the parent
-         b. and sleep for 3 seconds
+      device = my_pid % 2; 		// if 0 TERM0, if 1 TERM1
+	if (device == 0)
+		device = TERM0;
+	if (device == 1)
+		device = TERM1;
+		
+      while(1)				//4. loop forever:
+      {
+      		Write(device, "");	//a. show the msg (see demo) to the same terminal as the parent
+      		Sleep(3);		//b. and sleep for 3 seconds
+      }
 }
+
+/*
 void TermProc(void) {
 	... get my PID and build a string as before ...
 	loop: 
@@ -125,7 +140,7 @@ void TermProc(void) {
 
 void TermProc(void)
 {
-	int my_pid, device, i;
+	int my_pid, device, i, comp, c_pid;
 	char str[3];
 	char buff[BUFF_SIZE];
 	
@@ -146,13 +161,26 @@ void TermProc(void)
 	
 	while(1)
 	{
-		i = 0;
+		Sleep(1);
 		Write(device, str);		// Print
 		Write(device,"Enter: ");	// Prompt to enter characters
 		Read(device, buff);		// Read what was entered
 		Write(device,"\n\rEntered: ");
 		Write(device, buff);		// Print what was entered
 		Write(device, "\n\r");
+		
+		comp = StrComp(buff,fork);
+		
+		if(comp == 1)
+		{
+			c_pid = Fork();
+			if (c_pid == -1)
+				Wrtie(device, "Error message");
+			if (c_pid == 0)
+				ChildCode();
+			
+		}
+		
 		
 	}
 }
