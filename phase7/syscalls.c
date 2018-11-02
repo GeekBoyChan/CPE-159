@@ -105,11 +105,24 @@ void Signal(int sig_num, func_p_t p) {
 
 int GetPpid(void) 
 {
-   //will return parent PID (similar to the get PID call)
+   int pid;
+
+   asm("movl %1, %%eax;       // service #20 (GETPID)
+        int $128;             // interrupt!
+        movl %%ebx, %0"       // after, copy eax to variable 'pid'
+       : "=g" (pid)           // output
+       : "g" (GETPPID)         // input
+       : "eax", "ebx"         // used registers
+    );
+
+   return pid;
 }
    
 int Fork(void)
 {
+   int pid
+   asm("movl %1, %%eax;
+       
    //Returns the new child PID for the parent
    //process, and 0 for the child; or -1 if running out of PID
 }
