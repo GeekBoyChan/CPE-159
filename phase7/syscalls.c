@@ -120,11 +120,11 @@ int GetPpid(void)
    
 int Fork(void)
 {
-   int pid
+   int pid;
    asm("movl %1, %%eax;
        int $128;             // interrupt!
         movl %%ebx, %0"       // after, copy eax to variable 'pid'
-       : "=g" (pid)           // output
+       : "=g" (pid)          // output
        : "g" (FORK)         // input
        : "eax", "ebx"         // used registers
    );
