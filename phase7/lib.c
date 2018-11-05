@@ -79,9 +79,30 @@ int StrCmp(char *s1, char *s2)
 }
 
 /*
+int StrCmp(char *s1, char *s2)
+{
+   // Returns 1 if two strings are the same, otherwise 0
+   int same = 1;
+   char * ptr1 = s1;
+   char * ptr2 = s2;
+   
+   while((ptr1 != '\0') && (ptr2 != '\0'))
+   {
+      if (ptr1 != ptr2)
+      {
+         same = 0;
+      }
+      else
+      {
+         ptr1++;
+         ptr2++;
+      }
+   return same;
+}
+*/ 
+
 void MemCpy(char *dst, char *src, int size)
 {
-   which copies 'size' bytes from memory location 'src' to location 'dst'
-   
+   // Copies 'size' bytes from memory location 'src' to location 'dst'
 }
-*/
+
