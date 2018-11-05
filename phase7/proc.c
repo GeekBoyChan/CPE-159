@@ -106,7 +106,7 @@ void ChildCode(void)
       str[2] = ':';
       str[3] = '\0';
       
-      device = my_pid % 2; 		// if 0 TERM0, if 1 TERM1
+      device = p_pid % 2; 		// if 0 TERM0, if 1 TERM1
 	if (device == 0)
 		device = TERM0;
 	if (device == 1)
@@ -114,7 +114,7 @@ void ChildCode(void)
 		
       while(1)				//4. loop forever:
       {
-      		Write(device, "");	//a. show the msg (see demo) to the same terminal as the parent
+      		Write(device, "Show a message");	//a. show the msg (see demo) to the same terminal as the parent
       		Sleep(3);		//b. and sleep for 3 seconds
       }
 }
