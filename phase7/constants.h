@@ -55,6 +55,6 @@
 
 // Added for Phase 7
 #define FORK 2              // fork service #
-#define GETPPID             // get parent pid service #
+#define GETPPID 64            // get parent pid service #
 
 #endif
