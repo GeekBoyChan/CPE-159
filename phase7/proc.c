@@ -142,7 +142,7 @@ void TermProc(void) {
 void TermProc(void)
 {
 	int my_pid, device, comp, c_pid;
-	char str[3], fork[4];
+	char str[3], frk[4];
 	char buff[BUFF_SIZE];
 	
 	Signal(SIGINT,Ouch);
@@ -154,11 +154,11 @@ void TermProc(void)
 	str[2] = ':';
     	str[3] = '\0';
 	
-	fork[0] = 'f'; 		
-    	fork[1] = 'o'; 		
-	fork[2] = 'r';
-	fork[3] = 'k';
-    	fork[4] = '\0';
+	frk[0] = 'f'; 		
+    	frk[1] = 'o'; 		
+	frk[2] = 'r';
+	frk[3] = 'k';
+    	frk[4] = '\0';
 	
 	device = my_pid % 2; 		// if 0 TERM0, if 1 TERM1
 	if (device == 0)
@@ -176,7 +176,7 @@ void TermProc(void)
 		Write(device, buff);		// Print what was entered
 		Write(device, "\n\r");
 		
-		comp = StrCmp(buff,fork);
+		comp = StrCmp(buff,frk);
 		
 		if(comp == 1)
 		{
