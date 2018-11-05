@@ -350,7 +350,7 @@ void ForkISR(void)
       //if new child PID obtained is -1:
       //  1. show on TargetPC: Kernel Panic: no more process!
       //  2. just return
-      if(cpid == 1)
+      if(cpid == -1)
       {
 	      cons_printf("Kernel Panic: no more process!");
 	      return;
