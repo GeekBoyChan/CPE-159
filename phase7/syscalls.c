@@ -122,7 +122,12 @@ int Fork(void)
 {
    int pid
    asm("movl %1, %%eax;
-       
-   //Returns the new child PID for the parent
-   //process, and 0 for the child; or -1 if running out of PID
+       int $128;             // interrupt!
+        movl %%ebx, %0"       // after, copy eax to variable 'pid'
+       : "=g" (pid)           // output
+       : "g" (FORK)         // input
+       : "eax", "ebx"         // used registers
+   );
+   return pid;
+   //Returns the new child PID for the parent process, and 0 for the child; or -1 if running out of PID
 }
