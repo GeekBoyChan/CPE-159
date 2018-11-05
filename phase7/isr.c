@@ -347,7 +347,7 @@ void ForkISR(void)
       //the ebx of calling process trapframe (for Fork() to return)
       int cpid = pcb[cur_pid].TF_p->ebx = DeQ(&avail_q);
 	int adj;
-	int p*
+	int p*;
       //if new child PID obtained is -1:
       //  1. show on TargetPC: Kernel Panic: no more process!
       //  2. just return
