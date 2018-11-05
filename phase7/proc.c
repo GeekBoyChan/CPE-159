@@ -10,6 +10,7 @@
 #include "syscalls.h"
 #include "data.h"
 #include "types.h"
+#include "lib.h"
 
 void InitProc(void) {
    int i;
