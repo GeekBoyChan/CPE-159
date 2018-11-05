@@ -345,7 +345,7 @@ void ForkISR(void)
 {
       //get (DeQ) a new child PID and put it into
       //the ebx of calling process trapframe (for Fork() to return)
-      int cpid = pcb[cur_pid].TF_p->ebx = Deq(&abail_q);
+      int cpid = pcb[cur_pid].TF_p->ebx = DeQ(&avail_q);
 
       //if new child PID obtained is -1:
       //  1. show on TargetPC: Kernel Panic: no more process!
@@ -363,7 +363,7 @@ void ForkISR(void)
       //enqueue its PID to ready queue
 	EnQ(cpid, &ready_q);
       //set its ppid to the parent PID
-      	pcb[ppid] = GetPpidISr();
+      	pcb[ppid] = GetPpidISR();
       //copy its parent's runtime stack
 	stack[cpid] = stack[ppid];
       //calc the location distance between the two stacks, and
