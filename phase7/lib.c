@@ -103,7 +103,9 @@ int StrCmp(char *s1, char *s2)
          ptr1++;
          ptr2++;
       }
+   }
    return same;
+   
 }
 
 
@@ -112,8 +114,9 @@ void MemCpy(char *dst, char *src, int size)
    // Copies 'size' bytes from memory location 'src' to location 'dst'
    char *source = (char *)src;
    char *dest = (char *)dst;
+   int i;
    
-   for(int i =0; i<size; i++)
+   for(i =0; i<size; i++)
    {
       dest[i] = source[i];
    }
