@@ -365,9 +365,10 @@ void ForkISR(void)
       //set its ppid to the parent PID
       	pcb[cpid].ppid = GetPpidISR();
       //copy its parent's runtime stack
-	stack[cpid] = stack[ppid];
+	stack[cpid] = stack[pcb[cpid].ppid];
       //calc the location distance between the two stacks, and
-	int adj = &stack[cpid][0] - &stack[cur_pid][0];
+	int adj, *p;
+	adj = &stack[cpid][0] - &stack[cur_pid][0];
       //apply the distance to the child's TF_p
 	pcb[cpid].TF_p += adj;
       //then set ebx of its trapframe to 0 (child process gets 0 from Fork())
@@ -379,7 +380,7 @@ void ForkISR(void)
 	pcb[cpid].TF_p ->edi += adj;
       //(change all ebp if currently in a nested call stack:)
       //use an integer pointer p, set it to ebp (caller EBP)
-	int *p = pcb[cpid].TF_p ->ebp;
+	*p = pcb[cpid].TF_p ->ebp;
       //loop: if what p points to is not 0:
       //   adjust what it points to with the distance
       //   change p to what it points (caller EBP still)
