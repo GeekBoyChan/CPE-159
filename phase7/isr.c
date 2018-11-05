@@ -363,7 +363,7 @@ void ForkISR(void)
       //enqueue its PID to ready queue
 	EnQ(cpid, &ready_q);
       //set its ppid to the parent PID
-      	pcb[cur_pid].ppid = GetPpidISR();
+      	pcb[cpid].ppid = GetPpidISR();
       //copy its parent's runtime stack
 	stack[cpid] = stack[ppid];
       //calc the location distance between the two stacks, and
