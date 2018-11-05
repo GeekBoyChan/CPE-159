@@ -155,6 +155,9 @@ void TermProc(void)
 	str[2] = ':';
     	str[3] = '\0';
 	
+	//I think this should be alright
+	//frk = "fork";
+	
 	frk[0] = 'f'; 		
     	frk[1] = 'o'; 		
 	frk[2] = 'r';
@@ -181,6 +184,11 @@ void TermProc(void)
 		
 		if(comp == 1)
 		{
+			// TESTING Start
+			SetVideo(my_pid+1,1);         //set video cursor to beginning of my row
+			Write(STDOUT, "TermProc: for read successfully");
+			// TESTING End
+			
 			c_pid = Fork();
 			if (c_pid == -1)
 				Write(device, "Error message");
