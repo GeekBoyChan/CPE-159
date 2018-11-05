@@ -114,7 +114,8 @@ void ChildCode(void)
 		
       while(1)				//4. loop forever:
       {
-      		Write(device, "Show a message");	//a. show the msg (see demo) to the same terminal as the parent
+      		Write(device, "I am child pid: ");	//a. show the msg (see demo) to the same terminal as the parent
+	      	Write(device, str);
       		Sleep(3);		//b. and sleep for 3 seconds
       }
 }
