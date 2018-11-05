@@ -70,15 +70,21 @@ void EnQ(int to_add, q_t *p)
 }
 
 //Coding Hint #5
+/*
 int StrCmp(char *s1, char *s2)
 {
-   if (s1 == s2)
-      return 1;
-   else 
-      return 0;
+   int i;
+   for(i = 0; s1[i] && s2[i]; i++)
+   {
+      if(s1[i] != s2[i])
+      {
+         return 0;
+      }
+   }
+   return 1;
 }
+*/
 
-/*
 int StrCmp(char *s1, char *s2)
 {
    // Returns 1 if two strings are the same, otherwise 0
@@ -99,10 +105,17 @@ int StrCmp(char *s1, char *s2)
       }
    return same;
 }
-*/ 
+
 
 void MemCpy(char *dst, char *src, int size)
 {
    // Copies 'size' bytes from memory location 'src' to location 'dst'
+   char *source = (char *)src;
+   char *dest = (char *)dst;
+   
+   for(int i =0; i<size; i++)
+   {
+      dest[i] = source[i];
+   }
 }
 
