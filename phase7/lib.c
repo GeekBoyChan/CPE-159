@@ -69,13 +69,19 @@ void EnQ(int to_add, q_t *p)
    return;
 }
 
-/* Coding Hint #5
+//Coding Hint #5
 int StrCmp(char *s1, char *s2)
 {
-   which returns 1 if two strings are the same, otherwise 0
+   if (s1 == s2)
+      return 1;
+   else 
+      return 0;
 }
+
+/*
 void MemCpy(char *dst, char *src, int size)
 {
    which copies 'size' bytes from memory location 'src' to location 'dst'
+   
 }
 */
