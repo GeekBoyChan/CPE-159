@@ -141,7 +141,7 @@ void TermProc(void) {
 
 void TermProc(void)
 {
-	int my_pid, device, i, comp, c_pid;
+	int my_pid, device, comp, c_pid;
 	char str[3], fork[4];
 	char buff[BUFF_SIZE];
 	
@@ -176,13 +176,13 @@ void TermProc(void)
 		Write(device, buff);		// Print what was entered
 		Write(device, "\n\r");
 		
-		comp = StrComp(buff,fork);
+		comp = StrCmp(buff,fork);
 		
 		if(comp == 1)
 		{
 			c_pid = Fork();
 			if (c_pid == -1)
-				Wrtie(device, "Error message");
+				Write(device, "Error message");
 			if (c_pid == 0)
 				ChildCode();
 			
