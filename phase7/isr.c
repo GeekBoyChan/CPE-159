@@ -336,13 +336,14 @@ void WrapperISR(int pid, func_p_t handler_p)
 	pcb[pid].TF_p->eip = (int)Wrapper;
 }
 
-/* Coding Hint #4
+Coding Hint #4
 void GetPpidISR(void) 
 {
-      similar to the get PID ISR
+       pcb[p_pid].TF_p->ebx = p_pid; 
 }
 
-void ForkISR(void) 
+//Coding Hint #4
+/*void ForkISR(void) 
 {
       get (DeQ) a new child PID and put it into
       the ebx of calling process trapframe (for Fork() to return)
