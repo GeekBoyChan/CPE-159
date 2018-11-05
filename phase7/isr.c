@@ -366,7 +366,7 @@ void ForkISR(void)
       //set its ppid to the parent PID
       	pcb[cpid].ppid = GetPpid();
       //copy its parent's runtime stack
-	stack[cpid] = stack[pcb[cpid].ppid];
+	MemCpy(stack[cpid], stack[pcb[cpid].ppid], STACK_SIZE);
       //calc the location distance between the two stacks, and
 	adj = &stack[cpid][0] - &stack[cur_pid][0];
       //apply the distance to the child's TF_p
