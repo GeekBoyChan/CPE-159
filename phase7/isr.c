@@ -338,7 +338,7 @@ void WrapperISR(int pid, func_p_t handler_p)
 
 void GetPpidISR(void) 
 {
-       pcb[p_pid].TF_p->ebx = p_pid; 
+       pcb[p_pid].TF_p->ebx = cur_pid; 
 }
 
 void ForkISR(void) 
