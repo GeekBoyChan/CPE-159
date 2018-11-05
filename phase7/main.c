@@ -161,6 +161,12 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
       case SIGNAL:
          SignalISR();
          break;
+      case GETPPID:
+         GetPpidISR();
+         break;
+      case FORK:
+         ForkISR();
+         break;
    }
 
    if (cons_kbhit()) 
