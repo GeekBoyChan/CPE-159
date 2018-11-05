@@ -338,7 +338,7 @@ void WrapperISR(int pid, func_p_t handler_p)
 
 void GetPpidISR(void) 
 {
-       pcb[p_pid].TF_p->ebx = cur_pid; 
+       pcb[cur_pid].TF_p->ebx = pcb[cur_pid].ppid; 
 }
 
 void ForkISR(void) 
@@ -363,11 +363,11 @@ void ForkISR(void)
       //enqueue its PID to ready queue
 	EnQ(cpid, &ready_q);
       //set its ppid to the parent PID
-      	pcb[ppid] = GetPpidISR();
+      	pcb[cur_pid].ppid = GetPpidISR();
       //copy its parent's runtime stack
 	stack[cpid] = stack[ppid];
       //calc the location distance between the two stacks, and
-	int adj = &stack[cpid][0] - &stack[cur_pid][0]
+	int adj = &stack[cpid][0] - &stack[cur_pid][0];
       //apply the distance to the child's TF_p
 	pcb[cpid].TF_p += adj;
       //then set ebx of its trapframe to 0 (child process gets 0 from Fork())
