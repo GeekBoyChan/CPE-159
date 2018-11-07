@@ -343,16 +343,14 @@ void GetPpidISR(void)
 
 void ForkISR(void) 
 {
-	//cons_printf("We made it to ForkISR!!!\n");
-	//return;
       //get (DeQ) a new child PID and put it into
       //the ebx of calling process trapframe (for Fork() to return)
       int cpid;
-	int adj;
-	int *p;
+      int adj;
+      int *p;
 	
-	cpid = DeQ(&avail_q);
-	pcb[cur_pid].TF_p -> ebx = cpid;
+      cpid = DeQ(&avail_q);
+      pcb[cur_pid].TF_p -> ebx = cpid;
       //if new child PID obtained is -1:
       //  1. show on TargetPC: Kernel Panic: no more process!
       //  2. just return
