@@ -72,7 +72,7 @@ void EnQ(int to_add, q_t *p)
 //Coding Hint #5
 int StrCmp(char *s1, char *s2)
 {
-   printf("We're inside StrCmp \n\r");
+   //printf("We're inside StrCmp \n\r");
    int i;
    for(i = 0; s1[i] && s2[i]; i++)
    {
