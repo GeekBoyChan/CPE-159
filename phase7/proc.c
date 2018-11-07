@@ -95,7 +95,7 @@ void Ouch(void)
 void ChildCode(void) 
 {  // child proc runs this
       int my_pid, p_pid, device;
-      char str[3];
+      char str[2];
   
       my_pid = GetPid();	//1. get my PID
       
@@ -104,8 +104,7 @@ void ChildCode(void)
       				//3. build a string based on my PID
       str[0] = '0' + my_pid/10; 	//print the first digit of mypid
       str[1] = '0' + my_pid%10; 	//print the second digit of mypid
-      str[2] = ':';
-      str[3] = '\0';
+      str[2] = '\0';
       
       device = p_pid % 2; 		// if 0 TERM0, if 1 TERM1
 	if (device == 0)
