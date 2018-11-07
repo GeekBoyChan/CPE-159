@@ -6,7 +6,7 @@
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
 // Phase 7
 
-#include "constants.h"        	// include only these 2 files
+#include "constants.h"        	
 #include "syscalls.h"
 #include "data.h"
 #include "types.h"
@@ -97,11 +97,11 @@ void ChildCode(void)
       int my_pid, p_pid, device;
       char str[3];
   
-      my_pid = GetPid();	//1. get my PID
+      my_pid = GetPid();		//1. get my PID
       
-      p_pid = GetPpid();	//2. get parent's PID using new syscall
+      p_pid = GetPpid();		//2. get parent's PID using new syscall
       
-      				//3. build a string based on my PID
+      					//3. build a string based on my PID
       str[0] = '0' + my_pid/10; 	//print the first digit of mypid
       str[1] = '0' + my_pid%10; 	//print the second digit of mypid
       str[2] = ' ';
@@ -118,28 +118,9 @@ void ChildCode(void)
       		Write(device, "I am child pid: ");	//a. show the msg (see demo) to the same terminal as the parent
 	      	Write(device, str);
 	      	Write(device, "\n\r");
-	      	Sleep(3);		//b. and sleep for 3 seconds
+	      	Sleep(3);				//b. and sleep for 3 seconds
       }
 }
-
-/*
-void TermProc(void) {
-	... get my PID and build a string as before ...
-	loop: 
-	{
-	sleep for 1 second
-	prompt and read input from terminal (as before)
-	show input (as before)
-	use new StrCmp() to compare if what entered is "fork"
-	if so, 
-	{
-	    1. new call Fork() to create process and return the new child pid
-	    2. if pid returned is:
-	       a. -1, show an error message onto terminal: OS failed to fork!
-	       b. 0, (child process) call ChildCode() instead
-	}
-}
-*/
 
 void TermProc(void)
 {
