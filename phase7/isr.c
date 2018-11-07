@@ -404,7 +404,7 @@ void ForkISR(void)
 		if(*p != 0)
 		{
 			*p += adj;
-			p = (int *) p;
+			p = (int *) *p;
 			goto loop;
 		}
 
