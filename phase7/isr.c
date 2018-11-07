@@ -343,9 +343,8 @@ void GetPpidISR(void)
 
 void ForkISR(void) 
 {
-	cons_printf("We made it to ForkISR!!!\n");
-	return;
-	/*
+	//cons_printf("We made it to ForkISR!!!\n");
+	//return;
       //get (DeQ) a new child PID and put it into
       //the ebx of calling process trapframe (for Fork() to return)
       int cpid = pcb[cur_pid].TF_p->ebx = DeQ(&avail_q);
@@ -406,6 +405,6 @@ void ForkISR(void)
 			*p = pcb[cpid].TF_p ->ebp;
 			goto loop;
 		}
-		*/
+
 }
 	 
