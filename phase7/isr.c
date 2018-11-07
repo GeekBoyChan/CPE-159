@@ -402,7 +402,7 @@ void ForkISR(void)
       //   jmp loop
 	while(*p)
 	{
-		*p -= adj;
+		*p += adj;
 		p = (int *) *p;
 	}
 		
