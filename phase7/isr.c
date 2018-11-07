@@ -343,7 +343,7 @@ void GetPpidISR(void)
 
 void ForkISR(void) 
 {
-	cons_printf("We made it to ForkISR!!!");
+	cons_printf("We made it to ForkISR!!!\n");
 	return;
 	/*
       //get (DeQ) a new child PID and put it into
