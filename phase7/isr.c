@@ -400,13 +400,11 @@ void ForkISR(void)
       //   adjust what it points to with the distance
       //   change p to what it points (caller EBP still)
       //   jmp loop
-	loop:
-		if(*p != 0)
-		{
-			*p += adj;
-			p = (int *) *p;
-			goto loop;
-		}
-
+	while(*p)
+	{
+		*p += adj;
+		p = (int *) *p;
+	}
+		
 }
 	 
