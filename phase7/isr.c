@@ -378,10 +378,10 @@ void ForkISR(void)
 	MemCpy(stack[cpid], stack[pcb[cpid].ppid], STACK_SIZE);
 	
       //calc the location distance between the two stacks, and
-	adj = &stack[cpid][0] - &stack[cur_pid][0];
+	adj = stack[cpid] - stack[cur_pid];
 	
       //apply the distance to the child's TF_p
-	pcb[cpid].TF_p += adj;
+	(int)pcb[cpid].TF_p += adj;
 	
       //then set ebx of its trapframe to 0 (child process gets 0 from Fork())
 	pcb[cpid].TF_p -> ebx = 0;
@@ -394,7 +394,7 @@ void ForkISR(void)
 	
       //(change all ebp if currently in a nested call stack:)
       //use an integer pointer p, set it to ebp (caller EBP)
-	p =(int*)pcb[cpid].TF_p ->ebp;
+	p =(int *)pcb[cpid].TF_p ->ebp;
 	
       //loop: if what p points to is not 0:
       //   adjust what it points to with the distance
@@ -402,7 +402,7 @@ void ForkISR(void)
       //   jmp loop
 	while(*p)
 	{
-		*p += adj;
+		*p -= adj;
 		p = (int *) *p;
 	}
 		
