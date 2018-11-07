@@ -87,6 +87,7 @@ int StrCmp(char *s1, char *s2)
 
 int StrCmp(char *s1, char *s2)
 {
+   cons_printf("We're inside StrCmp \n\r");
    // Returns 1 if two strings are the same, otherwise 0
    int same = 1;
    char * ptr1 = s1;
