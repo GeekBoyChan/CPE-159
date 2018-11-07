@@ -69,7 +69,6 @@ void EnQ(int to_add, q_t *p)
    return;
 }
 
-//Coding Hint #5
 int StrCmp(char *s1, char *s2)
 {
    //printf("We're inside StrCmp \n\r");
@@ -85,34 +84,7 @@ int StrCmp(char *s1, char *s2)
 }
 
 
-/*
-int StrCmp(char *s1, char *s2)
-{
-   // Returns 1 if two strings are the same, otherwise 0
-   int same;
-   same = 1;
-   char *ptr1;
-   char *ptr2;
-   *ptr1 = s1;
-   *ptr2 = s2;
-   printf("We're inside StrCmp \n\r");
-   
-   while((ptr1 != '\0') && (ptr2 != '\0'))
-   {
-      if (ptr1 != ptr2)
-      {
-         same = 0;
-      }
-      else
-      {
-         ptr1++;
-         ptr2++;
-      }
-   }
-   return same;
-   
-}
-*/
+
 
 void MemCpy(char *dst, char *src, int size)
 {
