@@ -116,7 +116,7 @@ void ChildCode(void)
       {
       		Write(device, "I am child pid: ");	//a. show the msg (see demo) to the same terminal as the parent
 	      	Write(device, str);
-	      	Sleep(1);		//b. and sleep for 3 seconds
+	      	Sleep(5);		//b. and sleep for 3 seconds
       }
 }
 
