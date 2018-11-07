@@ -157,11 +157,6 @@ void TermProc(void)
 		
 		if(comp == 1)
 		{
-			// TESTING Start
-			SetVideo(my_pid+1,1);         //set video cursor to beginning of my row
-			Write(STDOUT, "TermProc: for read successfully");
-			// TESTING End
-			
 			c_pid = Fork();
 			if (c_pid == -1)
 				Write(device, "Error message");
