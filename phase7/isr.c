@@ -372,7 +372,7 @@ void ForkISR(void)
 	EnQ(cpid, &ready_q);
 	
       //set its ppid to the parent PID
-      	pcb[cpid].ppid = pcb[cur_pid].ppid;
+      	pcb[cpid].ppid = cur_pid;
 	
       //copy its parent's runtime stack
 	MemCpy(stack[cpid], stack[pcb[cpid].ppid], STACK_SIZE);
