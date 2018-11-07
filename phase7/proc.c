@@ -153,7 +153,7 @@ void TermProc(void)
     	str[0] = '0' + my_pid/10; 	//print the first digit of mypid
     	str[1] = '0' + my_pid%10; 	//print the second digit of mypid
 	str[2] = ':';
-    	str[3] = '\0'
+    	str[3] = '\0';
 	
 	device = my_pid % 2; 		// if 0 TERM0, if 1 TERM1
 	if (device == 0)
