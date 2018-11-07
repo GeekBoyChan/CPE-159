@@ -125,5 +125,6 @@ void MemCpy(char *dst, char *src, int size)
    {
       dest[i] = source[i];
    }
+   return;
 }
 
