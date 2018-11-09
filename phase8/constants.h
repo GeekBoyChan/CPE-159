@@ -57,4 +57,9 @@
 #define FORK 2              // fork service #
 #define GETPPID 64            // get parent pid service #
 
+// Added for Phase 8
+#define WAITCALL 7   // syscall/service ID
+#define EXIT 1       // sysacll/service ID
+#define SIGCHLD 17   // new signal name for event of child exiting
+
 #endif
