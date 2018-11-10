@@ -23,6 +23,7 @@ int car_sem;                        // to hold a semaphore ID for testing
 term_if_t term_if[TERM_MAX];        // Terminal interface
 char *rx_p;                         // point to inside the buffer
 q_t rx_wait_q;                      // for PID waiting for term KB input
+q_t wait_q;                         // to Enq parents calling wait and got blocked
 
 void TermInit(int which)
 {
