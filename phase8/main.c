@@ -167,6 +167,12 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
       case FORK:
          ForkISR();
          break;
+         case WAITCALL:
+         WaitISR();
+         break;
+         case EXIT:
+         ExitISR();
+         break;
    }
 
    if (cons_kbhit()) 
