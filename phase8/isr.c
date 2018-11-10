@@ -406,3 +406,84 @@ void ForkISR(void)
 		
 }
 	 
+void ExitISR(void)
+{
+	int ppid, ec, *ec_p;
+	//get ec = ... (see where syscall put it)
+	ec = ...;
+	//get ppid = ...
+	ppid = pcb[cur_pid].ppid;
+	
+	//call InQ() to check if my parent is in the new wait_q   // child exits early?
+        //if not:
+	if()
+	{
+         	//1. alter child's state to ?  // use this unsanitory name because...
+		pcb[cpid].state = ZOMBIE;
+         	//2. reset cur_pid to ?        // can no longer run
+		cur_pid = -1;
+         	//3. if my parent has requested a SIGCHLD handler:
+		if(pcb[ppid].sigint_handler_p == SIGCHILD)
+		{
+         		//4. call WrapperISR(...) to alter parent's runtime direction
+			WrapperISR(ppid, pcb[ppid].sigint_handler_p);
+		}
+         	//5. return
+		return;
+	}
+
+      //(yes) call DelQ() to delete parent from wait_q
+	DeQ(&wait_q);
+      //instead, enqueue it to ? queue
+	EnQ(ppid, &ready_q);
+      //alter its state to ?
+	pcb[ppid].state = READY;
+      //give parent:
+         //1. PID of child exited
+         //2. child's exit code
+
+      //reclaim child's PID:
+         //1. enqueue its PID to ? queue
+		EnQ(cur_pid, &avail_q);
+         //2. alter its state to ?
+		pcb[cpid].state = READY;
+         //3. reset cur_pid to ?
+		cur_pid = -1;
+}
+
+void WaitISR(void)
+{
+	int cpid, *ec_p;
+	//loop thru each PCB:
+	for(cpid = 0; cpid < PROC_MAX; cpid++)
+	{
+         //if the state is ZOMBIE and the ppid is cur_pid: break loop (found a zombie child)
+		if(pcb[cpid].state == ZOMBIE && pcb[cpid].ppid == cur_pid)
+		{
+			break;
+		}
+	}
+
+	//if loop index is over PCB array index (not found):
+	if(cpid == PROC_MAX)
+	{
+         //1. queue cur_pid to wait_q
+		EnQ(cur_pid, &wait_q);
+         //2. alter cur_pid state to ?
+		pcb[cur_pid].state = WAIT;
+         //3. reset cur_pid to ?
+		cur_pid = -1;
+         //4. return
+		return;
+	}
+
+      //fetch for cur_pid:
+         //1. its exit code (use ec_p, set it by what syscall provides)
+         //2. PID of child exited (pass it via in TF for syscall to fetch)
+
+      //reclaim child's PID:
+         //1. enqueue its PID to ? queue
+	EnQ(cpid, &avail_q);
+         //2. alter its state to ?
+	pcb[cpid].state = READY;
+}
