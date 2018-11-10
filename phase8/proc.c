@@ -113,18 +113,38 @@ void ChildCode(void)
 	if (device == 1)
 		device = TERM1;
 		
-      while(1)				//4. loop forever:
-      {
-      		Write(device, "I am child pid: ");	//a. show the msg (see demo) to the same terminal as the parent
-	      	Write(device, str);
-	      	Write(device, "\n\r");
-	      	Sleep(3);				//b. and sleep for 3 seconds
-      }
+      Write(device, "\n\r");
+      Sleep(my_pid);
+      Exit(my_pid * 5);
+}
+
+void ChldHandler(void)
+{
+	int my_pid, ec;
+	
+	wait(ec);
+	
+	my_pid = GetPid();
+
+    	str[0] = '0' + my_pid/10; 	//print the first digit of mypid
+    	str[1] = '0' + my_pid%10; 	//print the second digit of mypid
+	str[2] = ':';
+    	str[3] = '\0';
+	
+	device = my_pid % 2; 		// if 0 TERM0, if 1 TERM1
+	if (device == 0)
+		device = TERM0;
+	if (device == 1)
+		device = TERM1;
+	
+	Write(device,"print info from wait");
+	Signal(SIGINT, ChldHandler);
+	
 }
 
 void TermProc(void)
 {
-	int my_pid, device, comp, c_pid;
+	int my_pid, device, fgcomp, bgcomp, c_pid, fg, ec;
 	char str[3];
 	char buff[BUFF_SIZE];
 	
@@ -145,7 +165,7 @@ void TermProc(void)
 	
 	while(1)
 	{
-		Sleep(1);
+		Sleep(2);
 		Write(device, str);		// Print
 		Write(device,"Enter: ");	// Prompt to enter characters
 		Read(device, buff);		// Read what was entered
@@ -153,18 +173,34 @@ void TermProc(void)
 		Write(device, buff);		// Print what was entered
 		Write(device, "\n\r");
 		
-		comp = StrCmp(buff,"fork");
+		fgcomp = StrCmp(buff,"fork");
+		bgcomp = Strcmp(buff, "fork&");
 		
-		if(comp == 1)
+		if(fgcomp == 1)
+			fg == 1;
+		
+		else if(bgcomp == 1)
+			fg == 0;
+		
+		if(fg == 1)
+			Signal(SIGINT, ChldHandler);
+		
+		c_pid = fork();
+		switch(c_pid)
 		{
-			c_pid = Fork();
-			if (c_pid == -1)
-				Write(device, "Error message");
-			if (c_pid == 0)
+			case -1:
+				Write(device, "OS failed to fork! \n\r");
+				break;
+			case 0:
 				ChildCode();
-			
+			default:
+				Sleep(my_pid * 2);
+				if(fg == 1)
+				{
+					Wait(c_pid);
+					Write(device, "Print infro from wait");
+				}
 		}
-		
 		
 	}
 }
