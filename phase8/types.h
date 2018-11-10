@@ -10,7 +10,7 @@
 
 typedef void (*func_p_t)(void); // void-return function pointer type
 
-typedef enum {AVAIL, READY, RUN, SLEEPY, WAIT} state_t;
+typedef enum {AVAIL, READY, RUN, SLEEPY, WAIT, ZOMBIE} state_t;
 
 typedef struct {
    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
