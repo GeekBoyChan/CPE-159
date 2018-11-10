@@ -23,5 +23,7 @@ void SignalISR(void);
 void WrapperISR(int pid, func_p_t handler_p);
 void GetPpidISR(void);
 void ForkISR(void);
+void ExitISR(void);
+void WaitISR(void);
 
 #endif
