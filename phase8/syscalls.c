@@ -131,3 +131,26 @@ int Fork(void)
    return pid;
    //Returns the new child PID for the parent process, and 0 for the child; or -1 if running out of PID
 }
+
+void Exit(int ec)
+{
+   asm("movl %0, %%eax;
+        movl %1, %%ebx;
+        int $128"
+        :
+        : "g"(EXIT), "g"(ec)
+        : "eax", "ebx");
+}
+   
+void Wait(int *ec_p)
+{
+   int cpid
+   asm("movl %1, %%eax;             //serive#
+        movl %2, %%ebx;             // passes
+        int $128;
+        movl %%ecx, %0"             //sem_od
+        : "=g" (cpid)             //output
+        : "g"(WAITCALL), "g"(ec_p)
+        : "eax", "ebx", "ecx");     //used registers
+   return cpid;
+}
