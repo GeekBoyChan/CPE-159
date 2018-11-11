@@ -168,10 +168,10 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
       case FORK:
          ForkISR();
          break;
-         case WAITCALL:
+      case WAITCALL:
          WaitISR();
          break;
-         case EXIT:
+      case EXIT:
          ExitISR();
          break;
    }
