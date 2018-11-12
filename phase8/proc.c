@@ -121,9 +121,9 @@ void ChildCode(void)
 
 void ChldHandler(void)
 {
-	int my_pid, cpid, ec;
+	int my_pid, cpid, ec, device;
 	
-	cpid = wait(ec);			//1. issue Wait() call to get PID and exit code from the exiting child
+	cpid = Wait(ec);			//1. issue Wait() call to get PID and exit code from the exiting child
 
 	my_pid = GetPid();		//2. get my PID to build str and determine device to Write()
 
@@ -187,7 +187,7 @@ void TermProc(void)
 			
 			Signal(SIGINT, ChldHandler); //if foreground running, call Signal to register my ChldHandler
 		
-		c_pid = fork();
+		c_pid = Fork();
 		switch(c_pid)
 		{
 			case -1:
