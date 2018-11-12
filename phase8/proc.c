@@ -176,7 +176,7 @@ void TermProc(void)
 		Write(device, "\n\r");
 		
 		fgcomp = StrCmp(buff,"fork");
-		bgcomp = Strcmp(buff, "fork&");
+		bgcomp = StrCmp(buff, "fork&");
 		
 		if(fgcomp == 1)
 			fg == 1;		//if entry is "fork" set fg = 1
