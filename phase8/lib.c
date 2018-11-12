@@ -83,8 +83,17 @@ int StrCmp(char *s1, char *s2)
    return 1;
 }
 
-
-
+int InQ(int in, q_t *p)
+{
+   int count = 0;
+   int * ptr = p->head;
+   while(count <= p->size-1)
+   {
+     if (*ptr == in) return 1;
+     ptr++;
+   }
+   return 0;
+}
 
 void MemCpy(char *dst, char *src, int size)
 {
