@@ -86,7 +86,7 @@ int StrCmp(char *s1, char *s2)
 int InQ(int in, q_t *p)
 {
    int count = 0;
-   int * ptr = p->head;
+   int * ptr = p->q[p->head];
    while(count <= p->size-1)
    {
      if (*ptr == in) return 1;
