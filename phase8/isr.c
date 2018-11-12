@@ -423,7 +423,7 @@ void ExitISR(void)
          	//2. reset cur_pid to ?        // can no longer run
 		cur_pid = -1;
          	//3. if my parent has requested a SIGCHLD handler:
-		if(pcb[ppid].sigint_handler_p == SIGCHILD)
+		if(pcb[ppid].sigint_handler_p == SIGCHLD)
 		{
          		//4. call WrapperISR(...) to alter parent's runtime direction
 			WrapperISR(ppid, pcb[ppid].sigint_handler_p);
@@ -481,7 +481,7 @@ void WaitISR(void)
 
       //fetch for cur_pid:
          //1. its exit code (use ec_p, set it by what syscall provides)
-		ec = pcb[cur_pid].TF_p->ebx;
+		ec_p = pcb[cur_pid].TF_p->ebx;
          //2. PID of child exited (pass it via in TF for syscall to fetch)
 		cpid = pcb[cur_pid].TF_p->ppid;
 
