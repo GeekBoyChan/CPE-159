@@ -142,7 +142,7 @@ void Exit(int ec)
         : "eax", "ebx");
 }
    
-void Wait(int *ec_p)
+int Wait(int *ec_p)
 {
    int cpid
    asm("movl %1, %%eax;             //serive#
