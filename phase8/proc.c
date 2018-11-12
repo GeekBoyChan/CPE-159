@@ -112,19 +112,20 @@ void ChildCode(void)
 		device = TERM0;
 	if (device == 1)
 		device = TERM1;
-		
+	
+      //... the same code except there's no loop in the end, just use these:	
       Write(device, "\n\r");
       Sleep(my_pid);
-      Exit(my_pid * 5);
+      Exit(my_pid * 5);			//// Exiting with a special exit number for parent to get
 }
 
 void ChldHandler(void)
 {
 	int my_pid, ec;
 	
-	wait(ec);
-	
-	my_pid = GetPid();
+	wait(ec);			//1. issue Wait() call to get PID and exit code from the exiting child
+
+	my_pid = GetPid();		//2. get my PID to build str and determine device to Write()
 
     	str[0] = '0' + my_pid/10; 	//print the first digit of mypid
     	str[1] = '0' + my_pid%10; 	//print the second digit of mypid
@@ -137,8 +138,8 @@ void ChldHandler(void)
 	if (device == 1)
 		device = TERM1;
 	
-	Write(device,"print info from wait");
-	Signal(SIGINT, ChldHandler);
+	Write(device,"print info from wait");	//3. issue several Write() calls to print info from Wait()
+	Signal(SIGINT, Ouch);		//4. issue Signal() call to cancel ChldHandler
 	
 }
 
@@ -177,28 +178,29 @@ void TermProc(void)
 		bgcomp = Strcmp(buff, "fork&");
 		
 		if(fgcomp == 1)
-			fg == 1;
+			fg == 1;		//if entry is "fork" set fg = 1
 		
 		else if(bgcomp == 1)
-			fg == 0;
+			fg == 0;		//else if entry is "fork&" set fg = 0
 		
 		if(fg == 1)
-			Signal(SIGINT, ChldHandler);
+			
+			Signal(SIGINT, ChldHandler); //if foreground running, call Signal to register my ChldHandler
 		
 		c_pid = fork();
 		switch(c_pid)
 		{
 			case -1:
-				Write(device, "OS failed to fork! \n\r");
+				Write(device, "OS failed to fork! \n\r"); //call Write to write to terminal:
 				break;
 			case 0:
-				ChildCode();
-			default:
-				Sleep(my_pid * 2);
-				if(fg == 1)
+				ChildCode();	//run ChildCode
+			default:		// parent does this
+				Sleep(my_pid * 2);	// TermProc PID 1 & 2, sleep 2 & 4 secs
+				if(fg == 1)	//if foreground running:	
 				{
-					Wait(c_pid);
-					Write(device, "Print infro from wait");
+					Wait(c_pid);	//1. call the new call Wait. Get child PID and exit code
+					Write(device, "Print infro from wait");		//2. issue several Write() calls to print info from Wait()
 				}
 		}
 		
