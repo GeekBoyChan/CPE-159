@@ -121,9 +121,9 @@ void ChildCode(void)
 
 void ChldHandler(void)
 {
-	int my_pid, ec;
+	int my_pid, cpid, ec;
 	
-	wait(ec);			//1. issue Wait() call to get PID and exit code from the exiting child
+	cpid = wait(ec);			//1. issue Wait() call to get PID and exit code from the exiting child
 
 	my_pid = GetPid();		//2. get my PID to build str and determine device to Write()
 
