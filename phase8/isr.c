@@ -416,7 +416,7 @@ void ExitISR(void)
 	
 	//call InQ() to check if my parent is in the new wait_q   // child exits early?
         //if not:
-	if()
+	if(!(InQ(ppid, &wait_q)))
 	{
          	//1. alter child's state to ?  // use this unsanitory name because...
 		pcb[cpid].state = ZOMBIE;
