@@ -410,7 +410,7 @@ void ExitISR(void)
 {
 	int ppid, ec, *ec_p;
 	//get ec = ... (see where syscall put it)
-	ec = ...;
+	ec = pcb[cur_pid].TF_p->ebx;
 	//get ppid = ...
 	ppid = pcb[cur_pid].ppid;
 	
@@ -434,14 +434,16 @@ void ExitISR(void)
 
       //(yes) call DelQ() to delete parent from wait_q
 	DeQ(&wait_q);
-      //instead, enqueue it to ? queue
+      //instead, enqueue it to ready queue
 	EnQ(ppid, &ready_q);
-      //alter its state to ?
+      //alter its state to ready
 	pcb[ppid].state = READY;
       //give parent:
          //1. PID of child exited
+	pcb[ppid].TF_p->ecx = cur_pid;
          //2. child's exit code
-
+	pcb[ppid].TF_p->ebx = ec;    
+		
       //reclaim child's PID:
          //1. enqueue its PID to ? queue
 		EnQ(cur_pid, &avail_q);
@@ -479,7 +481,9 @@ void WaitISR(void)
 
       //fetch for cur_pid:
          //1. its exit code (use ec_p, set it by what syscall provides)
+		ec = pcb[cur_pid].TF_p->ebx;
          //2. PID of child exited (pass it via in TF for syscall to fetch)
+		cpid = pcb[cur_pid].TF_p->ppid;
 
       //reclaim child's PID:
          //1. enqueue its PID to ? queue
