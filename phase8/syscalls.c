@@ -144,7 +144,7 @@ void Exit(int ec)
    
 int Wait(int *ec_p)
 {
-   int cpid
+   int cpid;
    asm("movl %1, %%eax;             //serive#
         movl %2, %%ebx;             // passes
         int $128;
