@@ -448,7 +448,7 @@ void ExitISR(void)
          //1. enqueue its PID to ? queue
 		EnQ(cur_pid, &avail_q);
          //2. alter its state to ?
-		pcb[cpid].state = READY;
+		pcb[cur_pid].state = READY;
          //3. reset cur_pid to ?
 		cur_pid = -1;
 }
