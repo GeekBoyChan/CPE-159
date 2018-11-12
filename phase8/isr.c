@@ -419,11 +419,11 @@ void ExitISR(void)
 	if(!(InQ(ppid, &wait_q)))
 	{
          	//1. alter child's state to ?  // use this unsanitory name because...
-		pcb[cpid].state = ZOMBIE;
+		pcb[cur_pid].state = ZOMBIE;
          	//2. reset cur_pid to ?        // can no longer run
 		cur_pid = -1;
          	//3. if my parent has requested a SIGCHLD handler:
-		if(pcb[ppid].sigint_handler_p == SIGCHLD)
+		if((int)pcb[ppid].sigint_handler_p == SIGCHLD)
 		{
          		//4. call WrapperISR(...) to alter parent's runtime direction
 			WrapperISR(ppid, pcb[ppid].sigint_handler_p);
@@ -481,9 +481,9 @@ void WaitISR(void)
 
       //fetch for cur_pid:
          //1. its exit code (use ec_p, set it by what syscall provides)
-		ec_p = pcb[cur_pid].TF_p->ebx;
+		ec_p = (int *)pcb[cur_pid].TF_p->ebx;
          //2. PID of child exited (pass it via in TF for syscall to fetch)
-		cpid = pcb[cur_pid].TF_p->ppid;
+		cpid = pcb[cur_pid].ppid;
 
       //reclaim child's PID:
          //1. enqueue its PID to ? queue
