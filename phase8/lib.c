@@ -91,6 +91,7 @@ int InQ(int in, q_t *p)
    {
      if (*ptr == in) return 1;
      ptr++;
+     count++;
    }
    return 0;
 }
