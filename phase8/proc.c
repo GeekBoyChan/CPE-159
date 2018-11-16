@@ -147,7 +147,8 @@ void ChldHandler(void)
 
 void TermProc(void)
 {
-	int my_pid, device, fgcomp, bgcomp, c_pid, fg, ec;
+	int my_pid, device, fgcomp, bgcomp, c_pid, fg;
+	int * ec;
 	char str[3];
 	char buff[BUFF_SIZE];
 	
@@ -180,10 +181,10 @@ void TermProc(void)
 		bgcomp = StrCmp(buff, "fork&");
 		
 		if(fgcomp == 1)
-			fg == 1;		//if entry is "fork" set fg = 1
+			fg = 1;		//if entry is "fork" set fg = 1
 		
 		else if(bgcomp == 1)
-			fg == 0;		//else if entry is "fork&" set fg = 0
+			fg = 0;		//else if entry is "fork&" set fg = 0
 		
 		if(fg == 1)
 			
@@ -201,7 +202,7 @@ void TermProc(void)
 				Sleep(my_pid * 2);	// TermProc PID 1 & 2, sleep 2 & 4 secs
 				if(fg == 1)	//if foreground running:	
 				{
-					Wait(c_pid);	//1. call the new call Wait. Get child PID and exit code
+					c_pid = Wait(ec);	//1. call the new call Wait. Get child PID and exit code
 					Write(device, "Print infro from wait");		//2. issue several Write() calls to print info from Wait()
 				}
 		}
