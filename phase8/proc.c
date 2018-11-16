@@ -113,6 +113,8 @@ void ChildCode(void)
 	if (device == 1)
 		device = TERM1;
 	
+	Write(device, "I am child pid: ");	//a. show the msg (see demo) to the same terminal as the parent
+	Write(device, str);
       //... the same code except there's no loop in the end, just use these:	
       Write(device, "\n\r");
       Sleep(my_pid);
@@ -140,7 +142,9 @@ void ChldHandler(void)
 	if (device == 1)
 		device = TERM1;
 	
-	Write(device,"print info from wait");	//3. issue several Write() calls to print info from Wait()
+	Write(device,"I'm child PID: ");	//3. issue several Write() calls to print info from Wait()
+	Write(device, str);
+	Write(device, "\n\r");
 	Signal(SIGINT, Ouch);		//4. issue Signal() call to cancel ChldHandler
 	
 }
@@ -149,7 +153,7 @@ void TermProc(void)
 {
 	int my_pid, device, fgcomp, bgcomp, c_pid, fg;
 	int * ec;
-	char str[3];
+	char str[3], frk[3], exc[3];
 	char buff[BUFF_SIZE];
 	
 	Signal(SIGINT,Ouch);
@@ -191,19 +195,37 @@ void TermProc(void)
 			Signal(SIGINT, ChldHandler); //if foreground running, call Signal to register my ChldHandler
 		
 		c_pid = Fork();
+		frk[0] = '0' + c_pid/10; 	//print the first digit of mypid
+    		frk[1] = '0' + c_pid%10; 	//print the second digit of mypid
+		frk[2] = ':';
+    		frk[3] = '\0';
+		
 		switch(c_pid)
 		{
 			case -1:
 				Write(device, "OS failed to fork! \n\r"); //call Write to write to terminal:
 				break;
 			case 0:
-				ChildCode();	//run ChildCode
-			default:		// parent does this
+				ChildCode();		//run ChildCode
+			default:			// parent does this
 				Sleep(my_pid * 2);	// TermProc PID 1 & 2, sleep 2 & 4 secs
-				if(fg == 1)	//if foreground running:	
+				if(fg == 1)		//if foreground running:	
 				{
 					c_pid = Wait(ec);	//1. call the new call Wait. Get child PID and exit code
-					Write(device, "Print infro from wait");		//2. issue several Write() calls to print info from Wait()
+					exc[0] = '0' + ec/10; 	//print the first digit of mypid
+    					exc[1] = '0' + ec%10; 	//print the second digit of mypid
+					exc[2] = ':';
+    					exc[3] = '\0';
+					
+					Write(device, "my_pid ");		//2. issue several Write() calls to print info from Wait()
+					Write(device, str);
+					Write(device, ", ");
+					Write(device, "cpid ");
+					Write(device, c_pid);
+					Write(device, ", ");
+					Write(device, "ec ");
+					Write(device, exc);
+					Write(device, "\n\r");
 				}
 		}
 		
