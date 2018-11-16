@@ -121,7 +121,8 @@ void ChildCode(void)
 
 void ChldHandler(void)
 {
-	int my_pid, cpid, ec, device;
+	int my_pid, cpid, device;
+	int * ec;
 	char str[3];
 	
 	cpid = Wait(ec);			//1. issue Wait() call to get PID and exit code from the exiting child
