@@ -212,8 +212,8 @@ void TermProc(void)
 				if(fg == 1)		//if foreground running:	
 				{
 					c_pid = Wait(ec);	//1. call the new call Wait. Get child PID and exit code
-					exc[0] = '0' + ec/10; 	//print the first digit of mypid
-    					exc[1] = '0' + ec%10; 	//print the second digit of mypid
+					exc[0] = '0' + (int)ec/10; 	//print the first digit of mypid
+    					exc[1] = '0' + (int)ec%10; 	//print the second digit of mypid
 					exc[2] = ':';
     					exc[3] = '\0';
 					
@@ -221,7 +221,7 @@ void TermProc(void)
 					Write(device, str);
 					Write(device, ", ");
 					Write(device, "cpid ");
-					Write(device, c_pid);
+					Write(device, frk);
 					Write(device, ", ");
 					Write(device, "ec ");
 					Write(device, exc);
