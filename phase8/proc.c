@@ -185,14 +185,19 @@ void TermProc(void)
 		bgcomp = StrCmp(buff, "fork&");
 		
 		if(fgcomp == 1)
+		{
 			fg = 1;		//if entry is "fork" set fg = 1
+		}
 		
-		else if(bgcomp == 1)
+		if(bgcomp == 1)
+		{
 			fg = 0;		//else if entry is "fork&" set fg = 0
+		}
 		
 		if(fg == 1)
-			
+		{
 			Signal(SIGINT, ChldHandler); //if foreground running, call Signal to register my ChldHandler
+		}
 		
 		c_pid = Fork();
 		frk[0] = '0' + c_pid/10; 	//print the first digit of mypid
