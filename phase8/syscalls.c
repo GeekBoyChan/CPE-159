@@ -150,7 +150,7 @@ int Wait(int *ec_p)
         int $128;
         movl %%ecx, %0"             //sem_od
         : "=g" (cpid)             //output
-        : "g"(WAITCALL), "g"(ec_p)
+        : "g"(WAITCALL), "g"((int)ec_p)
         : "eax", "ebx", "ecx");     //used registers
    return cpid;
 }
