@@ -131,28 +131,45 @@ void ChldHandler(void)
 
 	my_pid = GetPid();		//2. get my PID to build str and determine device to Write()
 
-    	str[0] = '0' + my_pid/10; 	//print the first digit of mypid
-    	str[1] = '0' + my_pid%10; 	//print the second digit of mypid
-	str[2] = ':';
-    	str[3] = '\0';
-	
 	device = my_pid % 2; 		// if 0 TERM0, if 1 TERM1
 	if (device == 0)
 		device = TERM0;
 	if (device == 1)
 		device = TERM1;
 	
+	Write(device, "my_pid ");
+    	str[0] = '0' + my_pid/10; 	//print the first digit of mypid
+    	str[1] = '0' + my_pid%10; 	//print the second digit of mypid
+    	str[2] = '\0';
+	Write(device, str);
+	
+	Write(device, ", cpid ");
+    	str[0] = '0' + cpid/10; 	//print the first digit of mypid
+    	str[1] = '0' + cpid%10; 	//print the second digit of mypid
+    	str[2] = '\0';
+	Write(device, str);
+	
+	Write(device, ", ec ");
+    	str[0] = '0' + ec/10; 	//print the first digit of mypid
+    	str[1] = '0' + ec%10; 	//print the second digit of mypid
+    	str[2] = '\0';
+	Write(device, str);
+	
+	Write(device, "\n\r");
+	
+	Signal(SIGCHILD, (func_p_t)0);
+	/*
 	Write(device,"I'm child PID: ");	//3. issue several Write() calls to print info from Wait()
 	Write(device, str);
 	Write(device, "\n\r");
 	Signal(SIGINT, Ouch);		//4. issue Signal() call to cancel ChldHandler
-	
+	*/
 }
 
 void TermProc(void)
 {
 	int my_pid, device, fgcomp, bgcomp, c_pid, fg;
-	int * ec;
+	int ec;
 	char str[3], frk[3], exc[3];
 	char buff[BUFF_SIZE];
 	
@@ -162,8 +179,7 @@ void TermProc(void)
 
     	str[0] = '0' + my_pid/10; 	//print the first digit of mypid
     	str[1] = '0' + my_pid%10; 	//print the second digit of mypid
-	str[2] = ':';
-    	str[3] = '\0';
+    	str[2] = '\0';
 	
 	device = my_pid % 2; 		// if 0 TERM0, if 1 TERM1
 	if (device == 0)
@@ -181,6 +197,16 @@ void TermProc(void)
 		Write(device, buff);		// Print what was entered
 		Write(device, "\n\r");
 		
+		if(StrCmp(buff, "fork"))
+			fg = 1;
+		else if(StrCmp(buff, "fork&"))
+			fg = 0;
+		else
+			continue;
+		if(!fg)
+			Signal(SIGINT, ChldHandler);
+		
+		/*
 		fgcomp = StrCmp(buff,"fork");
 		bgcomp = StrCmp(buff, "fork&");
 		
@@ -198,12 +224,12 @@ void TermProc(void)
 		{
 			Signal(SIGINT, ChldHandler); //if foreground running, call Signal to register my ChldHandler
 		}
+		*/
 		
 		c_pid = Fork();
 		frk[0] = '0' + c_pid/10; 	//print the first digit of mypid
     		frk[1] = '0' + c_pid%10; 	//print the second digit of mypid
-		frk[2] = ':';
-    		frk[3] = '\0';
+    		frk[2] = '\0';
 		
 		switch(c_pid)
 		{
@@ -216,16 +242,14 @@ void TermProc(void)
 				Sleep(my_pid * 2);	// TermProc PID 1 & 2, sleep 2 & 4 secs
 				if(fg == 1)		//if foreground running:	
 				{
-					c_pid = Wait(ec);	//1. call the new call Wait. Get child PID and exit code
+					c_pid = Wait(&ec);	//1. call the new call Wait. Get child PID and exit code
 					exc[0] = '0' + (int)ec/10; 	//print the first digit of mypid
     					exc[1] = '0' + (int)ec%10; 	//print the second digit of mypid
-					exc[2] = ':';
-    					exc[3] = '\0';
+    					exc[2] = '\0';
 					
 					Write(device, "my_pid ");		//2. issue several Write() calls to print info from Wait()
 					Write(device, str);
-					Write(device, ", ");
-					Write(device, "cpid ");
+					Write(device, ", cpid ");
 					Write(device, frk);
 					Write(device, ", ");
 					Write(device, "ec ");
