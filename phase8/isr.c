@@ -423,7 +423,7 @@ void ExitISR(void)
          	//2. reset cur_pid to ?        // can no longer run
 		cur_pid = -1;
          	//3. if my parent has requested a SIGCHLD handler:
-		if((int)pcb[ppid].sigint_handler_p == SIGCHLD)
+		if(pcb[ppid].sigint_handler_p)
 		{
          		//4. call WrapperISR(...) to alter parent's runtime direction
 			WrapperISR(ppid, pcb[ppid].sigint_handler_p);
@@ -433,11 +433,21 @@ void ExitISR(void)
 	}
 
       //(yes) call DelQ() to delete parent from wait_q
-	DeQ(&wait_q);
+	DelQ(ppid, &wait_q);
       //instead, enqueue it to ready queue
 	EnQ(ppid, &ready_q);
       //alter its state to ready
 	pcb[ppid].state = READY;
+	
+	ec_p = (int *) pcb[ppid].TF_p->ebx;
+	*ec_p = ec;
+	pcb[ppid].TF_p->ecx = cur_pid;
+	
+	EnQ(cur_pid, &avail_q);
+	pcb[cur_pid].state = AVAIL;
+	
+	cur_pid = -1;
+	/*
       //give parent:
          //1. PID of child exited
 	pcb[ppid].TF_p->ecx = cur_pid;
@@ -451,6 +461,7 @@ void ExitISR(void)
 		pcb[cur_pid].state = READY;
          //3. reset cur_pid to ?
 		cur_pid = -1;
+		*/
 }
 
 void WaitISR(void)
@@ -489,5 +500,5 @@ void WaitISR(void)
          //1. enqueue its PID to ? queue
 	EnQ(cpid, &avail_q);
          //2. alter its state to ?
-	pcb[cpid].state = READY;
+	pcb[cpid].state = AVAIL;
 }
