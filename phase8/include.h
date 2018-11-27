@@ -2,7 +2,7 @@
 // SPEDE library headers, ~spede2/Target-i386/Common/include/spede
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 7
+// Phase 8
 
 #ifndef __INCLUDE__
 #define __INCLUDE__
