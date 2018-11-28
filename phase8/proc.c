@@ -127,7 +127,7 @@ void ChldHandler(void)
 	int ec;
 	char str[3];
 	
-	cpid = Wait(ec);			//1. issue Wait() call to get PID and exit code from the exiting child
+	cpid = Wait(&ec);			//1. issue Wait() call to get PID and exit code from the exiting child
 
 	my_pid = GetPid();		//2. get my PID to build str and determine device to Write()
 
@@ -157,7 +157,7 @@ void ChldHandler(void)
 	
 	Write(device, "\n\r");
 	
-	Signal(SIGCHILD, (func_p_t)0);
+	Signal(SIGCHLD, (func_p_t)0);
 	/*
 	Write(device,"I'm child PID: ");	//3. issue several Write() calls to print info from Wait()
 	Write(device, str);
@@ -168,7 +168,7 @@ void ChldHandler(void)
 
 void TermProc(void)
 {
-	int my_pid, device, fgcomp, bgcomp, c_pid, fg;
+	int my_pid, device, fg, c_pid, fg;
 	int ec;
 	char str[3], frk[3], exc[3];
 	char buff[BUFF_SIZE];
