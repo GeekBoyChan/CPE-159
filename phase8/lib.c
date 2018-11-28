@@ -89,7 +89,8 @@ void DelQ(int delete, q_t *p)
    {
       return;
    }
-   int count, i;
+   int count;
+   int i;
    int * ptr;
    ptr = &(p->q[p->head]);
    while(count <= p->size-1)
