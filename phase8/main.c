@@ -80,6 +80,8 @@ void InitKernel(void) {             // init and set up kernel!
    
    TermInit(0);                     // Initialize terminal 0
    TermInit(1);                     // Initialize terminal 1
+   
+   Bzero((char*)&wait_q, sizeof(q_t));       //phase 8
 }
 
 void Scheduler(void) 
