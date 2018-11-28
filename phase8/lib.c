@@ -85,11 +85,11 @@ int StrCmp(char *s1, char *s2)
 
 void DelQ(int delete, q_t *p)
 {
+   int count = 0;
    if(QisEmpty(p))
    {
       return;
    }
-   int supercount = 0;
    /*
    int i = 0;
    int * ptr;
