@@ -86,9 +86,7 @@ int StrCmp(char *s1, char *s2)
 void DelQ(int delete, q_t *p)
 {
    if(QisEmpty(p))
-   {
       return;
-   }
   
    int count = 0;
    /*
