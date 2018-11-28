@@ -83,6 +83,33 @@ int StrCmp(char *s1, char *s2)
    return 1;
 }
 
+void DelQ(int delete, q_t *p)
+{
+   if(QisEmpty(p))
+   {
+      return -1;
+   }
+   int count, i;
+   int * ptr;
+   ptr = &(p->q[p->head]);
+   while(count <= p->size-1)
+   {
+      if(*ptr == delete)
+      {
+         for(i = count; i < p->tail - 1; i++)
+         {
+            p->q[count] = p->q[count+1];
+            i++;
+         }
+         p->tail--;
+         p->size--;
+      }
+      ptr++;
+      count++;
+   }
+   return;
+}
+      
 int InQ(int in, q_t *p)
 {
    int count = 0;
