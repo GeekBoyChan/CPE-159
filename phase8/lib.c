@@ -89,6 +89,7 @@ void DelQ(int delete, q_t *p)
    {
       return;
    }
+   /*
    int count = 0;
    int i = 0;
    int * ptr;
@@ -108,6 +109,7 @@ void DelQ(int delete, q_t *p)
       ptr++;
       count++;
    }
+   */
    return;
 }
       
