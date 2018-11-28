@@ -168,7 +168,7 @@ void ChldHandler(void)
 
 void TermProc(void)
 {
-	int my_pid, device, fg, c_pid, fg;
+	int my_pid, device, c_pid, fg;
 	int ec;
 	char str[3], frk[3], exc[3];
 	char buff[BUFF_SIZE];
