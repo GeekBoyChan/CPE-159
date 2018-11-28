@@ -204,7 +204,7 @@ void TermProc(void)
 		else
 			continue;
 		if(!fg)
-			Signal(SIGINT, ChldHandler);
+			Signal(SIGCHLD, ChldHandler);
 		
 		/*
 		fgcomp = StrCmp(buff,"fork");
