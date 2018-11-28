@@ -1,7 +1,7 @@
 // isr.c, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 7
+// Phase 8
 
 #include "include.h"
 #include "types.h"
@@ -491,11 +491,13 @@ void WaitISR(void)
 	}
 
       //fetch for cur_pid:
+		pcb[cur_pid].TF_p->ecx = cpid;
          //1. its exit code (use ec_p, set it by what syscall provides)
 		ec_p = (int *)pcb[cur_pid].TF_p->ebx;
          //2. PID of child exited (pass it via in TF for syscall to fetch)
-		cpid = pcb[cur_pid].ppid;
-
+		//cpid = pcb[cur_pid].ppid;
+		*ec_p = pcb[cpid].TF_p->ebx;
+	
       //reclaim child's PID:
          //1. enqueue its PID to ? queue
 	EnQ(cpid, &avail_q);
