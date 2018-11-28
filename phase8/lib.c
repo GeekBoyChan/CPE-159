@@ -87,7 +87,7 @@ void DelQ(int delete, q_t *p)
 {
    if(QisEmpty(p))
    {
-      return -1;
+      return;
    }
    int count, i;
    int * ptr;
