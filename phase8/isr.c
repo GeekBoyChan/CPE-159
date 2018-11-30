@@ -447,21 +447,6 @@ void ExitISR(void)
 	pcb[cur_pid].state = AVAIL;
 	
 	cur_pid = -1;
-	/*
-      //give parent:
-         //1. PID of child exited
-	pcb[ppid].TF_p->ecx = cur_pid;
-         //2. child's exit code
-	pcb[ppid].TF_p->ebx = ec;    
-		
-      //reclaim child's PID:
-         //1. enqueue its PID to ? queue
-		EnQ(cur_pid, &avail_q);
-         //2. alter its state to ?
-		pcb[cur_pid].state = READY;
-         //3. reset cur_pid to ?
-		cur_pid = -1;
-		*/
 }
 
 void WaitISR(void)
