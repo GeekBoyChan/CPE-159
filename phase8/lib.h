@@ -1,7 +1,7 @@
 // lib.h, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 7
+// Phase 8
 
 #ifndef __LIB__
 #define __LIB__
