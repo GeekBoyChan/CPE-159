@@ -238,6 +238,7 @@ void TermProc(void)
 				break;
 			case 0:
 				ChildCode();		//run ChildCode
+				break;
 			default:			// parent does this
 				Sleep(my_pid * 2);	// TermProc PID 1 & 2, sleep 2 & 4 secs
 				if(fg == 1)		//if foreground running:	
