@@ -95,6 +95,7 @@ int StrCmp(char *s1, char *s2)
 
 void DelQ(int delete, q_t *p)
 {
+   /*
    int count = 0;
    int i = 0;
    int * ptr;
@@ -120,11 +121,26 @@ void DelQ(int delete, q_t *p)
       count++;
    }
    return;
+   */
+   int i;
+   q_t tmp_q;
+   
+   Bzero((char *)&tmp_q, sizeof(q_t));
+   
+   for(i=0;i<p->size; i++)
+   {
+      if (pid == p->q[(p->head +i) % Q_SIZE]) 
+         continue;
+       EnQ(DeQ(p), &tmp_q);
+   }
+   
+   *p = tmp_q;
 }
       
 int InQ(int in, q_t *p)
 {
-   int count = 0;
+   /*
+   int count;
    int * ptr;
    ptr = &(p->q[p->head]);
    while(count <= p->size-1)
@@ -133,6 +149,14 @@ int InQ(int in, q_t *p)
      ptr++;
      count++;
    }
+   return 0;
+   */
+   
+   int i;
+   
+   for(i = 0; i < p->size; i++)
+         if(pid == p->q[(p->head + i) % Q_SIZE])
+            return 1;
    return 0;
 }
 
