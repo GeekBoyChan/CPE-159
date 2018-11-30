@@ -129,7 +129,7 @@ void DelQ(int delete, q_t *p)
    
    for(i=0;i<p->size; i++)
    {
-      if (pid == p->q[(p->head +i) % Q_SIZE]) 
+      if (delete == p->q[(p->head +i) % Q_SIZE]) 
          continue;
        EnQ(DeQ(p), &tmp_q);
    }
@@ -155,7 +155,7 @@ int InQ(int in, q_t *p)
    int i;
    
    for(i = 0; i < p->size; i++)
-         if(pid == p->q[(p->head + i) % Q_SIZE])
+         if(in == p->q[(p->head + i) % Q_SIZE])
             return 1;
    return 0;
 }
