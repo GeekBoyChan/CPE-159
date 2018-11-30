@@ -73,16 +73,6 @@ int StrCmp(char *s1, char *s2)
 {
    //printf("We're inside StrCmp \n\r");
    int i = 0;
-   /*
-   for(i = 0; s1[i] && s2[i]; i++)
-   {
-      if(s1[i] != s2[i] || s1[i] == '\0' || s2[i] == '\0')
-      {
-         return 0;
-      }
-   }
-   return 1;
-   */
    
    while(s1[i] != '\0')
    {
@@ -95,33 +85,6 @@ int StrCmp(char *s1, char *s2)
 
 void DelQ(int delete, q_t *p)
 {
-   /*
-   int count = 0;
-   int i = 0;
-   int * ptr;
-   if(QisEmpty(p))
-   {
-      return;
-   }
-
-   ptr = &(p->q[p->head]);
-   while(count <= p->size-1)
-   {
-      if(*ptr == delete)
-      {
-         for(i = count; i < p->tail - 1; i++)
-         {
-            p->q[count] = p->q[count+1];
-            i++;
-         }
-         p->tail--;
-         p->size--;
-      }
-      ptr++;
-      count++;
-   }
-   return;
-   */
    int i;
    q_t tmp_q;
    
@@ -139,19 +102,6 @@ void DelQ(int delete, q_t *p)
       
 int InQ(int in, q_t *p)
 {
-   /*
-   int count;
-   int * ptr;
-   ptr = &(p->q[p->head]);
-   while(count <= p->size-1)
-   {
-     if (*ptr == in) return 1;
-     ptr++;
-     count++;
-   }
-   return 0;
-   */
-   
    int i;
    
    for(i = 0; i < p->size; i++)
