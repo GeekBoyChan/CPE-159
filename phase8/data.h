@@ -4,7 +4,7 @@
 
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 7
+// Phase 8
 
 #ifndef __DATA__
 #define __DATA__
