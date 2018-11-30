@@ -158,12 +158,7 @@ void ChldHandler(void)
 	Write(device, "\n\r");
 	
 	Signal(SIGCHLD, (func_p_t)0);
-	/*
-	Write(device,"I'm child PID: ");	//3. issue several Write() calls to print info from Wait()
-	Write(device, str);
-	Write(device, "\n\r");
-	Signal(SIGINT, Ouch);		//4. issue Signal() call to cancel ChldHandler
-	*/
+	
 }
 
 void TermProc(void)
@@ -206,25 +201,6 @@ void TermProc(void)
 		if(fg == 0)
 			Signal(SIGCHLD, ChldHandler);
 		
-		/*
-		fgcomp = StrCmp(buff,"fork");
-		bgcomp = StrCmp(buff, "fork&");
-		
-		if(fgcomp == 1)
-		{
-			fg = 1;		//if entry is "fork" set fg = 1
-		}
-		
-		if(bgcomp == 1)
-		{
-			fg = 0;		//else if entry is "fork&" set fg = 0
-		}
-		
-		if(fg == 1)
-		{
-			Signal(SIGINT, ChldHandler); //if foreground running, call Signal to register my ChldHandler
-		}
-		*/
 		
 		c_pid = Fork();
 		frk[0] = '0' + c_pid/10; 	//print the first digit of mypid
