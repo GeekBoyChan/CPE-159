@@ -203,7 +203,7 @@ void TermProc(void)
 			fg = 0;
 		else
 			continue;
-		if(!fg)
+		if(fg == 0)
 			Signal(SIGCHLD, ChldHandler);
 		
 		/*
