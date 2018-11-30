@@ -3,7 +3,7 @@
 
 // Team name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 7
+// Phase 8
 
 #include "constants.h"
 #include "types.h"
