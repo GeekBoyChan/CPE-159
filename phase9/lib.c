@@ -1,7 +1,7 @@
 // lib.c, 159
 // Team Name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 8
+// Phase 9
 
 #include "include.h"
 #include "types.h"
@@ -124,3 +124,41 @@ void MemCpy(char *dst, char *src, int size)
    return;
 }
 
+void ReclaimPages(int pid)
+{
+   // Search through memory info array by pid, change 'owned' --> 'not owned'
+   int i;
+   
+   for(i=0; i<PAGE_MAX; i++)
+   {
+      if(pages[i].owner == pid)
+         pages[i].owner = -1;
+   }
+}
+
+int Alloc(int pid, int how_many, int page_index[]) 
+{
+   int i , counter;
+   //search thru the memory info array for 'how_many' pages currently not owned
+   //set them to be owned by 'pid,' and collect their page indices into page_index[]
+   //return 0 if successfully got that many asked,
+   //otherwise, leave/recover owner info intact and return -1
+   
+   got = 0;
+   for(i=0; i<PAGE_MAX; i++)
+   {
+      if(pages[i].owner == -1)
+      {
+         pages[i].owner = pid;
+         page_index[counter] = i;
+         counter ++;
+         if(counter == how_many)
+            return 0;
+      }
+   }
+   
+   for(i=0; i<counter; i++)
+      pages(page_index[counter]).owner = -1; //release
+   
+   return -1;
+}
