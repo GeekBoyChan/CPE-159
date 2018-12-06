@@ -15,5 +15,6 @@ int StrCmp(char *s1, char *s2);
 void MemCpy(char *dst, char *src, int size);
 int InQ(int in, q_t *p);
 void DelQ(int delete, q_t *p);
-
+void ReclaimPages(int pid);
+int Alloc(int pid, int how_many, int page_index[]);
 #endif
