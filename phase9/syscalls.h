@@ -20,5 +20,6 @@ int GetPpid(void);
 int Fork(void);
 void Exit(int ec);
 int Wait(int *ec_p);
+int Exec(func_p_t2 code_p, int device);
 
 #endif
