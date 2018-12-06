@@ -24,4 +24,5 @@ extern term_if_t term_if[TERM_MAX];       // Terminal interface
 extern char *rx_p;                        // point to inside the buffer
 extern q_t rx_wait_q;                     // for PID waiting for term KB input
 extern q_t wait_q;                        // to Enq parents calling wait and got blocked
+extern page_t pages[PAGE_MAX];            // Keeps usage info of DRAM memory
 #endif                                    // endif of ifndef
