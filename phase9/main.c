@@ -1,5 +1,5 @@
 // main.c, 159
-// OS bootstrap and The Kernel for OS phase 7
+// OS bootstrap and The Kernel for OS phase 9
 //
 // Team Name: LIGMAOS (Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso)
 
@@ -24,6 +24,7 @@ term_if_t term_if[TERM_MAX];        // Terminal interface
 char *rx_p;                         // point to inside the buffer
 q_t rx_wait_q;                      // for PID waiting for term KB input
 q_t wait_q;                         // to Enq parents calling wait and got blocked
+page_t pages[PAGE_MAX];
 
 void TermInit(int which)
 {
@@ -175,6 +176,9 @@ void TheKernel(TF_t *TF_p) {           // kernel runs
          break;
       case EXIT:
          ExitISR();
+         break;
+      case EXEC:
+         ExecISR();
          break;
    }
 
