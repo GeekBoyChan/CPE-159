@@ -62,4 +62,9 @@
 #define EXIT 1       // sysacll/service ID
 #define SIGCHLD 17   // new signal name for event of child exiting
 
+// Added for Phase 9
+#define EXEC 11             // New service number
+#define BASE_ADDR 0xe00000  // My OS.dli ends at byte 14M-1, 0xdfffff
+#define PAGE_SIZE 0x1000    // Each DRAM page is 4KB in size, 0x1000
+#define PAGE_MAX 100        // There are 100 DRAM pages to allocate
 #endif
