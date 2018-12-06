@@ -3,7 +3,7 @@
 
 // Team name: LIGMAOS
 // Members: Andrew Encinas, Chandler Ocapan, Alex Paraiso
-// Phase 8
+// Phase 9
 
 #include "constants.h"
 #include "types.h"
@@ -154,3 +154,8 @@ int Wait(int *ec_p)
         : "eax", "ebx", "ecx");     //used registers
    return cpid;
 }
+
+ int Exec(func_p_t2 code_p, int device)
+ {
+    
+ }
