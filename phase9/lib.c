@@ -144,7 +144,7 @@ int Alloc(int pid, int how_many, int page_index[])
    //return 0 if successfully got that many asked,
    //otherwise, leave/recover owner info intact and return -1
    
-   got = 0;
+   counter = 0;
    for(i=0; i<PAGE_MAX; i++)
    {
       if(pages[i].owner == -1)
