@@ -496,7 +496,7 @@ void WaitISR(void)
 
 void ExecISR(void)
 {
-	int code_adder, device, pi[2], status, *p;
+	int code_addr, device, pi[2], status, *p;
 	
 	code_addr = pcb[cur_pid].TF_p->ebx;
 	device = pcb[cur_pid].TF_p->ecx;
@@ -523,7 +523,7 @@ void ExecISR(void)
 	p--;
 	*p = 0;
 	
-	pcb[cur_pid].TF_p = (Tf_t *)p;
+	pcb[cur_pid].TF_p = (TF_t *)p;
 	pcb[cur_pid].TF_p--;
 	
 	pcb[cur_pid].TF_p->efl = EF_DEFAULT_VALUE | EF_INTR;
