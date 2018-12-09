@@ -446,6 +446,8 @@ void ExitISR(void)
 	EnQ(cur_pid, &avail_q);
 	pcb[cur_pid].state = AVAIL;
 	
+	ReclaimPages(ppid);
+	
 	cur_pid = -1;
 }
 
@@ -488,6 +490,8 @@ void WaitISR(void)
 	EnQ(cpid, &avail_q);
          //2. alter its state to ?
 	pcb[cpid].state = AVAIL;
+	
+	ReclaimPages(cpid);
 }
 
 void ExecISR(void)
