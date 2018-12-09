@@ -158,7 +158,7 @@ int Alloc(int pid, int how_many, int page_index[])
    }
    
    for(i=0; i<counter; i++)
-      pages(page_index[counter]).owner = -1; //release
+      pages[page_index[counter]].owner = -1; //release
    
    return -1;
 }
