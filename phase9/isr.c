@@ -489,3 +489,40 @@ void WaitISR(void)
          //2. alter its state to ?
 	pcb[cpid].state = AVAIL;
 }
+
+void ExecISR(void)
+{
+	int code_adder, device, pi[2], status, *p;
+	
+	code_addr = pcb[cur_pid].TF_p->ebx;
+	device = pcb[cur_pid].TF_p->ecx;
+	
+	status = AllocPages(cur_pid, 2, pi);
+	
+	if(status == -1)
+	{
+		pcb[cur_pid].TF_p->edx = -1;
+		return;
+	}
+	
+	//build code page
+	MemCpy((char *)pages[pi[0]].addr, (char *)code_addr, PAGE_SIZE);
+	
+	//build stack page
+	Bzero((char *)pages[pi[1]].addr, PAGE_SIZE);
+	
+	p = (int *) (pages[pi[1]].addr + PAGE_SIZE);
+	
+	p--;
+	*p = device;
+	
+	p--;
+	*p = 0;
+	
+	pcb[cur_pid].TF_p = (Tf_t *)p;
+	pcb[cur_pid].TF_p--;
+	
+	pcb[cur_pid].TF_p->efl = EF_DEFAULT_VALUE | EF_INTR;
+	pcb[cur_pid].TF_p->cs = get_cs();
+	pcb[cur_pid].TF_p->eip = pages[pi[0]].addr;
+}
