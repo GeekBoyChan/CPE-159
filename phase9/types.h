@@ -48,4 +48,9 @@ typedef struct {
       q_t rx_wait_q;   // for PID waiting for term KB input
    } term_if_t;
 
+typedef void (*func_p_t2)(int);
+typedef struct {
+   int addr, owner;
+} page_t;
+
 #endif
