@@ -501,7 +501,7 @@ void ExecISR(void)
 	code_addr = pcb[cur_pid].TF_p->ebx;
 	device = pcb[cur_pid].TF_p->ecx;
 	
-	status = AllocPages(cur_pid, 2, pi);
+	status = Alloc(cur_pid, 2, pi);
 	
 	if(status == -1)
 	{
