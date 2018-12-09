@@ -212,8 +212,12 @@ void TermProc(void)
 			case -1:
 				Write(device, "OS failed to fork! \n\r"); //call Write to write to terminal:
 				break;
-			case 0:
-				ChildCode();		//run ChildCode
+			case 0: 		//for child proc: call Exec() service arg device
+				if( -1 == Exec(ChildCode, device))
+				{
+					Write(device, "OS failed to Exex()!\n\r");
+					Exit(-1);
+				}
 				break;
 			default:			// parent does this
 				Sleep(my_pid * 2);	// TermProc PID 1 & 2, sleep 2 & 4 secs
