@@ -25,5 +25,6 @@ void GetPpidISR(void);
 void ForkISR(void);
 void ExitISR(void);
 void WaitISR(void);
+void ExecISR(void);
 
 #endif
