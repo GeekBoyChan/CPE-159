@@ -83,6 +83,12 @@ void InitKernel(void) {             // init and set up kernel!
    TermInit(1);                     // Initialize terminal 1
    
    Bzero((char*)&wait_q, sizeof(q_t));       //phase 8
+   
+   for(i=0; i<PAGE_MAX; i++)                 //phase 9
+   {
+      pages[i].owner = -1;
+      pages[i].addr = BASE_ADDR + PAGE_SIZE*i;
+   }
 }
 
 void Scheduler(void) 
