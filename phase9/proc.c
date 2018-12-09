@@ -92,26 +92,18 @@ void Ouch(void)
 	Write(device, "Ouch, don't touch that! \n\r");
 }
 
-void ChildCode(void) 
+void ChildCode(int device) 
 {  // child proc runs this
-      int my_pid, p_pid, device;
+      int my_pid;
       char str[3];
   
       my_pid = GetPid();		//1. get my PID
-      
-      p_pid = GetPpid();		//2. get parent's PID using new syscall
       
       					//3. build a string based on my PID
       str[0] = '0' + my_pid/10; 	//print the first digit of mypid
       str[1] = '0' + my_pid%10; 	//print the second digit of mypid
       str[2] = ' ';
       str[3] = '\0';
-      
-      device = p_pid % 2; 		// if 0 TERM0, if 1 TERM1
-	if (device == 0)
-		device = TERM0;
-	if (device == 1)
-		device = TERM1;
 	
 	Write(device, "I am child pid: ");	//a. show the msg (see demo) to the same terminal as the parent
 	Write(device, str);
